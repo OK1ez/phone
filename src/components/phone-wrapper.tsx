@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import Background from "@/assets/backgrounds/ifruit.webp"
+// import Background from "@/assets/backgrounds/ifruit.webp"
 import { Notch } from "./os/notch";
 
 interface PhoneWrapperProps {
