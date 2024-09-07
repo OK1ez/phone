@@ -2,7 +2,6 @@ import { ReactNode } from "react";
 import Background from "@/assets/backgrounds/ifruit.webp";
 import { Signal, WifiHigh } from "lucide-react";
 import { Notch } from "./notch";
-import { Indicator } from "./indicator";
 
 interface PhoneWrapperProps {
   children: ReactNode;
@@ -13,9 +12,7 @@ interface PhoneWrapperProps {
 
 export default function PhoneWrapper({
   children,
-  lockPhone,
-  showIndicator,
-  onIndicatorClick
+  lockPhone
 }: PhoneWrapperProps) {
   return (
     <div
@@ -58,7 +55,6 @@ export default function PhoneWrapper({
               </button>
             </header>
             {children}
-            {showIndicator && <Indicator onIndicatorClick={onIndicatorClick} />}
           </div>
         </div>
       </div>

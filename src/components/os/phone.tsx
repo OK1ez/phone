@@ -38,7 +38,9 @@ const AppView: React.FC<{
   isScaling: boolean;
   isClosing: boolean;
   appRef: React.RefObject<HTMLDivElement>;
-}> = ({ app, appPosition, isScaling, isClosing, appRef }) => (
+  onIndicatorClick?: () => void;
+  showIndicator?: boolean;
+}> = ({ app, appPosition, isScaling, isClosing, appRef, onIndicatorClick, showIndicator }) => (
   <motion.div
     ref={appRef}
     initial={{
@@ -55,6 +57,7 @@ const AppView: React.FC<{
     className="absolute inset-0 flex items-center justify-center"
   >
     {app}
+    {showIndicator && <Indicator onIndicatorClick={onIndicatorClick} />}
   </motion.div>
 );
 
@@ -64,6 +67,7 @@ export default function Phone() {
   const [appPosition, setAppPosition] = useState<Position>({ x: 0, y: 0 });
   const [isScaling, setIsScaling] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const appRef = useRef<HTMLDivElement>(null); 
 
@@ -85,14 +89,18 @@ export default function Phone() {
     setIsClosing(true);
 
     setTimeout(() => {
-      setOpenApp(null);
       setIsScaling(false);
+      setOpenApp(null);
     }, 250);
   };
 
   const handleIndicatorClick = () => {
     if (isLocked) {
-      unlockPhone();
+      setIsAnimating(true);
+      setTimeout(() => {
+        setIsAnimating(false);
+        unlockPhone();
+      }, 300);      
     } else if (openApp) {
       goToHomescreen();
     }
@@ -101,13 +109,13 @@ export default function Phone() {
   const showIndicator = isLocked || openApp !== null;
 
   return (
-    <PhoneWrapper
-      lockPhone={lockPhone}
-      showIndicator={showIndicator}
-      onIndicatorClick={handleIndicatorClick}
-    >
+    <PhoneWrapper lockPhone={lockPhone}>
       {isLocked ? (
-        <Lockscreen />
+        <Lockscreen 
+          showIndicator={showIndicator} 
+          onIndicatorClick={handleIndicatorClick} 
+          isAnimating={isAnimating} 
+        />
       ) : (
         <div className="relative z-20 w-full h-full">
           <Homescreen
@@ -122,6 +130,8 @@ export default function Phone() {
               isScaling={isScaling}
               isClosing={isClosing}
               appRef={appRef}
+              showIndicator={showIndicator}
+              onIndicatorClick={handleIndicatorClick}
             />
           )}
         </div>
