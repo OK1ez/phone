@@ -51,7 +51,7 @@ export default function Phone() {
       onIndicatorClick={handleIndicatorClick}
     >
       {isLocked ? (
-        <Lockscreen onUnlock={unlockPhone} />
+        <Lockscreen />
       ) : (
         <div className="relative z-20 w-full h-full">
           {!openApp ? (
