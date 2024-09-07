@@ -8,7 +8,7 @@ import { ModeToggle } from './components/mode-toggle'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className='flex flex-col items-center w-screen h-screen'>
         <Phone />
         <ModeToggle />
