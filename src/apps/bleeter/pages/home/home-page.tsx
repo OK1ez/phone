@@ -82,11 +82,8 @@ const mockBleets = [
   },
 ];
 
-
-const isDev = process.env.NODE_ENV === "development";
-
 export function BleeterHomePage() {
-  const bleets = isDev ? mockBleets : [];
+  const bleets = mockBleets;
 
   return(
     <Tabs defaultValue="for-you">
