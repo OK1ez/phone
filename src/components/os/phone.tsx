@@ -91,7 +91,7 @@ export default function Phone() {
                 x: isClosing ? appPosition.x - window.innerWidth / 2 : 0,
                 y: isClosing ? appPosition.y - window.innerHeight / 2 : 0,
               }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
               className="absolute inset-0 flex items-center justify-center"
             >
               {openApp}
