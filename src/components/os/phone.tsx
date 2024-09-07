@@ -24,43 +24,40 @@ const apps = [
 export default function Phone() {
   const [isLocked, setIsLocked] = useState(true);
   const [openApp, setOpenApp] = useState<AppComponent | null>(null);
-  const [appPosition, setAppPosition] = useState({ x: 0, y: 0 }); // Store click coordinates
-  const [isScaling, setIsScaling] = useState(false); // State for controlling the animation
-  const [isClosing, setIsClosing] = useState(false); // State to track if app is closing
+  const [appPosition, setAppPosition] = useState({ x: 0, y: 0 });
+  const [isScaling, setIsScaling] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
-  const appRef = useRef<HTMLDivElement>(null); // Ref to track app's DOM element
+  const appRef = useRef<HTMLDivElement>(null); 
 
   const unlockPhone = () => setIsLocked(false);
   const lockPhone = () => setIsLocked(true);
 
-  // Handle app opening and capture click coordinates
   const openAppById = (appId: string, event: React.MouseEvent) => {
     const app = apps.find((app) => app.id === appId);
     if (app) {
       const { clientX, clientY } = event;
-      setAppPosition({ x: clientX, y: clientY }); // Capture click coordinates
+      setAppPosition({ x: clientX, y: clientY });
       setOpenApp(app.component);
-      setIsScaling(true); // Start the scaling animation
-      setIsClosing(false); // App is opening
+      setIsScaling(true);
+      setIsClosing(false);
     }
   };
 
   const goToHomescreen = () => {
-    // App is closing
     setIsClosing(true);
 
-    // Delay to let the animation play before removing the app
     setTimeout(() => {
       setOpenApp(null);
-      setIsScaling(false); // Reset scaling state
-    }, 250); // Set timeout equal to animation duration
+      setIsScaling(false);
+    }, 250);
   };
 
   const handleIndicatorClick = () => {
     if (isLocked) {
       unlockPhone();
     } else if (openApp) {
-      goToHomescreen(); // Close app when indicator is clicked
+      goToHomescreen();
     }
   };
 
@@ -85,9 +82,9 @@ export default function Phone() {
             <motion.div
               ref={appRef}
               initial={{
-                scale: isClosing ? 1 : 0.0,
-                x: isClosing ? 0 : appPosition.x - window.innerWidth / 2,
-                y: isClosing ? 0 : appPosition.y - window.innerHeight / 2,
+                scale: isScaling ? 0.0 : 1,
+                x: isScaling ? appPosition.x - window.innerWidth / 2 : 0,
+                y: isScaling ? appPosition.y - window.innerHeight / 2 : 0,
               }}
               animate={{
                 scale: isClosing ? 0 : 1,
