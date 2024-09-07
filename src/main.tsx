@@ -2,7 +2,7 @@ import '@/styles/index.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { TailwindIndicator } from '@/components/tailwind-indicator.tsx'
-import Phone from '@/components/phone.tsx'
+import Phone from '@/components/os/phone.tsx'
 import { ThemeProvider } from './components/theme-provider'
 import { ModeToggle } from './components/mode-toggle'
 
