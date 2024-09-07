@@ -1,5 +1,4 @@
-
-export function Homescreen({ onAppClick }) {
+export function Homescreen({ onAppClick }: { onAppClick: (appName: string) => void }) {
   return (
     <div className="grid grid-cols-3 gap-4 mt-16 homescreen">
       <button onClick={() => onAppClick("bleeter")}>Open Bleeter</button>
