@@ -5,6 +5,7 @@ import PhoneWrapper from "./phone-wrapper";
 import { Homescreen } from "./homescreen";
 import { Lockscreen } from "./lockscreen";
 import { motion } from "framer-motion";
+import { Indicator } from "./indicator";
 
 type AppComponent = JSX.Element;
 
