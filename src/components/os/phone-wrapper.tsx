@@ -52,7 +52,7 @@ export default function PhoneWrapper({
           <div className="relative flex flex-col w-full h-full">
             <header className="absolute z-50 flex items-center justify-between w-full px-8 py-4">
               <p className="font-medium ">13:03</p>
-              <button className="flex gap-2">
+              <button className="flex gap-2" aria-label="control-center">
                 <WifiHigh className="mb-2 w-7 h-7" />
                 <Signal className="w-6 h-6 mt-[0.40rem]" />
               </button>
