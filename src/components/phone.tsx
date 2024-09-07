@@ -2,7 +2,7 @@ import { BleeterApp } from "@/apps/bleeter/bleeter-app";
 import { Indicator } from "./os/indicator";
 import PhoneWrapper from "./phone-wrapper";
 import { Signal, WifiHigh } from "lucide-react";
-import { MessagesApp } from "@/apps/messages/messages-app";
+// import { MessagesApp } from "@/apps/messages/messages-app";
 
 export default function Phone() {
   return (

@@ -1,4 +1,4 @@
-import { BellDot, Home, Inbox, Search, User } from "lucide-react";
+import { BellDot, Home, Search, User } from "lucide-react";
 
 export function BleeterNav() {
   return(
