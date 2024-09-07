@@ -1,4 +1,9 @@
-export function BleetContent({ content, image }) {
+interface BleetContentProps {
+  content: string;
+  image: string | null;
+}
+
+export function BleetContent({ content, image }: BleetContentProps) {
     return (
       <div>
         <p>{content}</p>
