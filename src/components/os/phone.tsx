@@ -8,7 +8,13 @@ import { motion } from "framer-motion";
 
 type AppComponent = JSX.Element;
 
-const apps = [
+interface App {
+  id: string;
+  label: string;
+  component: AppComponent;
+}
+
+const apps: App[] = [
   {
     id: "bleeter",
     label: "Bleeter",
@@ -21,10 +27,41 @@ const apps = [
   },
 ];
 
+interface Position {
+  x: number;
+  y: number;
+}
+
+const AppView: React.FC<{
+  app: AppComponent;
+  appPosition: Position;
+  isScaling: boolean;
+  isClosing: boolean;
+  appRef: React.RefObject<HTMLDivElement>;
+}> = ({ app, appPosition, isScaling, isClosing, appRef }) => (
+  <motion.div
+    ref={appRef}
+    initial={{
+      scale: isScaling ? 0.0 : 1,
+      x: isScaling ? appPosition.x - window.innerWidth / 2 : 0,
+      y: isScaling ? appPosition.y - window.innerHeight / 2 : 0,
+    }}
+    animate={{
+      scale: isClosing ? 0 : 1,
+      x: isClosing ? appPosition.x - window.innerWidth / 2 : 0,
+      y: isClosing ? appPosition.y - window.innerHeight / 2 : 0,
+    }}
+    transition={{ duration: 0.2, ease: "easeInOut" }}
+    className="absolute inset-0 flex items-center justify-center"
+  >
+    {app}
+  </motion.div>
+);
+
 export default function Phone() {
   const [isLocked, setIsLocked] = useState(true);
   const [openApp, setOpenApp] = useState<AppComponent | null>(null);
-  const [appPosition, setAppPosition] = useState({ x: 0, y: 0 });
+  const [appPosition, setAppPosition] = useState<Position>({ x: 0, y: 0 });
   const [isScaling, setIsScaling] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
@@ -79,23 +116,13 @@ export default function Phone() {
             }
           />
           {openApp && (
-            <motion.div
-              ref={appRef}
-              initial={{
-                scale: isScaling ? 0.0 : 1,
-                x: isScaling ? appPosition.x - window.innerWidth / 2 : 0,
-                y: isScaling ? appPosition.y - window.innerHeight / 2 : 0,
-              }}
-              animate={{
-                scale: isClosing ? 0 : 1,
-                x: isClosing ? appPosition.x - window.innerWidth / 2 : 0,
-                y: isClosing ? appPosition.y - window.innerHeight / 2 : 0,
-              }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              {openApp}
-            </motion.div>
+            <AppView
+              app={openApp}
+              appPosition={appPosition}
+              isScaling={isScaling}
+              isClosing={isClosing}
+              appRef={appRef}
+            />
           )}
         </div>
       )}
