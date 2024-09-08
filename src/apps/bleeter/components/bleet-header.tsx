@@ -43,7 +43,7 @@ export function BleetHeader({ bleet }: BleetProps) {
             <MoreHorizontal className="w-5 h-5" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="mt-2 -mr-5 min-w-48" align="start" side="left" >
+        <DropdownMenuContent className="mt-2 min-w-48" align="start" side="left" >
           <DropdownMenuItem onClick={() => setAlertDialogOpen(true)} className="space-x-2">
             <Trash2 className="w-3 h-3" />
             <span className="text-xs">Remove post</span>
@@ -60,7 +60,7 @@ export function BleetHeader({ bleet }: BleetProps) {
       </DropdownMenu>
 
       <AlertDialog open={alertDialogOpen} onOpenChange={setAlertDialogOpen}>
-        <AlertDialogOverlay className="rounded-[3.5rem] " />
+        <AlertDialogOverlay className="rounded-[3.5rem]" />
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>

@@ -40,7 +40,7 @@ export default function PhoneWrapper({
           />
         </div>
       </div>
-      <div className="w-full h-full bg-black rounded-[3.5rem] shadow-frame p-3 flex z-10">
+      <div className="w-full h-full bg-black rounded-[3.5rem] shadow-frame p-3 flex z-50">
         <Notch />
         <div
           className="w-full h-full rounded-[3rem] bg-cover bg-black overflow-hidden"

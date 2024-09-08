@@ -13,9 +13,9 @@ const mockBleets = [
     verified: false,
     time: "15h",
     content: "This phone is super cool!",
-    image: "https://cdn.discordapp.com/attachments/1099654888889266228/1165071137269616640/image.png?ex=66dce38d&is=66db920d&hm=e733dd56b0e844e81774778056bb3a00bf14021d6b56b03fb4d4fac0056c8b8d&",
+    image: "https://vrabvskoggqqgecvzdql.supabase.co/storage/v1/object/public/assets/test/image.png",
     comments: 5,
-    retweets: 12,
+    retweets: 205,
     likes: 40,
     views: 223,
     ad: false
@@ -31,7 +31,7 @@ const mockBleets = [
     image: null,
     comments: 5,
     retweets: 12,
-    likes: 40,
+    likes: 110,
     views: 124,
     ad: false
   },
@@ -44,9 +44,9 @@ const mockBleets = [
     time: "15h",
     content: "This phone is super cool!",
     image: null,
-    comments: 5,
+    comments: 253,
     retweets: 12,
-    likes: 40,
+    likes: 0,
     views: 10,
     ad: false
   },
@@ -62,7 +62,7 @@ const mockBleets = [
     comments: 5,
     retweets: 12,
     likes: 40,
-    views: 24042,
+    views: 242,
     ad: false
   },
   {
@@ -102,8 +102,8 @@ export function BleeterHomePage() {
           ))}
         </ScrollArea>
       </TabsContent>
-      <TabsContent value="following">
-        
+      <TabsContent value="following" className="p-6">
+        this dont work
       </TabsContent>
     </Tabs>
   )

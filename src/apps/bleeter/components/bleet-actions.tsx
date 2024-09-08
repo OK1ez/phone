@@ -1,24 +1,26 @@
 import { BleetProps } from "@/typings/bleeter";
-import { Heart, MessageSquare, Repeat2, ChartNoAxesColumn } from "lucide-react";
+import { Heart, MessageSquare, Repeat2 } from "lucide-react";
 
 export function BleetActions({ bleet }: BleetProps) {
   return (
     <div className="flex gap-8 mt-4">
-      <button className="flex items-center text-gray-400 hover:text-blue-400">
+      <button className="flex items-center w-16 text-gray-400 hover:text-blue-400">
         <MessageSquare size={20} />
-        <span className="ml-2">{bleet.comments}</span>
+        {bleet.comments > 0 && (
+          <span className="ml-2">{bleet.comments}</span>
+        )}
       </button>
-      <button className="flex items-center text-gray-400 hover:text-emerald-500">
+      <button className="flex items-center w-16 text-gray-400 hover:text-emerald-500">
         <Repeat2 size={20} />
-        <span className="ml-2">{bleet.retweets}</span>
+        {bleet.retweets > 0 && (
+          <span className="ml-2">{bleet.retweets}</span>
+        )}
       </button>
-      <button className="flex items-center text-gray-400 hover:text-rose-600">
+      <button className="flex items-center w-16 text-gray-400 hover:text-rose-600">
         <Heart size={20} />
-        <span className="ml-2">{bleet.likes}</span>
-      </button>
-      <button className="flex items-center text-gray-400 hover:text-blue-400">
-        <ChartNoAxesColumn size={20} />
-        <span className="ml-2">{bleet.views}</span>
+        {bleet.likes > 0 && (
+          <span className="ml-2">{bleet.likes}</span>
+        )}
       </button>
     </div>
   );
