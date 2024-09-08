@@ -25,65 +25,72 @@ const mockConversations = [
   },
   {
     id: 4,
-    name: "John",
-    message: "Let's catch up later!",
-    time: "13:00"
+    name: "Maya",
+    message: "Hey, did you see the latest episode?",
+    time: "12:45"
   },
   {
     id: 5,
-    name: "John",
-    message: "Let's catch up later!",
-    time: "13:00"
+    name: "Liam",
+    message: "Lunch tomorrow?",
+    time: "11:30"
   },
   {
     id: 6,
-    name: "John",
-    message: "Let's catch up later!",
-    time: "13:00"
+    name: "Olivia",
+    message: "Meeting at 2 PM.",
+    time: "10:15"
   },
   {
     id: 7,
-    name: "John",
-    message: "Let's catch up later!",
-    time: "13:00"
+    name: "Noah",
+    message: "Can you review this document?",
+    time: "09:00"
   },
   {
     id: 8,
-    name: "John",
-    message: "Let's catch up later!",
-    time: "13:00"
+    name: "Emma",
+    message: "How was the concert?",
+    time: "08:50"
   },
   {
     id: 9,
-    name: "John",
-    message: "Let's catch up later!",
-    time: "13:00"
+    name: "Ava",
+    message: "Reminder: team meeting at 3.",
+    time: "08:30"
   },
   {
     id: 10,
-    name: "John",
-    message: "Let's catch up later!",
-    time: "13:00"
+    name: "Sophia",
+    message: "Happy birthday!",
+    time: "07:45"
   },
   {
     id: 11,
-    name: "John",
-    message: "Let's catch up later!",
-    time: "13:00"
+    name: "Jackson",
+    message: "Finished the report.",
+    time: "07:30"
   },
   {
     id: 12,
-    name: "John",
-    message: "Let's catch up later!",
-    time: "13:00"
+    name: "Lucas",
+    message: "Are we still on for tonight?",
+    time: "07:00"
   },
 ];
 
-function truncateMessage(message, maxLength = 100) {
+function truncateMessage(message: string, maxLength: number = 100): string {
   return message.length > maxLength ? `${message.slice(0, maxLength)}..` : message;
 }
 
-function Message({ name, message, time, onClick }) {
+interface MessageProps {
+  name: string;
+  message: string;
+  time: string;
+  onClick: () => void;
+}
+
+function Message({ name, message, time, onClick }: MessageProps) {
   return (
     <button 
       className="flex flex-col w-full px-6 py-4 text-left border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
@@ -103,8 +110,15 @@ function Message({ name, message, time, onClick }) {
   );
 }
 
+interface Conversation {
+  id: number;
+  name: string;
+  message: string;
+  time: string;
+}
+
 export function RecentConversations() {
-  const [selectedConversation, setSelectedConversation] = useState(null);
+  const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
   const [hasBacked, setHasBacked] = useState(false);
 
   useEffect(() => {
@@ -121,15 +135,15 @@ export function RecentConversations() {
           conversation={selectedConversation} 
           onBack={() => {
             setSelectedConversation(null);
-            setHasBacked(true); // Ensure to set the flag when navigating back
+            setHasBacked(true);
           }} 
         />
       ) : (
         <motion.div
           key="recentConversations"
-          initial={hasBacked ? { x: "-100%" } : false} // Do not animate on initial render
+          initial={hasBacked ? { x: "-100%" } : {}}
           animate={{ x: 0 }}
-          exit={hasBacked ? { x: "-100%" } : false} // Do not animate on initial render
+          exit={hasBacked ? { x: "-100%" } : {}}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
         >
           <header className="flex items-center justify-between w-full gap-4 px-6 pb-4 mt-16 border-b">

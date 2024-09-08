@@ -2,17 +2,18 @@ import { ChevronLeft, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
+interface ConversationInfoProps {
+  name: string;
+}
 
-function ConversationInfo({ name }) {
+function ConversationInfo({ name }: ConversationInfoProps) {
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -31,10 +32,19 @@ function ConversationInfo({ name }) {
         </div>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }
 
-export function ConversationView({ conversation, onBack }) {
+interface Conversation {
+  name: string;
+}
+
+interface ConversationViewProps {
+  conversation: Conversation;
+  onBack: () => void;
+}
+
+export function ConversationView({ conversation, onBack }: ConversationViewProps) {
   return (
     <motion.div
       initial={{ x: "100%" }}
