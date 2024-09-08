@@ -64,8 +64,17 @@ export function ConversationView({ conversation, onBack }: ConversationViewProps
         </button>
       </header>
       
-      <ScrollArea className="flex-grow w-full overflow-y-auto">
-        <p>Messages and content go here</p>
+      <ScrollArea className="flex-grow w-full p-6 pb-0 overflow-y-auto">
+        <div className="flex justify-end w-full mb-4">
+          <div className="px-4 py-3 rounded-br-none bg-sky-400 dark:bg-sky-600 rounded-2xl max-w-72 ">
+            Nice phone
+          </div>
+        </div>
+        <div className="flex justify-start w-full mb-4">
+          <div className="px-4 py-3 rounded-bl-none bg-secondary rounded-2xl max-w-72 ">
+            Thanks
+          </div>
+        </div>
       </ScrollArea>
 
       <div className="flex w-full gap-4 px-6 pt-4 border-t pb-14 min-h-24 bg-backgroun">
