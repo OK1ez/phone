@@ -54,7 +54,7 @@ export function ConversationView({ conversation, onBack }: ConversationViewProps
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
       className="absolute z-20 flex flex-col w-full h-full overflow-hidden bg-background"
     >
-      <header className="flex items-center justify-between w-full gap-4 px-6 pb-4 mt-16 border-b">
+      <header className="flex items-center justify-between w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b">
         <button onClick={onBack}>
           <ChevronLeft className="w-6 h-6 text-gray-400 hover:text-foreground" />
         </button>
