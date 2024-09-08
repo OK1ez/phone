@@ -56,11 +56,11 @@ export function ConversationView({ conversation, onBack }: ConversationViewProps
     >
       <header className="flex items-center justify-between w-full gap-4 px-6 pb-4 mt-16 border-b">
         <button onClick={onBack}>
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-6 h-6 text-gray-400 hover:text-foreground" />
         </button>
         <ConversationInfo name={conversation.name} />
         <button>
-          <Phone className="w-5 h-5 fill-foreground" />
+          <Phone className="w-5 h-5 text-gray-400 hover:text-foreground" />
         </button>
       </header>
       

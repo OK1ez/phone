@@ -155,8 +155,8 @@ export function RecentConversations() {
                 className="font-normal bg-transparent min-w-14 focus:outline-none" 
               />
             </div>
-            <button>
-              <PlusCircle />
+            <button className="flex items-center justify-center h-12 rounded-full min-w-12 bg-secondary dark:bg-secondary/30 group">
+              <PlusCircle className="w-5 h-5 text-gray-400 group-hover:text-foreground" />
             </button>
           </header>
           <ScrollArea className="flex flex-col w-full h-full max-h-[57rem] overflow-y-auto">
