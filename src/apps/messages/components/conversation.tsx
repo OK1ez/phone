@@ -1,4 +1,4 @@
-import { ChevronLeft, Phone } from "lucide-react";
+import { ChevronLeft, Images, Mic, Phone, ReceiptPoundSterlingIcon, Smile } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   Drawer,
@@ -8,6 +8,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface ConversationInfoProps {
   name: string;
@@ -51,7 +52,7 @@ export function ConversationView({ conversation, onBack }: ConversationViewProps
       animate={{ x: 0 }}
       exit={{ x: "100%" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="absolute z-20 w-full h-full overflow-hidden bg-background"
+      className="absolute z-20 flex flex-col w-full h-full overflow-hidden bg-background"
     >
       <header className="flex items-center justify-between w-full gap-4 px-6 pb-4 mt-16 border-b">
         <button onClick={onBack}>
@@ -62,9 +63,30 @@ export function ConversationView({ conversation, onBack }: ConversationViewProps
           <Phone className="w-5 h-5 fill-foreground" />
         </button>
       </header>
-      <div className="flex flex-col p-6 overflow-y-auto">
+      
+      <ScrollArea className="flex-grow w-full overflow-y-auto">
         <p>Messages and content go here</p>
+      </ScrollArea>
+
+      <div className="flex w-full gap-4 px-6 pt-4 border-t pb-14 min-h-24 bg-backgroun">
+        <button className="flex items-center justify-center h-12 rounded-full min-w-12 bg-secondary dark:bg-secondary/30 group">
+          <Mic className="w-5 h-5 text-gray-400 group-hover:text-foreground" />
+        </button>
+        <div className="flex items-center w-full h-12 gap-4 px-4 text-lg font-medium transition-all rounded-full bg-secondary dark:bg-secondary/30">
+          <input 
+            type="text" 
+            placeholder="Type here..." 
+            className="flex-grow font-normal bg-transparent min-w-14 focus:outline-none" 
+          />
+          <button>
+            <Images className="w-5 h-5 text-gray-400 hover:text-foreground" />
+          </button>
+          <button >
+            <Smile className="w-5 h-5 text-gray-400 hover:text-foreground" />
+          </button>
+        </div>
       </div>
     </motion.div>
   );
 }
+
