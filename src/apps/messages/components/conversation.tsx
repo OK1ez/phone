@@ -1,4 +1,4 @@
-import { ChevronLeft, Images, Mic, Phone, ReceiptPoundSterlingIcon, Smile } from "lucide-react";
+import { ChevronLeft, Images, Mic, Phone, Smile } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   Drawer,
