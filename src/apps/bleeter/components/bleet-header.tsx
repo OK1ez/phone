@@ -17,9 +17,20 @@ import {
   AlertDialogTitle,
   AlertDialogOverlay
 } from "@/components/ui/alert-dialog"
-import { BleetProps } from "@/typings/bleeter";
 
-export function BleetHeader({ bleet }: BleetProps) {
+interface Bleet {
+  handle: string;
+  name: string;
+  verified?: boolean;
+  time: string;
+  ad?: boolean;
+}
+
+interface BleetHeaderProps {
+  bleet: Bleet;
+}
+
+export function BleetHeader({ bleet }: BleetHeaderProps) {
   const [alertDialogOpen, setAlertDialogOpen] = useState(false);
 
   return (

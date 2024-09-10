@@ -1,7 +1,16 @@
-import { BleetProps } from "@/typings/bleeter";
 import { Heart, MessageSquare, Repeat2 } from "lucide-react";
 
-export function BleetActions({ bleet }: BleetProps) {
+interface Bleet {
+  comments: number;
+  retweets: number;
+  likes: number;
+}
+
+interface BleetActionsProps {
+  bleet: Bleet;
+}
+
+export function BleetActions({ bleet }: BleetActionsProps) {
   return (
     <div className="flex gap-8 mt-4">
       <button className="flex items-center w-16 text-gray-400 hover:text-blue-400">
