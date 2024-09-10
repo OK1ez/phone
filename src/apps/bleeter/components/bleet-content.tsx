@@ -1,6 +1,6 @@
 interface BleetContentProps {
   content: string;
-  image?: string;
+  image?: string | null;
 }
 
 export function BleetContent({ content, image }: BleetContentProps) {

@@ -8,7 +8,7 @@ interface BleetProps {
   avatar: string;
   name: string;
   content: string;
-  image?: string;
+  image?: string | null;
   comments: number;
   retweets: number;
   likes: number;
