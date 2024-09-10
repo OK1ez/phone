@@ -1,12 +1,9 @@
 import { ChevronLeft, Images, Mic, Phone, Smile } from "lucide-react";
 import { motion } from "framer-motion";
 import {
-  Drawer,
   DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
+  Drawer,
+  DrawerTrigger
 } from "@/components/ui/drawer"
 import { ScrollArea } from "@/components/ui/scroll-area";
 
@@ -16,21 +13,11 @@ interface ConversationInfoProps {
 
 function ConversationInfo({ name }: ConversationInfoProps) {
   return (
-    <Drawer noBodyStyles={true}>
-      <DrawerTrigger asChild>
-        <button className="text-lg font-medium">
-          <p>{name}</p>
-        </button>
-      </DrawerTrigger>
-      <DrawerContent className="absolute">
-        <DrawerHeader>
-          <DrawerTitle>Conversation Info</DrawerTitle>
-          <DrawerDescription>Details about {name}</DrawerDescription>
-        </DrawerHeader>
-        <div className="p-4 overflow-y-auto">
-          <p>This is the conversation info for {name}.</p>
-          <p>You can add more details, settings, or options here.</p>
-        </div>
+    <Drawer>
+      <DrawerTrigger className="font-bold font-base">{name}</DrawerTrigger>
+      <DrawerContent className=" h-[50%]">
+        <h2 className="mb-4 text-2xl font-bold">Drawer Content</h2>
+        <p>This is the content of the drawer. You can put any components or text here.</p>
       </DrawerContent>
     </Drawer>
   );
