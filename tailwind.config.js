@@ -50,9 +50,6 @@ export default {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			},
-  			os: {
-				indicator: 'hsl(var(--os-indicator))',
-			},
   		},
 		boxShadow: {
 			'frame': '0 0 0.3rem 0.3rem #241D24, 0 0 0 0.4rem #d3cde4',
