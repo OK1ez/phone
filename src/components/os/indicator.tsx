@@ -9,7 +9,7 @@ export function Indicator({ onIndicatorClick }: IndicatorProps) {
       onClick={onIndicatorClick}
       aria-label="indicator"
     >
-      <div className="bg-os-indicator w-60 rounded-full min-h-1.5 group-hover:bg-os-indicator/70" />
+      <div className=" bg-foreground/80 w-60 rounded-full min-h-1.5 group-hover:bg-foreground/60" />
     </button>
   );
 }

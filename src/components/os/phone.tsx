@@ -15,6 +15,20 @@ interface App {
   component: AppComponent;
 }
 
+interface Position {
+  x: number;
+  y: number;
+}
+
+interface AppViewProps {
+  app: AppComponent;
+  appPosition: Position;
+  isScaling: boolean;
+  isClosing: boolean;
+  appRef: React.RefObject<HTMLDivElement>;
+  onIndicatorClick?: () => void;
+}
+
 const apps: App[] = [
   {
     id: "bleeter",
@@ -28,39 +42,29 @@ const apps: App[] = [
   },
 ];
 
-interface Position {
-  x: number;
-  y: number;
-}
+const AppView: React.FC<AppViewProps> = ({ app, appPosition, isScaling, isClosing, appRef, onIndicatorClick }) => {
+  const initialScale = isScaling ? 0 : 1;
+  const initialX = isScaling ? appPosition.x - window.innerWidth / 2 : 0;
+  const initialY = isScaling ? appPosition.y - window.innerHeight / 2 : 0;
 
-const AppView: React.FC<{
-  app: AppComponent;
-  appPosition: Position;
-  isScaling: boolean;
-  isClosing: boolean;
-  appRef: React.RefObject<HTMLDivElement>;
-  onIndicatorClick?: () => void;
-  showIndicator?: boolean;
-}> = ({ app, appPosition, isScaling, isClosing, appRef, onIndicatorClick, showIndicator }) => (
-  <motion.div
-    ref={appRef}
-    initial={{
-      scale: isScaling ? 0.0 : 1,
-      x: isScaling ? appPosition.x - window.innerWidth / 2 : 0,
-      y: isScaling ? appPosition.y - window.innerHeight / 2 : 0,
-    }}
-    animate={{
-      scale: isClosing ? 0 : 1,
-      x: isClosing ? appPosition.x - window.innerWidth / 2 : 0,
-      y: isClosing ? appPosition.y - window.innerHeight / 2 : 0,
-    }}
-    transition={{ duration: 0.2, ease: "easeInOut" }}
-    className="absolute inset-0 flex items-center justify-center"
-  >
-    {app}
-    {showIndicator && <Indicator onIndicatorClick={onIndicatorClick} />}
-  </motion.div>
-);
+  const animateScale = isClosing ? 0 : 1;
+  const animateX = isClosing ? appPosition.x - window.innerWidth / 2 : 0;
+  const animateY = isClosing ? appPosition.y - window.innerHeight / 2 : 0;
+
+  return (
+    <motion.div
+      ref={appRef}
+      initial={{ scale: initialScale, x: initialX, y: initialY }}
+      animate={{ scale: animateScale, x: animateX, y: animateY }}
+      transition={{ duration: 0.2, ease: "easeInOut" }}
+      className="absolute inset-0 flex items-center justify-center"
+    >
+      {app}
+      <Indicator onIndicatorClick={onIndicatorClick} />
+    </motion.div>
+  );
+};
+
 
 export default function Phone() {
   const [isLocked, setIsLocked] = useState(true);
@@ -68,18 +72,16 @@ export default function Phone() {
   const [appPosition, setAppPosition] = useState<Position>({ x: 0, y: 0 });
   const [isScaling, setIsScaling] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [isAnimating, setIsAnimating] = useState(false);
 
-  const appRef = useRef<HTMLDivElement>(null); 
+  const appRef = useRef<HTMLDivElement>(null);
 
   const unlockPhone = () => setIsLocked(false);
   const lockPhone = () => setIsLocked(true);
 
-  const openAppById = (appId: string, event: React.MouseEvent) => {
-    const app = apps.find((app) => app.id === appId);
+  const openAppById = (appId: string, event: React.MouseEvent<HTMLButtonElement>) => {
+    const app = apps.find(app => app.id === appId);
     if (app) {
-      const { clientX, clientY } = event;
-      setAppPosition({ x: clientX, y: clientY });
+      setAppPosition({ x: event.clientX, y: event.clientY });
       setOpenApp(app.component);
       setIsScaling(true);
       setIsClosing(false);
@@ -88,42 +90,19 @@ export default function Phone() {
 
   const goToHomescreen = () => {
     setIsClosing(true);
-
     setTimeout(() => {
       setIsScaling(false);
       setOpenApp(null);
     }, 250);
   };
 
-  const handleIndicatorClick = () => {
-    if (isLocked) {
-      setIsAnimating(true);
-      setTimeout(() => {
-        setIsAnimating(false);
-        unlockPhone();
-      }, 300);      
-    } else if (openApp) {
-      goToHomescreen();
-    }
-  };
-
-  const showIndicator = isLocked || openApp !== null;
-
   return (
     <PhoneWrapper lockPhone={lockPhone}>
       {isLocked ? (
-        <Lockscreen 
-          showIndicator={showIndicator} 
-          onIndicatorClick={handleIndicatorClick} 
-          isAnimating={isAnimating} 
-        />
+        <Lockscreen onIndicatorClick={unlockPhone} />
       ) : (
-        <div className="relative z-20 w-full h-full">
-          <Homescreen
-            onAppClick={(appId: string, event: React.MouseEvent) =>
-              openAppById(appId, event)
-            }
-          />
+        <div className="relative z-10 w-full h-full">
+          <Homescreen onAppClick={openAppById} />
           {openApp && (
             <AppView
               app={openApp}
@@ -131,8 +110,7 @@ export default function Phone() {
               isScaling={isScaling}
               isClosing={isClosing}
               appRef={appRef}
-              showIndicator={showIndicator}
-              onIndicatorClick={handleIndicatorClick}
+              onIndicatorClick={goToHomescreen}
             />
           )}
         </div>
