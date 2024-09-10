@@ -58,6 +58,7 @@ const AppView: React.FC<AppViewProps> = ({ app, appPosition, isScaling, isClosin
       animate={{ scale: animateScale, x: animateX, y: animateY }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
       className="absolute inset-0 flex items-center justify-center"
+      id="portal"
     >
       {app}
       <Indicator onIndicatorClick={onIndicatorClick} />

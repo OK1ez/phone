@@ -16,7 +16,7 @@ interface ConversationInfoProps {
 
 function ConversationInfo({ name }: ConversationInfoProps) {
   return (
-    <Drawer>
+    <Drawer noBodyStyles={true}>
       <DrawerTrigger asChild>
         <button className="text-lg font-medium">
           <p>{name}</p>

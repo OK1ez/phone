@@ -79,3 +79,12 @@
     @apply bg-background text-foreground;
   }
 }
+
+[vaul-drawer][vaul-drawer-direction=bottom]::after {
+  top: 0%;
+  bottom: initial;
+  left: 0;
+  right: 0;
+  height: 0% !important;
+  background-color: blue;
+}
