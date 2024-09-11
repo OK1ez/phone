@@ -68,7 +68,7 @@ function DrawerContent({ className, children }: { className?: string, children: 
             exit={{ opacity: 0 }}
           />
           <motion.div 
-            className={cn("absolute inset-x-0 bottom-0 z-40 px-6 pb-12 flex h-auto flex-col rounded-t-lg border-t bg-background", className)}
+            className={cn("absolute inset-x-0 bottom-0 z-40 px-6 pb-12 flex h-auto flex-col rounded-t-2xl border-t bg-background", className)}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
             exit={{ y: "100%" }}

@@ -3,6 +3,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useEffect, useState } from "react";
 import { ConversationView } from "./conversation";
 import { AnimatePresence, motion } from "framer-motion";
+import {
+  DrawerContent,
+  Drawer,
+  DrawerTrigger
+} from "@/components/ui/drawer"
+import { Button } from "@/components/ui/button";
 
 const mockConversations = [
   {
@@ -78,6 +84,22 @@ const mockConversations = [
     time: "07:00"
   },
 ];
+
+function NewConversation() {
+  return (
+    <Drawer>
+      <DrawerTrigger className="flex items-center justify-center h-12 font-bold rounded-full font-base min-w-12 bg-secondary dark:bg-secondary/30 group">
+        <PlusCircle className="w-5 h-5 text-gray-400 group-hover:text-foreground" />
+      </DrawerTrigger>
+      <DrawerContent className="items-center text-center h-[94%] ">
+        <h2 className="text-2xl font-bold">Sss</h2>
+        <Button className="w-full mt-4">
+          Share posistion
+        </Button>
+      </DrawerContent>
+    </Drawer>
+  );
+}
 
 function truncateMessage(message: string, maxLength: number = 100): string {
   return message.length > maxLength ? `${message.slice(0, maxLength)}..` : message;
@@ -155,9 +177,7 @@ export function RecentConversations() {
                 className="font-normal bg-transparent min-w-14 focus:outline-none" 
               />
             </div>
-            <button className="flex items-center justify-center h-12 rounded-full min-w-12 bg-secondary dark:bg-secondary/30 group">
-              <PlusCircle className="w-5 h-5 text-gray-400 group-hover:text-foreground" />
-            </button>
+            <NewConversation />
           </header>
           <ScrollArea className="flex flex-col w-full h-full max-h-[57rem] overflow-y-auto">
             {mockConversations.map(conversation => (

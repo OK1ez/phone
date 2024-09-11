@@ -6,6 +6,7 @@ import {
   DrawerTrigger
 } from "@/components/ui/drawer"
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
 interface ConversationInfoProps {
   name: string;
@@ -15,9 +16,14 @@ function ConversationInfo({ name }: ConversationInfoProps) {
   return (
     <Drawer>
       <DrawerTrigger className="font-bold font-base">{name}</DrawerTrigger>
-      <DrawerContent className=" h-[50%]">
-        <h2 className="mb-4 text-2xl font-bold">Drawer Content</h2>
-        <p>This is the content of the drawer. You can put any components or text here.</p>
+      <DrawerContent className="items-center text-center ">
+        <h2 className="text-2xl font-bold">{name}</h2>
+        <div className="w-full h-24 mt-4 border rounded-lg">
+          what is the reson for this, i dont know
+        </div>
+        <Button className="w-full mt-4">
+          Share posistion
+        </Button>
       </DrawerContent>
     </Drawer>
   );
