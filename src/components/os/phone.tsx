@@ -6,6 +6,8 @@ import { Homescreen } from "./homescreen";
 import { Lockscreen } from "./lockscreen";
 import { motion } from "framer-motion";
 import { Indicator } from "./indicator";
+import { PhoneApp } from "@/apps/phone/phone-app";
+import { SettingsApp } from "@/apps/settings/settings-app";
 
 type AppComponent = JSX.Element;
 
@@ -31,9 +33,19 @@ interface AppViewProps {
 
 const apps: App[] = [
   {
+    id: "settings",
+    label: "Settings",
+    component: <SettingsApp />,
+  },
+  {
     id: "bleeter",
     label: "Bleeter",
     component: <BleeterApp />,
+  },
+  {
+    id: "phone",
+    label: "Phone",
+    component: <PhoneApp />,
   },
   {
     id: "messages",
