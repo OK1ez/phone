@@ -14,7 +14,7 @@ const PhoneWrapper: React.FC<PhoneWrapperProps> = ({ children, lockPhone }) => (
     <div className="absolute w-full">
       <motion.button
         onClick={lockPhone}
-        className="absolute z-50 w-1 h-32 bg-[#797683] shadow-inner rounded-full left-[30.3rem] top-44"
+        className="absolute w-1 h-32 bg-[#797683] shadow-inner rounded-full left-[30.35rem] top-44"
         aria-label="Lock phone"
         whileTap={{ x: -2 }}
       />
