@@ -20,15 +20,22 @@ export function SettingsApp() {
   }
 
   const [isAirplaneModeOn, setIsAirplaneModeOn] = useState(false);
+  const [isStreamerModeOn, setIsStreamerModeOn] = useState(false);
 
   const toggleAirplaneMode = () => {
     setIsAirplaneModeOn(prev => !prev);
   };
 
-  const [isStreamerModeOn, setIsStreamerModeOn] = useState(false);
-
   const toggleStreamerMode = () => {
     setIsStreamerModeOn(prev => !prev);
+  };
+
+  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>, mode: 'airplane' | 'streamer') => {
+    if (mode === 'airplane') {
+      setIsAirplaneModeOn(event.target.checked);
+    } else if (mode === 'streamer') {
+      setIsStreamerModeOn(event.target.checked);
+    }
   };
   
   return (
@@ -83,7 +90,10 @@ export function SettingsApp() {
                     <p className="text-sm text-gray-400">Fake a flight and dodge distractions!</p>
                   </div>
                 </div>
-                <Switch checked={isAirplaneModeOn} onCheckedChange={toggleAirplaneMode} />
+                <Switch 
+                  checked={isAirplaneModeOn} 
+                  onCheckedChange={(event) => handleSwitchChange(event, 'airplane')} 
+                />
               </button>
               <button onClick={() => toggleStreamerMode()} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
@@ -93,7 +103,10 @@ export function SettingsApp() {
                     <p className="text-sm text-gray-400">Hides sensitive information</p>
                   </div>
                 </div>
-                <Switch checked={isStreamerModeOn} onCheckedChange={toggleStreamerMode} />
+                <Switch 
+                  checked={isStreamerModeOn} 
+                  onCheckedChange={(event) => handleSwitchChange(event, 'streamer')} 
+                />
               </button>
               <button onClick={() => setSelectedConversation('notifications')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
