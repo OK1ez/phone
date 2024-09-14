@@ -3,6 +3,13 @@ import { Switch } from "@/components/ui/switch";
 import { AudioLines, BellDot, ChevronLeft, ChevronRight, Cloud, Image, PlaneTakeoff, ScanFace, Settings, Smartphone, Video } from "lucide-react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from "react";
+import SettingsCloudPage from "./pages/cloud-page";
+import SettingsNotificationsPage from "./pages/notification-page";
+import SettingsGeneralPage from "./pages/general-page";
+import SettingsSoundsPage from "./pages/sounds-page";
+import SettingsUnlockPage from "./pages/unlock-page";
+import SettingsDisplayPage from "./pages/display-page";
+import SettingsWallpapersPage from "./pages/wallpapers-page";
 
 export function SettingsApp() {
   const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
@@ -36,13 +43,35 @@ export function SettingsApp() {
     } else if (mode === 'streamer') {
       setIsStreamerModeOn(checked);
     }
-  };  
+  };
+
+  const renderSelectedPage = () => {
+    switch (selectedConversation) {
+      case 'cloud':
+        return <SettingsCloudPage />;
+      case 'general':
+        return <SettingsGeneralPage />;
+      case 'notifications':
+        return <SettingsNotificationsPage />;
+      case 'sounds':
+        return <SettingsSoundsPage />;
+      case 'unlock':
+        return <SettingsUnlockPage />;
+      case 'display':
+        return <SettingsDisplayPage />;
+      case 'wallpapers':
+        return <SettingsWallpapersPage />;
+      default:
+        return null;
+    }
+  };
   
   return (
     <div className="flex flex-col w-full h-full bg-background">
       <AnimatePresence>
         {selectedConversation ? (
           <motion.div
+            key={selectedConversation}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -55,9 +84,8 @@ export function SettingsApp() {
               </button>
               <p className="font-medium">{selectedConversation}</p>
             </header>
-            
-            <ScrollArea className="flex-grow w-full p-6 pb-0 overflow-y-auto">
-              Settings and shit here
+            <ScrollArea className="flex flex-col flex-grow w-full overflow-y-auto">
+              {renderSelectedPage()}
             </ScrollArea>
           </motion.div>
         ) : (
