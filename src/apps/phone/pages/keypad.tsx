@@ -1,9 +1,11 @@
-
-
 export function KeyPadPage() {
-  return(
-    <div>
-      keypad
-    </div>
-  )
+  return (
+    <>
+      <header className="flex flex-col w-full pb-4 border-b">
+        <div className="flex items-center justify-between w-full h-5 gap-4 px-6 mt-16">
+          <p className="font-medium">Keypad</p>
+        </div>
+      </header>
+    </>
+  );
 }
