@@ -56,15 +56,7 @@ export function SettingsApp() {
             transition={{ type: "spring", stiffness: 300, damping: 35 }}
             className="absolute z-20 flex flex-col w-full h-full overflow-hidden bg-background"
           >
-            <header className="flex items-center w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b">
-              <button onClick={onBack} className="text-gray-400 hover:text-foreground">
-              <ChevronLeft className="w-6 h-6 text-gray-400 hover:text-foreground" />
-              </button>
-              <p className="font-medium">{selectedSetting}</p>
-            </header>
-            <ScrollArea className="flex flex-col flex-grow w-full overflow-y-auto">
-              {renderSelectedPage()}
-            </ScrollArea>
+            {renderSelectedPage()}
           </motion.div>
         ) : (
           <motion.div
