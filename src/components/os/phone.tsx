@@ -70,7 +70,6 @@ const AppView: React.FC<AppViewProps> = ({ app, appPosition, isScaling, isClosin
       animate={{ scale: animateScale, x: animateX, y: animateY }}
       transition={{ duration: 0.2, ease: "easeInOut" }}
       className="absolute inset-0 flex items-center justify-center"
-      id="portal"
     >
       {app}
       <Indicator onIndicatorClick={onIndicatorClick} />
@@ -114,7 +113,7 @@ export default function Phone() {
       {isLocked ? (
         <Lockscreen onIndicatorClick={unlockPhone} />
       ) : (
-        <div className="relative z-10 w-full h-full">
+        <div className="relative z-10 w-full h-full" id="portal">
           <Homescreen onAppClick={openAppById} />
           {openApp && (
             <AppView
