@@ -10,16 +10,11 @@ export function PhoneApp() {
 
   const renderPage = () => {
     switch (activePage) {
-      case 'favorites':
-        return <FavoritesPage />;
-      case 'recentCalls':
-        return <RecentCallsPage />;
-      case 'contacts':
-        return <ContactsPage />;
-      case 'keypad':
-        return <KeyPadPage />;
-      default:
-        return <RecentCallsPage />;
+      case 'favorites': return <FavoritesPage />;
+      case 'recentCalls': return <RecentCallsPage />;
+      case 'contacts': return <ContactsPage />;
+      case 'keypad': return <KeyPadPage />;
+      default: return <RecentCallsPage />;
     }
   };
 

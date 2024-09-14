@@ -12,58 +12,44 @@ import SettingsDisplayPage from "./pages/display-page";
 import SettingsWallpapersPage from "./pages/wallpapers-page";
 
 export function SettingsApp() {
-  const [selectedConversation, setSelectedConversation] = useState<string | null>(null);
+  const [selectedSetting, setselectedSetting] = useState<string | null>(null);
   const [hasBacked, setHasBacked] = useState(false);
-
-  useEffect(() => {
-    if (selectedConversation) {
-      setHasBacked(true);
-    }
-  }, [selectedConversation]);
-
-  function onBack() {
-    setSelectedConversation(null);
-    setHasBacked(true);
-  }
-
   const [isAirplaneModeOn, setIsAirplaneModeOn] = useState(false);
   const [isStreamerModeOn, setIsStreamerModeOn] = useState(false);
 
-  const toggleAirplaneMode = () => {
-    setIsAirplaneModeOn(prev => !prev);
+  useEffect(() => {
+    if (selectedSetting) {
+      setHasBacked(true);
+    }
+  }, [selectedSetting]);
+
+  const onBack = () => {
+    setselectedSetting(null);
+    setHasBacked(true);
   };
 
-  const toggleStreamerMode = () => {
-    setIsStreamerModeOn(prev => !prev);
-  };
+  const toggleAirplaneMode = () => setIsAirplaneModeOn(prev => !prev);
+  const toggleStreamerMode = () => setIsStreamerModeOn(prev => !prev);
 
   const renderSelectedPage = () => {
-    switch (selectedConversation) {
-      case 'cloud':
-        return <SettingsCloudPage />;
-      case 'general':
-        return <SettingsGeneralPage />;
-      case 'notifications':
-        return <SettingsNotificationsPage />;
-      case 'sounds':
-        return <SettingsSoundsPage />;
-      case 'unlock':
-        return <SettingsUnlockPage />;
-      case 'display':
-        return <SettingsDisplayPage />;
-      case 'wallpapers':
-        return <SettingsWallpapersPage />;
-      default:
-        return null;
+    switch (selectedSetting) {
+      case 'cloud': return <SettingsCloudPage onBack={onBack} />;
+      case 'general': return <SettingsGeneralPage onBack={onBack} />;
+      case 'notifications': return <SettingsNotificationsPage onBack={onBack} />;
+      case 'sounds': return <SettingsSoundsPage onBack={onBack} />;
+      case 'unlock': return <SettingsUnlockPage onBack={onBack} />;
+      case 'display': return <SettingsDisplayPage onBack={onBack} />;
+      case 'wallpapers': return <SettingsWallpapersPage onBack={onBack} />;
+      default: return null;
     }
   };
-  
+
   return (
     <div className="flex flex-col w-full h-full bg-background">
       <AnimatePresence>
-        {selectedConversation ? (
+        {selectedSetting ? (
           <motion.div
-            key={selectedConversation}
+            key={selectedSetting}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -74,7 +60,7 @@ export function SettingsApp() {
               <button onClick={onBack} className="text-gray-400 hover:text-foreground">
               <ChevronLeft className="w-6 h-6 text-gray-400 hover:text-foreground" />
               </button>
-              <p className="font-medium">{selectedConversation}</p>
+              <p className="font-medium">{selectedSetting}</p>
             </header>
             <ScrollArea className="flex flex-col flex-grow w-full overflow-y-auto">
               {renderSelectedPage()}
@@ -92,7 +78,7 @@ export function SettingsApp() {
               <p className="font-medium">Settings</p>
             </header>
             <ScrollArea className="flex flex-col w-full h-full max-h-[57rem] overflow-y-auto">
-              <button onClick={() => setSelectedConversation('cloud')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+              <button onClick={() => setselectedSetting('cloud')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
                   <Cloud />
                   <div className="text-left">
@@ -130,7 +116,7 @@ export function SettingsApp() {
                   onClick={(e) => e.stopPropagation()}
                 />
               </div>
-              <button onClick={() => setSelectedConversation('general')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+              <button onClick={() => setselectedSetting('general')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
                   <Settings />
                   <div className="text-left">
@@ -140,7 +126,7 @@ export function SettingsApp() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
-              <button onClick={() => setSelectedConversation('notifications')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+              <button onClick={() => setselectedSetting('notifications')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
                   <BellDot />
                   <div className="text-left">
@@ -150,7 +136,7 @@ export function SettingsApp() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
-              <button onClick={() => setSelectedConversation('sounds')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+              <button onClick={() => setselectedSetting('sounds')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
                   <AudioLines />
                   <div className="text-left">
@@ -160,7 +146,7 @@ export function SettingsApp() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
-              <button onClick={() => setSelectedConversation('unlock')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+              <button onClick={() => setselectedSetting('unlock')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
                   <ScanFace />
                   <div className="text-left">
@@ -170,7 +156,7 @@ export function SettingsApp() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
-              <button onClick={() => setSelectedConversation('display')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+              <button onClick={() => setselectedSetting('display')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
                   <Smartphone />
                   <div className="text-left">
@@ -180,7 +166,7 @@ export function SettingsApp() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
-              <button onClick={() => setSelectedConversation('wallpapers')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+              <button onClick={() => setselectedSetting('wallpapers')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
                   <Image />
                   <div className="text-left">

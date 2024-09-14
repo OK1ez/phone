@@ -1,18 +1,31 @@
-import { ChevronRight, Settings2 } from "lucide-react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ChevronLeft, ChevronRight, Settings2 } from "lucide-react";
 
-export default function SettingsCloudPage() {
+interface SettingsCloudPageProps {
+  onBack: () => void;
+}
+
+export default function SettingsCloudPage({ onBack }: SettingsCloudPageProps) {
   return(
     <>
-      <button className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
-        <div className="flex items-center space-x-4">
-          <Settings2 />
-          <div className="text-left">
-            <p className="text-base">General</p>
-            <p className="text-sm text-gray-400">All the basic stuff that actually matters</p>
+      <header className="flex items-center w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b">
+        <button onClick={onBack} className="text-gray-400 hover:text-foreground">
+          <ChevronLeft className="w-6 h-6 text-gray-400 hover:text-foreground" />
+        </button>
+        <p className="font-medium">General</p>
+      </header>
+      <ScrollArea className="flex flex-col flex-grow w-full overflow-y-auto">
+        <button className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+          <div className="flex items-center space-x-4">
+            <Settings2 />
+            <div className="text-left">
+              <p className="text-base">General</p>
+              <p className="text-sm text-gray-400">All the basic stuff that actually matters</p>
+            </div>
           </div>
-        </div>
-        <ChevronRight className="w-4 h-4 text-gray-400" />
-      </button>
+          <ChevronRight className="w-4 h-4 text-gray-400" />
+        </button>
+      </ScrollArea>
     </>
   )
 }
