@@ -37,14 +37,6 @@ export function SettingsApp() {
     setIsStreamerModeOn(prev => !prev);
   };
 
-  const handleSwitchChange = (checked: boolean, mode: 'airplane' | 'streamer') => {
-    if (mode === 'airplane') {
-      setIsAirplaneModeOn(checked);
-    } else if (mode === 'streamer') {
-      setIsStreamerModeOn(checked);
-    }
-  };
-
   const renderSelectedPage = () => {
     switch (selectedConversation) {
       case 'cloud':
@@ -110,7 +102,7 @@ export function SettingsApp() {
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
-              <button onClick={() => toggleAirplaneMode()} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+              <div onClick={toggleAirplaneMode} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">
                 <div className="flex items-center space-x-4">
                   <PlaneTakeoff />
                   <div className="text-left">
@@ -120,10 +112,11 @@ export function SettingsApp() {
                 </div>
                 <Switch 
                   checked={isAirplaneModeOn} 
-                  onCheckedChange={(checked) => handleSwitchChange(checked, 'airplane')} 
+                  onCheckedChange={(checked) => setIsAirplaneModeOn(checked)} 
+                  onClick={(e) => e.stopPropagation()}
                 />
-              </button>
-              <button onClick={() => toggleStreamerMode()} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+              </div>
+              <div onClick={toggleStreamerMode} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">
                 <div className="flex items-center space-x-4">
                   <Video />
                   <div className="text-left">
@@ -131,11 +124,12 @@ export function SettingsApp() {
                     <p className="text-sm text-gray-400">Hides sensitive information</p>
                   </div>
                 </div>
-                <Switch 
-                  checked={isStreamerModeOn} 
-                  onCheckedChange={(checked) => handleSwitchChange(checked, 'streamer')} 
+                <Switch
+                  checked={isStreamerModeOn}
+                  onCheckedChange={(checked) => setIsStreamerModeOn(checked)}
+                  onClick={(e) => e.stopPropagation()}
                 />
-              </button>
+              </div>
               <button onClick={() => setSelectedConversation('general')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
                   <Settings />
