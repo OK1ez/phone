@@ -30,13 +30,13 @@ export function SettingsApp() {
     setIsStreamerModeOn(prev => !prev);
   };
 
-  const handleSwitchChange = (event: React.ChangeEvent<HTMLInputElement>, mode: 'airplane' | 'streamer') => {
+  const handleSwitchChange = (checked: boolean, mode: 'airplane' | 'streamer') => {
     if (mode === 'airplane') {
-      setIsAirplaneModeOn(event.target.checked);
+      setIsAirplaneModeOn(checked);
     } else if (mode === 'streamer') {
-      setIsStreamerModeOn(event.target.checked);
+      setIsStreamerModeOn(checked);
     }
-  };
+  };  
   
   return (
     <div className="flex flex-col w-full h-full bg-background">
@@ -46,7 +46,7 @@ export function SettingsApp() {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={{ type: "spring", stiffness: 300, damping: 35 }}
             className="absolute z-20 flex flex-col w-full h-full overflow-hidden bg-background"
           >
             <header className="flex items-center w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b">
@@ -66,7 +66,7 @@ export function SettingsApp() {
             initial={hasBacked ? { x: "-100%" } : {}}
             animate={{ x: 0 }}
             exit={hasBacked ? { x: "-100%" } : {}}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={{ type: "spring", stiffness: 300, damping: 35 }}
           >
             <header className="flex items-center justify-between w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b">
               <p className="font-medium">Settings</p>
@@ -92,7 +92,7 @@ export function SettingsApp() {
                 </div>
                 <Switch 
                   checked={isAirplaneModeOn} 
-                  onCheckedChange={(event) => handleSwitchChange(event, 'airplane')} 
+                  onCheckedChange={(checked) => handleSwitchChange(checked, 'airplane')} 
                 />
               </button>
               <button onClick={() => toggleStreamerMode()} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
@@ -105,8 +105,18 @@ export function SettingsApp() {
                 </div>
                 <Switch 
                   checked={isStreamerModeOn} 
-                  onCheckedChange={(event) => handleSwitchChange(event, 'streamer')} 
+                  onCheckedChange={(checked) => handleSwitchChange(checked, 'streamer')} 
                 />
+              </button>
+              <button onClick={() => setSelectedConversation('general')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+                <div className="flex items-center space-x-4">
+                  <Settings />
+                  <div className="text-left">
+                    <p className="text-base">General</p>
+                    <p className="text-sm text-gray-400">All the basic stuff that actually matters</p>
+                  </div>
+                </div>
+                <ChevronRight className="w-4 h-4 text-gray-400" />
               </button>
               <button onClick={() => setSelectedConversation('notifications')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
                 <div className="flex items-center space-x-4">
@@ -124,16 +134,6 @@ export function SettingsApp() {
                   <div className="text-left">
                     <p className="text-base">Sounds</p>
                     <p className="text-sm text-gray-400">Change ringtone and alerts</p>
-                  </div>
-                </div>
-                <ChevronRight className="w-4 h-4 text-gray-400" />
-              </button>
-              <button onClick={() => setSelectedConversation('general')} className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
-                <div className="flex items-center space-x-4">
-                  <Settings />
-                  <div className="text-left">
-                    <p className="text-base">General</p>
-                    <p className="text-sm text-gray-400">All the basic stuff that actually matters</p>
                   </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-400" />

@@ -166,7 +166,7 @@ export function RecentConversations() {
           initial={hasBacked ? { x: "-100%" } : {}}
           animate={{ x: 0 }}
           exit={hasBacked ? { x: "-100%" } : {}}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          transition={{ type: "spring", stiffness: 300, damping: 35 }}
         >
           <header className="flex items-center justify-between w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b">
             <div className="flex items-center w-full h-12 gap-2 px-4 text-lg font-medium transition-all rounded-full bg-secondary dark:bg-secondary/30">
