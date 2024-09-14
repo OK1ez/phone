@@ -5,7 +5,7 @@ import { InfoIcon } from "lucide-react";
 
 function CallButton({ name, date, missed }: { name: string; date: string; missed: boolean }) {
   return (
-    <div className="flex items-center justify-between w-full px-6 border-b h-14 hover:bg-secondary/70 dark:hover:bg-secondary/20">
+    <div className="flex items-center justify-between w-full px-6 border-b h-14 hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">
       <p className={cn("text-base", missed ? "text-red-500" : "")}>{name}</p>
       <div className="flex items-center space-x-4">
         <p className="text-sm text-gray-400">{date}</p>

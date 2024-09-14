@@ -1,14 +1,11 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { InfoIcon, PlusCircle, Search } from "lucide-react";
+import { PlusCircle, Search } from "lucide-react";
 import { useState } from "react";
 
 function ContactButton({ name }: { name: string }) {
   return (
-    <div className="flex items-center justify-between w-full h-12 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">
+    <div className="flex items-center justify-between w-full px-6 border-b h-14 hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">
       <p className="text-base">{name}</p>
-      <button>
-        <InfoIcon className="w-4 h-4 text-gray-400 hover:text-foreground" />
-      </button>
     </div>
   );
 }
