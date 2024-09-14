@@ -29,4 +29,4 @@ export function PhoneApp() {
       <PhoneNav activePage={activePage} setActivePage={setActivePage} />
     </div>
   );
-  }
+}
