@@ -5,7 +5,7 @@ import { InfoIcon } from "lucide-react";
 
 function FavoriteButton({ name, image }: { name: string, image: string }) {
   return (
-    <button className="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+    <div className="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">
       <div className="flex items-center space-x-4">
         <Avatar>
           <AvatarFallback>{name[0]}</AvatarFallback>
@@ -16,7 +16,7 @@ function FavoriteButton({ name, image }: { name: string, image: string }) {
       <button>
         <InfoIcon className="w-4 h-4 text-gray-400 hover:text-foreground" />
       </button>
-    </button>
+    </div>
   );
 }
 
