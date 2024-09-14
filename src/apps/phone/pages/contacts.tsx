@@ -4,12 +4,12 @@ import { useState } from "react";
 
 function ContactButton({ name }: { name: string }) {
   return (
-    <button className="flex items-center justify-between w-full h-12 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+    <div className="flex items-center justify-between w-full h-12 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">
       <p className="text-base">{name}</p>
       <button>
         <InfoIcon className="w-4 h-4 text-gray-400 hover:text-foreground" />
       </button>
-    </button>
+    </div>
   );
 }
 
