@@ -34,9 +34,9 @@ export default function SettingsNotificationsPage({ onBack }: SettingsNotificati
       {!selectedSetting ? (
         <motion.div
           key="notifications"
-          initial={{ x: isFirstLoad ? "100%" : "-100%" }}
+          initial={{ x: isFirstLoad ? "0%" : "-100%" }}
           animate={{ x: 0 }}
-          exit={{ x: isFirstLoad ? "100%" : "-100%" }}
+          exit={{ x: isFirstLoad ? "0%" : "-100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 35 }}
           className="absolute top-0 left-0 w-full h-full overflow-hidden"
         >
