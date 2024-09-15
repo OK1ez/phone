@@ -34,7 +34,7 @@ export function BleeterProfilePage({ isOwnProfile, hasBackButton = false, onBack
   return (
     <>
       <header className="flex flex-col w-full pb-4 border-b">
-        <div className="flex items-center w-full h-5 gap-4 px-6 mt-16">
+        <div className="flex items-center w-full h-5 gap-4 px-4 mt-16">
           {hasBackButton && (
             <button onClick={onBack}>
               <ChevronLeft className="w-6 h-6 text-gray-400 hover:text-foreground" />
@@ -51,7 +51,7 @@ export function BleeterProfilePage({ isOwnProfile, hasBackButton = false, onBack
             alt="Profile banner"
             className="object-cover w-full h-32"
           />
-          <div className="absolute flex items-end justify-between w-full px-6 -mt-6">
+          <div className="absolute flex items-end justify-between w-full px-4 -mt-6">
             <Avatar className="w-20 h-20 border-4 border-background">
               <AvatarImage src="https://github.com/ok1ez.png" alt="@okiez" />
               <AvatarFallback>O</AvatarFallback>
@@ -62,7 +62,7 @@ export function BleeterProfilePage({ isOwnProfile, hasBackButton = false, onBack
                 Edit profile
               </Button>
             ) : (
-              <Button className="px-6 rounded-full">Follow</Button>
+              <Button className="px-4 rounded-full">Follow</Button>
             )}
           </div>
         </div>
