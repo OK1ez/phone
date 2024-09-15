@@ -10,17 +10,19 @@ interface SettingsNotificationsPageProps {
 
 interface NotificationSetting {
   name: string;
-  status: string;
+  notificationsEnabled: boolean;
+  soundsEnabled: boolean;
 }
 
 const mockData: NotificationSetting[] = [
-  { name: "Bleeter", status: "Off" },
-  { name: "Messages", status: "Off" },
-  { name: "Phone", status: "Off" },
+  { name: "Bleeter", notificationsEnabled: false, soundsEnabled: false },
+  { name: "Messages", notificationsEnabled: false, soundsEnabled: false },
+  { name: "Phone", notificationsEnabled: false, soundsEnabled: false },
 ];
 
 export default function SettingsNotificationsPage({ onBack }: SettingsNotificationsPageProps) {
   const [selectedSetting, setSelectedSetting] = useState<NotificationSetting | null>(null);
+  const [notifications, setNotifications] = useState<NotificationSetting[]>(mockData);
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
@@ -29,7 +31,19 @@ export default function SettingsNotificationsPage({ onBack }: SettingsNotificati
     }
   }, [isFirstLoad]);
 
-  return(
+  const toggleNotificationSetting = (settingName: string, field: 'notificationsEnabled' | 'soundsEnabled', value: boolean) => {
+    const updatedNotifications = notifications.map(setting =>
+      setting.name === settingName
+        ? { ...setting, [field]: value }
+        : setting
+    );
+    setNotifications(updatedNotifications);
+
+    const updatedSelectedSetting = updatedNotifications.find(setting => setting.name === settingName);
+    setSelectedSetting(updatedSelectedSetting || null);
+  };
+  
+  return (
     <AnimatePresence>
       {!selectedSetting ? (
         <motion.div
@@ -47,7 +61,7 @@ export default function SettingsNotificationsPage({ onBack }: SettingsNotificati
             <p className="font-medium">Notifications</p>
           </header>
           <ScrollArea className="flex flex-col flex-grow w-full overflow-y-auto">
-            {mockData.map((setting, index) => (
+            {notifications.map((setting, index) => (
               <button
                 key={index}
                 className="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
@@ -56,7 +70,7 @@ export default function SettingsNotificationsPage({ onBack }: SettingsNotificati
                 <div className="flex items-center space-x-4">
                   <div className="text-left">
                     <p className="text-base">{setting.name}</p>
-                    <p className="text-sm text-gray-400">{setting.status}</p>
+                    <p className="text-sm text-gray-400">{setting.notificationsEnabled ? 'Notifications on' : 'Notifications off'}, {setting.soundsEnabled ? 'Sounds on' : 'Sounds off'}</p>
                   </div>
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
@@ -80,13 +94,25 @@ export default function SettingsNotificationsPage({ onBack }: SettingsNotificati
             <p className="font-medium">{selectedSetting.name}</p>
           </header>
           <div className="flex flex-col">
-            <div className="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">
+            <div
+              onClick={() => {toggleNotificationSetting(selectedSetting.name, 'notificationsEnabled', !selectedSetting.notificationsEnabled)}}
+              className="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer"
+            >
               <p className="text-base">Allow notifications</p>
-              <Switch />
+              <Switch
+                checked={selectedSetting.notificationsEnabled}
+                onCheckedChange={(value) => {toggleNotificationSetting(selectedSetting.name, 'notificationsEnabled', value)}}
+              />
             </div>
-            <div className="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">
+            <div
+              onClick={() => {toggleNotificationSetting(selectedSetting.name, 'soundsEnabled', !selectedSetting.soundsEnabled)}}
+              className="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer"
+            >
               <p className="text-base">Sounds</p>
-              <Switch />
+              <Switch
+                checked={selectedSetting.soundsEnabled}
+                onCheckedChange={(value) => {toggleNotificationSetting(selectedSetting.name, 'soundsEnabled', value)}}
+              />
             </div>
           </div>
         </motion.div>

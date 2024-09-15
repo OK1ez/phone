@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from "react";
 import SettingsCloudPage from "./pages/cloud-page";
 import SettingsNotificationsPage from "./pages/notification-page";
-import SettingsGeneralPage from "./pages/general-page";
+import SettingsGeneralPage from "./pages/general/general-page";
 import SettingsSoundsPage from "./pages/sounds-page";
 import SettingsUnlockPage from "./pages/unlock-page";
 import SettingsDisplayPage from "./pages/display-page";
@@ -60,11 +60,12 @@ export function SettingsApp() {
           </motion.div>
         ) : (
           <motion.div
-            key="recentConversations"
-            initial={hasBacked ? { x: "-100%" } : {}}
+            key={selectedSetting ? selectedSetting : "settings"}
+            initial={{ x: selectedSetting ? "-100%" : (hasBacked ? "-100%" : "0%") }}
             animate={{ x: 0 }}
-            exit={hasBacked ? { x: "-100%" } : {}}
+            exit={{ x: selectedSetting ? "-100%" : (hasBacked ? "-100%" : "0%") }}
             transition={{ type: "spring", stiffness: 300, damping: 35 }}
+            className="absolute z-20 flex flex-col w-full h-full overflow-hidden bg-background"
           >
             <header className="flex items-center justify-between w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b">
               <p className="font-medium">Settings</p>
