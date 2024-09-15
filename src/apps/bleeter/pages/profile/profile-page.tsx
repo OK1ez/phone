@@ -82,7 +82,7 @@ export function BleeterProfilePage({ isOwnProfile, hasBackButton = false, onBack
           </div>
         </div>
         {bleets.map((bleet) => (
-          <Bleet key={bleet.id} bleet={bleet} />
+          <Bleet key={bleet.id} bleet={bleet} onOpenProfile={() => {}} />
         ))}
       </ScrollArea>
     </>
