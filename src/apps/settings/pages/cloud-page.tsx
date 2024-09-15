@@ -1,5 +1,5 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ChevronLeft, ChevronRight, Settings2 } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 interface SettingsCloudPageProps {
   onBack: () => void;
