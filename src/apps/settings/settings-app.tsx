@@ -1,6 +1,6 @@
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Switch } from "@/components/ui/switch";
-import { AudioLines, BellDot, ChevronLeft, ChevronRight, Cloud, Image, PlaneTakeoff, ScanFace, Settings, Smartphone, Video } from "lucide-react";
+import { AudioLines, BellDot, ChevronRight, Cloud, Image, PlaneTakeoff, ScanFace, Settings, Smartphone, Video } from "lucide-react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from "react";
 import SettingsCloudPage from "./pages/cloud-page";
