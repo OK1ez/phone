@@ -18,7 +18,7 @@ export function BleeterApp() {
       case 'notifications':
         return <BleeterNotificationsPage />;
       case 'profile':
-        return <BleeterProfilePage />;
+        return <BleeterProfilePage isOwnProfile={true} hasBackButton={false} />;
       default:
         return <BleeterHomePage />;
     }

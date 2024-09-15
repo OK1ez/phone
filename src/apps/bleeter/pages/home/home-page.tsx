@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
-// import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Bleet } from "../../components/bleet";
+import { BleeterProfilePage } from "../profile/profile-page";
 
 const mockBleets = [
   {
@@ -81,10 +82,40 @@ const mockBleets = [
   },
 ];
 
-export function BleeterHomePage() {
-  const bleets = mockBleets;
+interface BleetProps {
+  handle: string;
+  avatar: string;
+  name: string;
+  content: string;
+  image?: string | null;
+  comments: number;
+  retweets: number;
+  likes: number;
+  time: string;
+}
 
-  return(
+export function BleeterHomePage() {
+  const [currentProfile, setCurrentProfile] = useState<BleetProps | null>(null);
+
+  const openProfile = (bleet: BleetProps) => {
+    setCurrentProfile(bleet);
+  };
+
+  const goBackToBleets = () => {
+    setCurrentProfile(null);
+  };
+
+  if (currentProfile) {
+    return (
+      <BleeterProfilePage
+        isOwnProfile={false}
+        hasBackButton={true}
+        onBack={goBackToBleets}
+      />
+    );
+  }
+
+  return (
     <Tabs defaultValue="for-you">
       <TabsList className="w-full mt-16 bg-transparent border-b rounded-none space-x-36">
         <TabsTrigger value="for-you" className="border-b-2 border-transparent rounded-none data-[state=active]:border-foreground py-2 text-base mb-1">
@@ -94,16 +125,16 @@ export function BleeterHomePage() {
           Following
         </TabsTrigger>
       </TabsList>
-      <TabsContent value="for-you" className="py-0 my-0 ">
+      <TabsContent value="for-you" className="py-0 my-0">
         <ScrollArea className="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto">
-          {bleets.map((bleet) => (
-            <Bleet key={bleet.id} bleet={bleet} />
+          {mockBleets.map((bleet) => (
+            <Bleet key={bleet.id} bleet={bleet} onOpenProfile={openProfile} />
           ))}
         </ScrollArea>
       </TabsContent>
       <TabsContent value="following" className="p-6">
-        this dont work
+        {/* Content for "following" tab */}
       </TabsContent>
     </Tabs>
-  )
+  );
 }

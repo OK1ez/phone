@@ -17,9 +17,10 @@ interface BleetProps {
 
 interface BleetComponentProps {
   bleet: BleetProps;
+  onOpenProfile: (bleet: BleetProps) => void; // Callback to handle profile opening
 }
 
-export function Bleet({ bleet }: BleetComponentProps) {
+export function Bleet({ bleet, onOpenProfile }: BleetComponentProps) {
   return (
     <div className="flex w-full gap-4 p-4 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
       <Avatar>
@@ -27,7 +28,7 @@ export function Bleet({ bleet }: BleetComponentProps) {
         <AvatarFallback>{bleet.name[0]}</AvatarFallback>
       </Avatar>
       <div className="flex flex-col w-full">
-        <BleetHeader bleet={bleet} />
+        <BleetHeader bleet={bleet} onOpenProfile={onOpenProfile} />
         <BleetContent content={bleet.content} image={bleet.image} />
         <BleetActions bleet={bleet} />
       </div>
