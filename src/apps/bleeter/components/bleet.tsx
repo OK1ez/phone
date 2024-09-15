@@ -13,11 +13,13 @@ interface BleetProps {
   retweets: number;
   likes: number;
   time: string;
+  verified?: boolean;
+  ad?: boolean;
 }
 
 interface BleetComponentProps {
   bleet: BleetProps;
-  onOpenProfile: (bleet: BleetProps) => void; // Callback to handle profile opening
+  onOpenProfile: (bleet: BleetProps) => void;
 }
 
 export function Bleet({ bleet, onOpenProfile }: BleetComponentProps) {

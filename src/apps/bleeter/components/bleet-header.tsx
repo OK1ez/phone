@@ -18,17 +18,22 @@ import {
   AlertDialogOverlay
 } from "@/components/ui/alert-dialog";
 
-interface Bleet {
+interface BleetProps {
   handle: string;
+  avatar: string;
   name: string;
-  verified?: boolean;
+  content: string;
+  image?: string | null;
+  comments: number;
+  retweets: number;
+  likes: number;
   time: string;
+  verified?: boolean;
   ad?: boolean;
 }
-
 interface BleetHeaderProps {
-  bleet: Bleet;
-  onOpenProfile: (bleet: Bleet) => void; // Callback to open profile
+  bleet: BleetProps;
+  onOpenProfile: (bleet: BleetProps) => void;
 }
 
 export function BleetHeader({ bleet, onOpenProfile }: BleetHeaderProps) {
@@ -39,7 +44,7 @@ export function BleetHeader({ bleet, onOpenProfile }: BleetHeaderProps) {
       <div className="flex items-center">
         <a
           className="text-base font-medium cursor-pointer hover:underline"
-          onClick={() => onOpenProfile(bleet)} // Handle profile click
+          onClick={() => onOpenProfile(bleet)}
         >
           {bleet.name}
         </a>
