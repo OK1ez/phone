@@ -2,6 +2,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 // import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Bleet } from "../../components/bleet";
+import { Plus } from "lucide-react";
 
 
 const mockBleets = [
@@ -101,6 +102,9 @@ export function BleeterHomePage() {
             <Bleet key={bleet.id} bleet={bleet} />
           ))}
         </ScrollArea>
+        <button className="absolute bottom-0 right-0 flex items-center justify-center m-4 rounded-full shadow-md w-14 h-14 mb-28 bg-secondary hover:bg-accent group">
+          <Plus className="text-gray-400 group-hover:text-foreground" />
+        </button>
       </TabsContent>
       <TabsContent value="following" className="p-6">
         this dont work
