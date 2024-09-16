@@ -1,8 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bleet } from "../../components/bleet";
+import { useState } from "react";
 
-const mockBleets = [
+const initialBleets = [
   {
     id: 1,
     name: "OK1ez",
@@ -97,6 +98,18 @@ interface BleeterHomePageProps {
 }
 
 export function BleeterHomePage({ onOpenProfile }: BleeterHomePageProps) {
+  const [bleets, setBleets] = useState(initialBleets);
+
+  const handleLike = (id: number, liked: boolean) => {
+    setBleets((prevBleets) =>
+      prevBleets.map((bleet) =>
+        bleet.id === id
+          ? { ...bleet, likes: liked ? bleet.likes + 1 : bleet.likes - 1 }
+          : bleet
+      )
+    );
+  };
+
   return (
     <Tabs defaultValue="for-you">
       <TabsList className="w-full mt-16 bg-transparent border-b rounded-none space-x-36">
@@ -109,8 +122,8 @@ export function BleeterHomePage({ onOpenProfile }: BleeterHomePageProps) {
       </TabsList>
       <TabsContent value="for-you" className="py-0 my-0">
         <ScrollArea className="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto">
-          {mockBleets.map((bleet) => (
-            <Bleet key={bleet.id} bleet={bleet} onOpenProfile={onOpenProfile} />
+          {bleets.map((bleet) => (
+            <Bleet key={bleet.id} bleet={bleet} onOpenProfile={onOpenProfile} onLike={handleLike} />
           ))}
         </ScrollArea>
       </TabsContent>
