@@ -6,6 +6,7 @@ import { BleeterNotificationsPage } from './pages/notifications/notifications-pa
 import { BleeterProfilePage } from './pages/profile/profile-page';
 import { Plus } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
+import { useBleeterUser } from '@/states/bleeter/user';
 
 interface BleetProps {
   handle: string;
@@ -22,6 +23,7 @@ interface BleetProps {
 export function BleeterApp() {
   const [activePage, setActivePage] = useState('home');
   const [currentProfile, setCurrentProfile] = useState<BleetProps | null>(null);
+  const user = useBleeterUser();
 
   const openProfile = (bleet: BleetProps) => {
     setCurrentProfile(bleet);
@@ -68,7 +70,7 @@ export function BleeterApp() {
       case 'notifications':
         return <BleeterNotificationsPage />;
       case 'profile':
-        return <BleeterProfilePage isOwnProfile={true} hasBackButton={false} />;
+        return <BleeterProfilePage isOwnProfile={true} hasBackButton={false} user={user} />;
       default:
         return <BleeterHomePage onOpenProfile={openProfile} />;
     }

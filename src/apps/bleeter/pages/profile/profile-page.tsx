@@ -22,15 +22,25 @@ const mockBleets = [
   },
 ];
 
+interface UserProfile {
+  handle: string;
+  name: string;
+  avatar: string;
+  banner: string;
+  description: string;
+  verified: boolean;
+  followers: number;
+  following: number;
+}
+
 interface BleeterProfilePageProps {
+  user: UserProfile;
   isOwnProfile: boolean;
   hasBackButton?: boolean;
   onBack?: () => void;
 }
 
-export function BleeterProfilePage({ isOwnProfile, hasBackButton = false, onBack }: BleeterProfilePageProps) {
-  const bleets = mockBleets;
-
+export const BleeterProfilePage: React.FC<BleeterProfilePageProps> = ({ user, isOwnProfile, hasBackButton = false, onBack }) => {
   return (
     <>
       <header className="flex flex-col w-full pb-4 border-b">
@@ -46,15 +56,11 @@ export function BleeterProfilePage({ isOwnProfile, hasBackButton = false, onBack
 
       <ScrollArea className="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto">
         <div className="relative">
-          <img
-            src="https://sumeetdas.me/Bleeter/img/banners/bleeter_banner.jpg"
-            alt="Profile banner"
-            className="object-cover w-full h-32"
-          />
+          <img src={user.banner} alt="Profile banner" className="object-cover w-full h-32" />
           <div className="absolute flex items-end justify-between w-full px-4 -mt-6">
             <Avatar className="w-20 h-20 border-4 border-background">
-              <AvatarImage src="https://github.com/ok1ez.png" alt="@okiez" />
-              <AvatarFallback>O</AvatarFallback>
+              <AvatarImage src={user.avatar} alt={`@${user.handle}`} />
+              <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
             </Avatar>
             {isOwnProfile ? (
               <Button variant="outline" className="rounded-full">
@@ -67,24 +73,23 @@ export function BleeterProfilePage({ isOwnProfile, hasBackButton = false, onBack
           </div>
         </div>
         <div className="p-6 pt-0 mt-16 border-b">
-          <h1 className="text-xl font-bold">OKiez</h1>
-          <p className="text-gray-400">@okiez</p>
-          <p className="mt-2">Test bio</p>
+          <h1 className="text-xl font-bold">{user.name}</h1>
+          <p className="text-gray-400">{user.handle}</p>
+          <p className="mt-2">{user.description}</p>
           <div className="flex gap-4 mt-2">
             <button>
-              <span className="font-bold">1,234</span>{" "}
-              <span className="text-gray-400 ">Following</span>
+              <span className="font-bold">{user.following}</span> <span className="text-gray-400">Following</span>
             </button>
             <button>
-              <span className="font-bold">5,678</span>{" "}
-              <span className="text-gray-400">Followers</span>
+              <span className="font-bold">{user.followers}</span> <span className="text-gray-400">Followers</span>
             </button>
           </div>
         </div>
-        {bleets.map((bleet) => (
-          <Bleet key={bleet.id} bleet={bleet} onOpenProfile={() => {}} />
+        {/* Mock bleets from this user */}
+        {mockBleets.map((bleet) => (
+          <Bleet key={bleet.id} bleet={bleet} onOpenProfile={() => {}} onLike={() => {}} />
         ))}
       </ScrollArea>
     </>
   );
-}
+};
