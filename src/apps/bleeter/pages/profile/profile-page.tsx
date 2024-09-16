@@ -8,7 +8,7 @@ const mockBleets = [
   {
     id: 1,
     name: "OK1ez",
-    handle: "@okiez",
+    handle: "okiez",
     avatar: "https://github.com/ok1ez.png",
     verified: false,
     time: "15h",
@@ -74,7 +74,7 @@ export const BleeterProfilePage: React.FC<BleeterProfilePageProps> = ({ user, is
         </div>
         <div className="p-6 pt-0 mt-16 border-b">
           <h1 className="text-xl font-bold">{user.name}</h1>
-          <p className="text-gray-400">{user.handle}</p>
+          <p className="text-gray-400">@{user.handle}</p>
           <p className="mt-2">{user.description}</p>
           <div className="flex gap-4 mt-2">
             <button>

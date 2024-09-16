@@ -31,6 +31,7 @@ interface BleetProps {
   verified?: boolean;
   ad?: boolean;
 }
+
 interface BleetHeaderProps {
   bleet: BleetProps;
   onOpenProfile: (bleet: BleetProps) => void;
@@ -52,11 +53,11 @@ export function BleetHeader({ bleet, onOpenProfile }: BleetHeaderProps) {
           <BadgeCheck fill="#60a5fa" className="w-5 h-5 ml-1 text-background" strokeWidth={2} />
         )}
         <p className="ml-1 text-sm text-gray-400">
-          {bleet.handle} · {bleet.time}
+          @{bleet.handle} · {bleet.time}
         </p>
       </div>
       {bleet.ad && <p className="text-sm text-gray-400">Ad</p>}
-      
+
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="text-gray-400">
