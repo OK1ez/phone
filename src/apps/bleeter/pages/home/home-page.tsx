@@ -1,8 +1,6 @@
-import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Bleet } from "../../components/bleet";
-import { BleeterProfilePage } from "../profile/profile-page";
 
 const mockBleets = [
   {
@@ -94,27 +92,11 @@ interface BleetProps {
   time: string;
 }
 
-export function BleeterHomePage() {
-  const [currentProfile, setCurrentProfile] = useState<BleetProps | null>(null);
+interface BleeterHomePageProps {
+  onOpenProfile: (bleet: BleetProps) => void;
+}
 
-  const openProfile = (bleet: BleetProps) => {
-    setCurrentProfile(bleet);
-  };
-
-  const goBackToBleets = () => {
-    setCurrentProfile(null);
-  };
-
-  if (currentProfile) {
-    return (
-      <BleeterProfilePage
-        isOwnProfile={false}
-        hasBackButton={true}
-        onBack={goBackToBleets}
-      />
-    );
-  }
-
+export function BleeterHomePage({ onOpenProfile }: BleeterHomePageProps) {
   return (
     <Tabs defaultValue="for-you">
       <TabsList className="w-full mt-16 bg-transparent border-b rounded-none space-x-36">
@@ -128,7 +110,7 @@ export function BleeterHomePage() {
       <TabsContent value="for-you" className="py-0 my-0">
         <ScrollArea className="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto">
           {mockBleets.map((bleet) => (
-            <Bleet key={bleet.id} bleet={bleet} onOpenProfile={openProfile} />
+            <Bleet key={bleet.id} bleet={bleet} onOpenProfile={onOpenProfile} />
           ))}
         </ScrollArea>
       </TabsContent>

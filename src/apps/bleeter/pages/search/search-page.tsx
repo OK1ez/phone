@@ -14,7 +14,7 @@ export function BleeterSearchPage() {
             <input 
               type="text" 
               placeholder="Search"
-              value={"okiez"}
+              // value={"okiez"}
               className="font-normal bg-transparent min-w-14 focus:outline-none" 
             />
           </div>
