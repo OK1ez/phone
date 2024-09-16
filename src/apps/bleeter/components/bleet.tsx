@@ -4,6 +4,7 @@ import { BleetContent } from "./bleet-content";
 import { BleetActions } from "./bleet-actions";
 
 interface BleetProps {
+  id: number;
   handle: string;
   avatar: string;
   name: string;
@@ -24,7 +25,7 @@ interface BleetComponentProps {
 }
 
 export function Bleet({ bleet, onOpenProfile, onLike }: BleetComponentProps) {
-  const handleLike = (liked: boolean) => onLike(bleet.id, liked);
+  const handleLike = (liked: boolean) => { onLike(bleet.id, liked)};
 
   return (
     <div className="flex w-full gap-4 p-4 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer">

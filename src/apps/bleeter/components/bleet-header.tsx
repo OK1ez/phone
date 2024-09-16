@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 interface BleetProps {
+  id: number;
   handle: string;
   avatar: string;
   name: string;
