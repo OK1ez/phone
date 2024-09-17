@@ -55,7 +55,7 @@ export default function SettingsNotificationsPage({ onBack }: SettingsNotificati
           className="absolute top-0 left-0 w-full h-full overflow-hidden"
         >
           <header className="flex items-center w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b">
-            <button onClick={onBack} className="text-gray-400 hover:text-foreground">
+            <button onClick={onBack} className="text-gray-400 hover:text-foreground" aria-label="Return to settings">
               <ChevronLeft className="w-6 h-6" />
             </button>
             <p className="font-medium">Notifications</p>
@@ -88,7 +88,7 @@ export default function SettingsNotificationsPage({ onBack }: SettingsNotificati
           className="absolute top-0 left-0 w-full h-full overflow-hidden"
         >
           <header className="flex items-center w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b">
-            <button onClick={() => setSelectedSetting(null)} className="text-gray-400 hover:text-foreground">
+            <button onClick={() => setSelectedSetting(null)} className="text-gray-400 hover:text-foreground" aria-label="Return to notifications">
               <ChevronLeft className="w-6 h-6" />
             </button>
             <p className="font-medium">{selectedSetting.name}</p>
