@@ -13,14 +13,10 @@
     notifications: NotificationsPage,
     profile: ProfilePage,
   };
-
-  function renderActivePage() {
-    return pageComponents[$ACTIVE_PAGE];
-  }
 </script>
 
 <div class="relative flex flex-col w-full h-full bg-background">
-  <svelte:component this={renderActivePage()} />
+  <svelte:component this={pageComponents[$ACTIVE_PAGE]} />
 
   <button class="absolute bottom-0 right-0 flex items-center justify-center m-4 rounded-full shadow-md w-14 h-14 mb-28 bg-secondary hover:opacity-80 group">
     <Plus class="text-gray-400 group-hover:text-foreground" />

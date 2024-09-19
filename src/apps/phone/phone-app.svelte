@@ -12,13 +12,9 @@
     favorites: FavoritesPage,
     keypad: KeypadPage,
   };
-
-  function renderActivePage() {
-    return pageComponents[$ACTIVE_PAGE];
-  }
 </script>
 
 <div class="relative flex flex-col w-full h-full bg-background">
-  <svelte:component this={renderActivePage()} />
+  <svelte:component this={pageComponents[$ACTIVE_PAGE]} />
   <BottomNav />
 </div>

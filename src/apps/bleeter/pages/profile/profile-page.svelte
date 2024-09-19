@@ -9,15 +9,13 @@
   let isOwnProfile = false
 </script>
 
-<header class="flex flex-col w-full pb-4 border-b">
-  <div class="flex items-center w-full h-5 gap-4 px-4 mt-16">
-    {#if hasBackButton}
-      <button>
-        <ChevronLeft class="w-6 h-6 text-gray-400 hover:text-foreground" />
-      </button>
-    {/if}
-    <p class="font-medium">Profile</p>
-  </div>
+<header class="flex items-center w-full gap-4 px-6 pb-4 mt-16 border-b">
+  {#if hasBackButton}
+    <button class="text-gray-400 hover:text-foreground">
+      <ChevronLeft className="w-6 h-6" />
+    </button>
+  {/if}
+  <p class="font-medium">Profile</p>
 </header>
 
 <ScrollArea class="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto">

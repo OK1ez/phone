@@ -2,11 +2,9 @@
   import { ScrollArea } from "@/components/ui/scroll-area";
   import * as Avatar from "@/components/ui/avatar";
 </script>
-  
-<header class="flex flex-col w-full pb-4 border-b">
-  <div class="flex items-center justify-between w-full h-5 gap-4 px-6 mt-16">
-    <p class="font-medium">Notifications</p>
-  </div>
+
+<header class="flex items-center w-full gap-4 px-6 pb-4 mt-16 border-b">
+	<p class="font-medium">Notifications</p>
 </header>
   
 <ScrollArea class="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto">

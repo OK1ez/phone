@@ -1,17 +1,16 @@
-<script>
+<script lang="ts">
 	import { ScrollArea } from "@/components/ui/scroll-area";
   import Switch from "@/components/ui/switch/switch.svelte";
   import { AudioLines, BellDot, ChevronRight, Cloud, PlaneTakeoff, ScanFace, Settings, Video, Smartphone, Image } from "lucide-svelte";
-  </script>
+  import { setActivePage } from "../../stores/settings";
+</script>
 
-<header class="flex flex-col w-full pb-4 border-b">
-	<div class="flex items-center justify-between w-full h-5 gap-4 px-6 mt-16">
-		<p class="font-medium">Favorites</p>
-	</div>
+<header class="flex items-center w-full gap-4 px-6 pb-4 mt-16 border-b">
+	<p class="font-medium">Settings</p>
 </header>
 
 <ScrollArea class="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto">
-	<button class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+	<button on:click={() => setActivePage("cloud")} class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
 		<div class="flex items-center space-x-4">
 			<Cloud />
 			<div class="text-left">
@@ -44,7 +43,7 @@
 		<Switch />
 	</div>
 
-	<button class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+	<button on:click={() => setActivePage("general")} class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
 		<div class="flex items-center space-x-4">
 			<Settings />
 			<div class="text-left">
@@ -55,7 +54,7 @@
 		<ChevronRight class="w-4 h-4 text-gray-400" />
 	</button>
 
-	<button class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+	<button on:click={() => setActivePage("notifications")} class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
 		<div class="flex items-center space-x-4">
 			<BellDot />
 			<div class="text-left">
@@ -66,7 +65,7 @@
 		<ChevronRight class="w-4 h-4 text-gray-400" />
 	</button>
 
-	<button class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+	<button on:click={() => setActivePage("sounds")} class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
 		<div class="flex items-center space-x-4">
 			<AudioLines />
 			<div class="text-left">
@@ -77,7 +76,7 @@
 		<ChevronRight class="w-4 h-4 text-gray-400" />
 	</button>
 
-	<button class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+	<button on:click={() => setActivePage("unlock")} class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
 		<div class="flex items-center space-x-4">
 			<ScanFace />
 			<div class="text-left">
@@ -88,7 +87,7 @@
 		<ChevronRight class="w-4 h-4 text-gray-400" />
 	</button>
 
-	<button class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+	<button on:click={() => setActivePage("display")} class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
 		<div class="flex items-center space-x-4">
 			<Smartphone />
 			<div class="text-left">
@@ -99,7 +98,7 @@
 		<ChevronRight class="w-4 h-4 text-gray-400" />
 	</button>
 
-	<button class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
+	<button on:click={() => setActivePage("wallpapers")} class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
 		<div class="flex items-center space-x-4">
 			<Image />
 			<div class="text-left">
