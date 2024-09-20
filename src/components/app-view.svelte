@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { SELECTED_APP, APPS } from "@/stores/phone";
+  import { SELECTED_APP } from "@/stores/phone";
+  import { scale } from 'svelte/transition';
   import Indicator from "./indicator.svelte";
   import BleeterApp from "@/apps/bleeter/bleeter-app.svelte";
   import SettingsApp from "@/apps/settings/settings-app.svelte";
@@ -10,10 +11,7 @@
     SELECTED_APP.set(null);
   }
 
-  $: selectedApp = $SELECTED_APP;
-  $: app = selectedApp && $APPS[selectedApp] ? $APPS[selectedApp] : null;
-
-  const appComponents = {
+  const appComponents: { [key: string]: any } = {
     bleeter: BleeterApp,
     settings: SettingsApp,
     messages: MessagesApp,
@@ -21,9 +19,12 @@
   };
 </script>
 
-<div class="relative flex flex-col w-full h-full bg-background">
-  {#if app}
-    <svelte:component this={appComponents[selectedApp]} />
+<div
+  class="relative flex flex-col w-full h-full bg-background"
+  transition:scale={{ start: 0.5, duration: 250 }} 
+>
+  {#if $SELECTED_APP}
+   <svelte:component this={appComponents[$SELECTED_APP]} />
   {/if}
   <Indicator on:click={closeApp} />
 </div>

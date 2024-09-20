@@ -1,9 +1,9 @@
 <script>
+  import { slide } from "svelte/transition";
+  import { quintOut } from "svelte/easing";
   import { IS_LOCKED } from "@/stores/phone";
   import Background from "@/assets/background.webp";
   import Indicator from "./indicator.svelte";
-  import { slide } from "svelte/transition";
-  import { quintOut } from "svelte/easing";
 
   function unlock() {
     IS_LOCKED.set(false);

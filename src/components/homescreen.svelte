@@ -6,7 +6,7 @@
   }
 </script>
 
-<div class="grid grid-cols-3 gap-4 mt-16 homescreen p-4">
+<div class="grid grid-cols-4 gap-4 mt-16 homescreen p-4">
   {#each Object.entries($APPS) as [appName, app]}
     <button on:click={() => openApp(appName)}>
       <span class="text-sm">{app.name}</span>
