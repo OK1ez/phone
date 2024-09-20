@@ -1,11 +1,11 @@
 <script lang="ts">
   import { ACTIVE_PAGE } from "./stores/bleeter";
-  import { Plus } from "lucide-svelte";
-  import BottomNav from "./components/bottom-nav.svelte";
+  import { Plus, BellDot, Home, Search, User } from "lucide-svelte";
   import HomePage from "./pages/home/home-page.svelte";
   import SearchPage from "./pages/search/search-page.svelte";
   import NotificationsPage from "./pages/notifications/notifications-page.svelte";
   import ProfilePage from "./pages/profile/profile-page.svelte";
+  import BottomNav from "@/components/bottom-nav.svelte";
 
   const pageComponents: { [key: string]: any } = {
     home: HomePage,
@@ -13,6 +13,13 @@
     notifications: NotificationsPage,
     profile: ProfilePage,
   };
+
+  const buttons = [
+    { icon: Home, page: "home" },
+    { icon: Search, page: "search" },
+    { icon: BellDot, page: "notifications" },
+    { icon: User, page: "profile" }
+  ];
 </script>
 
 <div class="relative flex flex-col w-full h-full bg-background">
@@ -22,5 +29,9 @@
     <Plus class="text-gray-400 group-hover:text-foreground" />
   </button>
 
-  <BottomNav />
+  <BottomNav
+    {buttons}
+    setActivePage={(page) => ACTIVE_PAGE.set(page)}
+    activePage={$ACTIVE_PAGE}
+  />
 </div>

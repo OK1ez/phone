@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Signal, WifiHigh } from "lucide-svelte";
   import Background from "@/assets/background.webp";
-  import Notch from "./notch.svelte";
   import { IS_LOCKED } from "@/stores/phone";
+  import Notch from "./notch.svelte";
 
   function lock() {
     IS_LOCKED.set(true);
