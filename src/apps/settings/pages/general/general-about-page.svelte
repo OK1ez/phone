@@ -7,5 +7,5 @@
   <button on:click={goBack} class="text-gray-400 hover:text-foreground">
     <ChevronLeft className="w-6 h-6" />
   </button>
-  <p class="font-medium">Wallpapers</p>
+  <p class="font-medium">About</p>
 </header>
