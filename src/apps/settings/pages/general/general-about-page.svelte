@@ -1,5 +1,5 @@
 <script>
-  import { ChevronLeft } from "lucide-svelte";
+  import { ChevronLeft, ChevronRight } from "lucide-svelte";
   import { goBack } from "../../stores/settings";
 </script>
 
@@ -9,3 +9,14 @@
   </button>
   <p class="font-medium">About</p>
 </header>
+
+<div>
+  <div class="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 text-base">
+    <p>Version</p>
+    <p class="text-gray-400">1.0.0</p>
+	</div>
+  <div class="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 text-base">
+    <p>Serial number</p>
+    <p class="text-gray-400">1234567890</p>
+	</div>
+</div>

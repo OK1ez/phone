@@ -21,12 +21,6 @@
 	</button>
   <button class="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
     <div class="flex items-center text-left">
-      <p class="text-base">Software Updates</p>
-    </div>
-    <ChevronRight class="w-4 h-4 text-gray-400" />
-	</button>
-  <button class="flex items-center justify-between w-full h-16 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20">
-    <div class="flex items-center text-left">
       <p class="text-base">Air transfer</p>
     </div>
     <Switch />
