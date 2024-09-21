@@ -9,16 +9,14 @@
     {#if $ACTIVE_PAGE === "recent"}
         <div
             class="absolute w-full h-full"
-            in:fly={{ x: -500, duration: 300 }}
-            out:fly={{ x: -500, duration: 300 }}
+            transition:fly={{ x: -500, duration: 300 }}
         >
             <RecentMessagesPage />
         </div>
     {:else if $ACTIVE_PAGE === "conversation"}
         <div
             class="absolute w-full h-full"
-            in:fly={{ x: 500, duration: 300 }}
-            out:fly={{ x: 500, duration: 300 }}
+            transition:fly={{ x: 500, duration: 300 }}
         >
             <ConversationPage conversationId={$SELECTED_CONVERSATION_ID} />
         </div>

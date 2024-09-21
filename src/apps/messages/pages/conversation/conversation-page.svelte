@@ -35,10 +35,9 @@
     {#if conversation && conversation.messages}
         {#each conversation.messages as message}
             <div
-                class={cn(
-                    "flex justify-end w-full mb-4",
-                    message.sender === "me" ? "justify-end" : "justify-start",
-                )}
+                class="flex w-full mb-4 {message.sender === 'me'
+                    ? 'justify-end'
+                    : 'justify-start'}"
             >
                 <div
                     class="px-4 py-3 rounded-2xl max-w-72 {message.sender ===
