@@ -4,12 +4,13 @@
   import HomePage from "./pages/home/home-page.svelte";
   import CloudPage from "./pages/cloud/cloud-page.svelte";
   import GeneralPage from "./pages/general/general-page.svelte";
+  import GeneralAboutPage from "./pages/general/general-about-page.svelte";
   import NotificationsPage from "./pages/notifications/notifications-page.svelte";
+  import NotificationsOptionsPage from "./pages/notifications/notifications-options-page.svelte";
   import SoundsPage from "./pages/sounds/sounds-page.svelte";
   import UnlockPage from "./pages/unlock/unlock-page.svelte";
   import DisplayPage from "./pages/display/display-page.svelte";
   import WallpapersPage from "./pages/wallpapers/wallpapers-page.svelte";
-  import GeneralAboutPage from "./pages/general/general-about-page.svelte";
 
   const pageComponents: { [key: string]: any } = {
     home: HomePage,
@@ -17,6 +18,7 @@
     general: GeneralPage,
     generalAbout: GeneralAboutPage,
     notifications: NotificationsPage,
+    notificationsOptions: NotificationsOptionsPage,
     sounds: SoundsPage,
     unlock: UnlockPage,
     display: DisplayPage,

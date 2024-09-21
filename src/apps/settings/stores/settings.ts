@@ -3,6 +3,7 @@ import { writable, get } from 'svelte/store';
 export const PAGE_STACK = writable<string[]>(['home']);
 export const ACTIVE_PAGE = writable<string>('home');
 export const NAVIGATION_DIRECTION = writable<'forward' | 'backward'>('forward');
+export const SELECTED_NOTIFICATION_APP = writable<string | null>(null);
 
 export function navigateTo(page: string) {
   const stack = get(PAGE_STACK);
@@ -29,4 +30,21 @@ export function goBack() {
 function setActivePage(page: string, direction: 'forward' | 'backward') {
   ACTIVE_PAGE.set(page);
   NAVIGATION_DIRECTION.set(direction);
+}
+
+// temp: will be replaced with actual settings
+interface Settings {
+  serialNumber: number;
+  wallpapers: {
+    homescreen: string;
+    lockscreen: string;
+  };
+  display: {
+    brightness: number; // useless?
+    scale: number;
+  };
+  unlock: {
+    faceUnlock: boolean;
+    passcode: number;
+  };
 }
