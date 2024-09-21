@@ -3,6 +3,7 @@
   import { ACTIVE_PAGE, NAVIGATION_DIRECTION } from "./stores/settings";
   import HomePage from "./pages/home/home-page.svelte";
   import CloudPage from "./pages/cloud/cloud-page.svelte";
+  import CloudLoginPage from "./pages/cloud/cloud-login-page.svelte";
   import GeneralPage from "./pages/general/general-page.svelte";
   import GeneralAboutPage from "./pages/general/general-about-page.svelte";
   import NotificationsPage from "./pages/notifications/notifications-page.svelte";
@@ -15,6 +16,7 @@
   const pageComponents: { [key: string]: any } = {
     home: HomePage,
     cloud: CloudPage,
+    cloudLogin: CloudLoginPage,
     general: GeneralPage,
     generalAbout: GeneralAboutPage,
     notifications: NotificationsPage,
