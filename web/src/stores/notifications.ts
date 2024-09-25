@@ -22,6 +22,10 @@ export const sendNotification = (notification: Omit<Notification, 'id'>) => {
   NOTIFICATIONS.update(n => [...n, newNotification]);
 
   setTimeout(() => {
-    NOTIFICATIONS.update(n => n.filter(item => item.id !== id));
+    removeNotification(id);
   }, newNotification.timeout);
+};
+
+export const removeNotification = (id: string) => {
+  NOTIFICATIONS.update(n => n.filter(item => item.id !== id));
 };
