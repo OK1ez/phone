@@ -1,5 +1,7 @@
 import { writable } from "svelte/store";
 
+export const VISIBLE = writable<boolean>(true);
+
 export const IS_LOCKED = writable<boolean>(true);
 
 export const APPS = writable({
