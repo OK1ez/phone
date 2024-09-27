@@ -2,7 +2,7 @@
   import { slide } from "svelte/transition";
   import { quintOut } from "svelte/easing";
   import { IS_LOCKED } from "@/stores/phone";
-  import Background from "@/assets/background.webp";
+  import Background from "@/assets/backgrounds/background.webp";
   import Indicator from "./indicator.svelte";
 
   function unlock() {

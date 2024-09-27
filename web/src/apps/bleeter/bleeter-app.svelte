@@ -5,7 +5,7 @@
   import SearchPage from "./pages/search/search-page.svelte";
   import NotificationsPage from "./pages/notifications/notifications-page.svelte";
   import ProfilePage from "./pages/profile/profile-page.svelte";
-  import BottomNav from "@/components/bottom-nav.svelte";
+  import BottomNav from "@/components/shared/bottom-nav.svelte";
 
   const pageComponents: { [key: string]: any } = {
     home: HomePage,

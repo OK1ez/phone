@@ -1,4 +1,4 @@
-import './globals.css'
+import './styles/globals.css'
 import App from './main.svelte'
 
 const app = new App({

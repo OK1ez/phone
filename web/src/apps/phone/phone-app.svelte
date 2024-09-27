@@ -5,7 +5,7 @@
   import RecentCallsPage from "./pages/recent-calls/recent-calls-page.svelte";
   import FavoritesPage from "./pages/favorites/favorites-page.svelte";
   import KeypadPage from "./pages/keypad/keypad-page.svelte"
-  import BottomNav from "@/components/bottom-nav.svelte";
+  import BottomNav from "@/components/shared/bottom-nav.svelte";
 
   const pageComponents: { [key: string]: any } = {
     contacts: ContactsPage,
@@ -13,7 +13,7 @@
     favorites: FavoritesPage,
     keypad: KeypadPage,
   };
-  
+
   const buttons = [
     { icon: Star, page: "favorites" },
     { icon: Clock, page: "recentCalls" },

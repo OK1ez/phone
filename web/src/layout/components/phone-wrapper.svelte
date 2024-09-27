@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Background from "@/assets/background.webp";
+  import Background from "@/assets/backgrounds/background.webp";
   import { Signal, WifiHigh } from "lucide-svelte";
   import { IS_LOCKED } from "@/stores/phone";
   import Notch from "./notch.svelte";
