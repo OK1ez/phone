@@ -1,8 +1,16 @@
 <script lang="ts">
-    import { Search, PlusCircle, ChevronRight } from "lucide-svelte";
-    import { ScrollArea } from "@/components/ui/scroll-area";
-    import { CONVERSATIONS, openConversation } from "../../stores/messages";
-    import { truncate } from "@/utils/misc";
+  import { Search, PlusCircle, ChevronRight } from "lucide-svelte";
+  import { ScrollArea } from "@/components/ui/scroll-area";
+  import { CONVERSATIONS, openConversation } from "../../stores/messages";
+  import { truncate } from "@/utils/misc";
+
+  // onMount fetch 15 latest conversations, on scroll fetch 15 more
+  // when openming a conversation, fetch the messages for that conversation
+  //
+  onMount(() => {
+
+  });
+
 </script>
 
 <header class="flex flex-col w-full pb-4 border-b">

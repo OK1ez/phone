@@ -14,6 +14,7 @@
 
     onMount(() => {
         conversation = getConversation(conversationId);
+        // fetch the conversation details from id
     });
 </script>
 
