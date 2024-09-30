@@ -1,21 +1,22 @@
 <script lang="ts">
-	import { Tabs as TabsPrimitive } from "bits-ui";
-	import { cn } from "@/utils/misc";
+  import { getContext } from "svelte";
+  import { cn } from "@/utils/misc";
 
-	type $$Props = TabsPrimitive.ContentProps;
+  export let value: string;
+  let className: string | undefined = undefined;
+  export { className as class };
 
-	let className: $$Props["class"] = undefined;
-	export let value: $$Props["value"];
-	export { className as class };
+  const { selectedTab } = getContext("tabs");
 </script>
 
-<TabsPrimitive.Content
-	class={cn(
-		"ring-offset-background focus-visible:ring-ring mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
-		className
-	)}
-	{value}
-	{...$$restProps}
->
-	<slot />
-</TabsPrimitive.Content>
+{#if $selectedTab === value}
+  <div
+    class={cn(
+      "ring-offset-background focus-visible:ring-ring mt-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+      className,
+    )}
+    {...$$restProps}
+  >
+    <slot />
+  </div>
+{/if}

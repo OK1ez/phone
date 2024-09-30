@@ -5,8 +5,8 @@
   import Button from "@/components/ui/button/button.svelte";
   import Bleet from "../../components/bleet/bleet.svelte";
 
-  let hasBackButton = false
-  let isOwnProfile = false
+  let hasBackButton = false;
+  let isOwnProfile = false;
 </script>
 
 <header class="flex items-center w-full gap-4 px-6 pb-4 mt-16 border-b">
@@ -20,7 +20,11 @@
 
 <ScrollArea class="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto">
   <div class="relative">
-    <img src="https://sumeetdas.me/Bleeter/img/banners/bleeter_banner.jpg" alt="Profile banner" class="object-cover w-full h-32" />
+    <img
+      src="https://sumeetdas.me/Bleeter/img/banners/bleeter_banner.jpg"
+      alt="Profile banner"
+      class="object-cover w-full h-32"
+    />
     <div class="absolute flex items-end justify-between w-full px-4 -mt-6">
       <Avatar.Root class="w-20 h-20 border-4 border-background">
         <Avatar.Image src="https://github.com/ok1ez.png" alt="@okiez" />
@@ -42,10 +46,12 @@
     <p class="mt-2">Super cool bio</p>
     <div class="flex gap-4 mt-2">
       <button>
-        <span class="font-bold">69</span> <span class="text-gray-400">Following</span>
+        <span class="font-bold">69</span>
+        <span class="text-gray-400">Following</span>
       </button>
       <button>
-        <span class="font-bold">420</span> <span class="text-gray-400">Followers</span>
+        <span class="font-bold">420</span>
+        <span class="text-gray-400">Followers</span>
       </button>
     </div>
   </div>

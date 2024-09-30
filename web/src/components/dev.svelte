@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Bug, Sun, Moon } from "lucide-svelte";
-  import * as DropdownMenu from "@/components/ui/dropdown-menu";
   import { Button } from "@/components/ui/button/index";
   import { toggleMode } from "mode-watcher";
   import { sendNotification } from "@/stores/notifications";
@@ -31,21 +30,7 @@
     />
     <span class="sr-only">Toggle theme</span>
   </Button>
-  <DropdownMenu.Root closeOnItemClick={false}>
-    <DropdownMenu.Trigger
-      class="flex items-center justify-center w-8 h-8 border rounded-lg"
-    >
-      <Bug class="w-4 h-4" />
-    </DropdownMenu.Trigger>
-    <DropdownMenu.Content>
-      <DropdownMenu.Group>
-        <DropdownMenu.Item on:click={toggleVisibility}
-          >Toggle visibility</DropdownMenu.Item
-        >
-        <DropdownMenu.Item on:click={testNotification}
-          >Send notification</DropdownMenu.Item
-        >
-      </DropdownMenu.Group>
-    </DropdownMenu.Content>
-  </DropdownMenu.Root>
+  <Button class="flex items-center justify-center w-8 h-8 border rounded-lg">
+    <Bug class="w-4 h-4" />
+  </Button>
 </div>
