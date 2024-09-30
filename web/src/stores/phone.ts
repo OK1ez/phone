@@ -8,7 +8,8 @@ export const APPS = writable({
   settings: { name: "Settings" },
   bleeter: { name: "Bleeter" },
   phone: { name: "Phone" },
-  messages: { name: "Messages" }
+  messages: { name: "Messages" },
+  mail: { name: "Mail" }
 });
 
 export const SELECTED_APP = writable<string | null>(null);

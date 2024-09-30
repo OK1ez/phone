@@ -2,12 +2,7 @@
     import { Search, PlusCircle, ChevronRight } from "lucide-svelte";
     import { ScrollArea } from "@/components/ui/scroll-area";
     import { CONVERSATIONS, openConversation } from "../../stores/messages";
-
-    function truncateMessage(message: string, maxLength: number = 100): string {
-        return message.length > maxLength
-            ? `${message.slice(0, maxLength)}..`
-            : message;
-    }
+    import { truncate } from "@/utils/misc";
 </script>
 
 <header class="flex flex-col w-full pb-4 border-b">
@@ -46,7 +41,7 @@
                 </div>
             </div>
             <span class="text-sm text-gray-400">
-                {truncateMessage(conversation.lastMessage)}
+                {truncate(conversation.lastMessage)}
             </span>
         </button>
     {/each}
