@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Background from "@/assets/backgrounds/background.webp";
   import { Signal, WifiHigh } from "lucide-svelte";
   import { IS_LOCKED } from "@/stores/phone";
   import Notch from "./notch.svelte";
@@ -42,7 +41,6 @@
     <Notch />
     <div
       class="w-full h-full rounded-[3rem] bg-cover bg-black overflow-hidden relative"
-      style="background-image: url({Background});"
     >
       <header
         class="absolute z-50 flex items-center justify-between w-full px-8 pt-4"
