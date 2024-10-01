@@ -7,7 +7,7 @@
   let recentCalls = [];
 
   onMount(async () => {
-    recentCalls = await SendEvent("recentCalls:fetch", {});
+    recentCalls = await SendEvent("phone:fetchRecents", {});
   });
 </script>
 

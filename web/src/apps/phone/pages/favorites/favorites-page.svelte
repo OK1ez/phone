@@ -8,7 +8,7 @@
   let favorites = [];
 
   onMount(async () => {
-    favorites = await SendEvent("favorites:fetch", {});
+    favorites = await SendEvent("phone:fetchFavorites", {});
   });
 </script>
 

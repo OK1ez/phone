@@ -5,6 +5,7 @@ import {
   mockContacts,
   mockFavorites,
   mockRecentCalls,
+  mockMails,
 } from "./mockDatas";
 
 /**
@@ -51,21 +52,41 @@ const ReceiveDebuggers: DebugEventCallback[] = [
     },
   },
   {
-    action: "contacts:fetch",
+    action: "phone:fetchContacts",
     handler: () => {
       return mockContacts;
     },
   },
   {
-    action: "favorites:fetch",
+    action: "phone:fetchFavorites",
     handler: () => {
       return mockFavorites;
     },
   },
   {
-    action: "recentCalls:fetch",
+    action: "phone:fetchRecents",
     handler: () => {
       return mockRecentCalls;
+    },
+  },
+  {
+    action: "mail:fetchRecents",
+    handler: () => {
+      const mails = Object.values(mockMails);
+      return mails;
+    },
+  },
+  {
+    action: "mail:fetchById",
+    handler: (mailId: string) => {
+      const mail = mockMails[mailId] || {
+        id: mailId,
+        subject: "Unknown",
+        sender: "unknown@email.com",
+        content: "This email does not exist.",
+        timestamp: new Date().toISOString(),
+      };
+      return mail;
     },
   },
   {

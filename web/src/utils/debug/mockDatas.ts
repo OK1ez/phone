@@ -61,3 +61,22 @@ export const mockRecentCalls = [
   { id: 3, name: "Mads", time: "2 days ago", missed: false },
   { id: 4, name: "John", time: "1 week ago", missed: false },
 ];
+
+export const mockMails = {
+  1: {
+    id: 1,
+    subject: "Important Meeting",
+    sender: "boss@company.com",
+    content:
+      "We need to discuss the upcoming project. Please prepare a brief summary.",
+    timestamp: "Yesterday",
+  },
+  2: {
+    id: 2,
+    subject: "Lunch Plans",
+    sender: "friend@email.com",
+    content:
+      "Hey, want to grab lunch tomorrow? I know a great new place downtown.",
+    timestamp: "1 week ago",
+  },
+};

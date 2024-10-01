@@ -7,7 +7,7 @@
   let contacts = [];
 
   onMount(async () => {
-    contacts = await SendEvent("contacts:fetch", {});
+    contacts = await SendEvent("phone:fetchContacts", {});
   });
 </script>
 
