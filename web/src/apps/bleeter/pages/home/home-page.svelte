@@ -1,13 +1,22 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { ScrollArea } from "@/components/ui/scroll-area";
   import * as Tabs from "@/components/ui/tabs";
   import Bleet from "../../components/bleet/bleet.svelte";
+  import { SendEvent } from "@/utils/eventsHandlers";
 
   let currentTab = "for-you";
+  let bleets = [];
 
   function handleTabChange(event) {
     currentTab = event.detail;
   }
+
+  onMount(async () => {
+    // todo: fetch 15 latest bleets, on scroll fetch 15 more and so on
+
+    bleets = await SendEvent("bleeter:fetchRecents");
+  });
 </script>
 
 <Tabs.Root value={currentTab} on:change={handleTabChange}>
@@ -31,14 +40,11 @@
     <ScrollArea
       class="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto"
     >
-      <Bleet />
-      <Bleet />
-      <Bleet />
-      <Bleet />
-      <Bleet />
-      <Bleet />
-      <Bleet />
-      <Bleet />
+      {#if bleets}
+        {#each bleets as bleet}
+          <Bleet {bleet} />
+        {/each}
+      {/if}
     </ScrollArea>
   </Tabs.Content>
   <Tabs.Content value="following">This shit dont work.</Tabs.Content>

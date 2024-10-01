@@ -6,6 +6,9 @@ import {
   mockFavorites,
   mockRecentCalls,
   mockMails,
+  mockBleeterAccounts,
+  mockBleets,
+  mockBleterNotifications,
 } from "./mockDatas";
 
 /**
@@ -87,6 +90,63 @@ const ReceiveDebuggers: DebugEventCallback[] = [
         timestamp: new Date().toISOString(),
       };
       return mail;
+    },
+  },
+  {
+    action: "bleeter:fetchRecents",
+    handler: () => {
+      return mockBleets.map((bleet) => {
+        const account = mockBleeterAccounts.find(
+          (acc) => acc.username === bleet.username,
+        );
+        if (account) {
+          return {
+            ...bleet,
+            displayName: account.displayName,
+            avatar: account.avatar,
+            verified: account.verified,
+          };
+        }
+        return bleet;
+      });
+    },
+  },
+  {
+    action: "bleeter:fetchFromUsername",
+    handler: (username: string) => {
+      return mockBleets
+        .filter((bleet) => bleet.username === username)
+        .map((bleet) => {
+          const account = mockBleeterAccounts.find(
+            (acc) => acc.username === bleet.username,
+          );
+          if (account) {
+            return {
+              ...bleet,
+              displayName: account.displayName,
+              avatar: account.avatar,
+              verified: account.verified,
+            };
+          }
+          return bleet;
+        });
+    },
+  },
+  {
+    action: "bleeter:fetchNotifications",
+    handler: (username: string) => {
+      return mockBleterNotifications
+        .filter((notification) => notification.username === username)
+        .map((notification) => {
+          const fromAccount = mockBleeterAccounts.find(
+            (account) => account.username === notification.from,
+          );
+          return {
+            ...notification,
+            displayName: fromAccount?.displayName || notification.from,
+            avatar: fromAccount?.avatar || "",
+          };
+        });
     },
   },
   {
