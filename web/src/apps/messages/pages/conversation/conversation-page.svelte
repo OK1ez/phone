@@ -1,10 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import {
-    CONVERSATIONS,
-    getConversation,
-    goBack,
-  } from "../../stores/messages";
+  import { goBack } from "../../stores/messages";
   import { ScrollArea } from "@/components/ui/scroll-area";
   import { ChevronLeft, Images, Mic, Phone, Smile } from "lucide-svelte";
   import { cn } from "@/utils/misc";
@@ -18,7 +14,6 @@
       "messages:fetchConversation",
       conversationId,
     );
-    console.log("conversation", conversation);
   });
 </script>
 

@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { Search, PlusCircle, ChevronRight } from "lucide-svelte";
   import { ScrollArea } from "@/components/ui/scroll-area";
-  import { CONVERSATIONS, openConversation } from "../../stores/messages";
+  import { openConversation } from "../../stores/messages";
   import { truncate } from "@/utils/misc";
   import { SendEvent } from "@/utils/eventsHandlers";
 
@@ -10,7 +10,6 @@
 
   onMount(async () => {
     recentMessages = await SendEvent("messages:fetchRecents");
-    console.log(recentMessages);
   });
 </script>
 
