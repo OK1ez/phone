@@ -112,6 +112,18 @@ const ReceiveDebuggers: DebugEventCallback[] = [
     },
   },
   {
+    action: "bleeter:fetchProfile",
+    handler: (username: string) => {
+      const profile = mockBleeterAccounts.find(
+        (account) => account.username.toLowerCase() === username.toLowerCase(),
+      );
+
+      if (profile) {
+        return profile;
+      }
+    },
+  },
+  {
     action: "bleeter:fetchFromUsername",
     handler: (username: string) => {
       return mockBleets

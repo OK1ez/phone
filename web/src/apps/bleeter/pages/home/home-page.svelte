@@ -3,10 +3,11 @@
   import { ScrollArea } from "@/components/ui/scroll-area";
   import * as Tabs from "@/components/ui/tabs";
   import Bleet from "../../components/bleet/bleet.svelte";
+  import type { Bleet as BleetType } from "@/typings/bleeter";
   import { SendEvent } from "@/utils/eventsHandlers";
 
   let currentTab = "for-you";
-  let bleets = [];
+  let bleets: BleetType[] = [];
 
   function handleTabChange(event) {
     currentTab = event.detail;
@@ -14,7 +15,6 @@
 
   onMount(async () => {
     // todo: fetch 15 latest bleets, on scroll fetch 15 more and so on
-
     bleets = await SendEvent("bleeter:fetchRecents");
   });
 </script>

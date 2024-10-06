@@ -6,31 +6,43 @@
   import Bleet from "../../components/bleet/bleet.svelte";
   import { SendEvent } from "@/utils/eventsHandlers";
   import { onMount } from "svelte";
-  import { LOGGED_IN_AS } from "../../stores/bleeter";
+  import { LOGGED_IN_AS, SELECTED_USER } from "../../stores/bleeter";
+
+  export let isOverlay = false;
 
   let profile = {};
   let bleets = [];
 
-  onMount(async () => {
-    // fetch profile by username
-    profile = {
-      username: "okiez",
-      displayName: "OKiez",
-      avatar: "https://github.com/ok1ez.png",
-      banner: "https://sumeetdas.me/Bleeter/img/banners/bleeter_banner.jpg",
-      bio: "Super cool bio",
-      verified: true,
-      followersCount: 420,
-      followingCount: 69,
-    };
+  $: username = isOverlay ? $SELECTED_USER : $LOGGED_IN_AS;
 
-    // fetch bleets from username, fetch 15 latest and on scroll fetch more
-    bleets = await SendEvent("bleeter:fetchFromUsername", profile.username);
-  });
+  $: {
+    if (username) {
+      loadProfile(username);
+    }
+  }
+
+  async function loadProfile(username) {
+    profile = await SendEvent("bleeter:fetchProfile", username);
+    bleets = await SendEvent("bleeter:fetchFromUsername", username);
+  }
+
+  function closeOverlay() {
+    if (isOverlay) {
+      SELECTED_USER.set(null);
+    }
+  }
 </script>
 
+{#if isOverlay}
+  <header class="flex items-center w-full gap-4 px-6 pb-4 mt-16 border-b">
+    <button on:click={closeOverlay}>
+      <ChevronLeft class="w-6 h-6 text-gray-400 hover:text-foreground" />
+    </button>
+  </header>
+{/if}
+
 <ScrollArea class="flex flex-col w-full h-full max-h-[56rem] overflow-y-auto">
-  {#if profile}
+  {#if profile.username}
     <div class="relative">
       <img
         src={profile.banner}

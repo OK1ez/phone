@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { SELECTED_USER } from "../../stores/bleeter";
   import {
     BadgeCheck,
     MoreHorizontal,
@@ -8,11 +9,15 @@
   } from "lucide-svelte";
 
   export let bleet: any;
+  export let selectUser: (event: MouseEvent) => void;
 </script>
 
 <div class="flex justify-between w-full">
   <div class="flex items-center">
-    <p class="text-base font-medium cursor-pointer hover:underline">
+    <p
+      class="text-base font-medium cursor-pointer hover:underline"
+      on:click={selectUser}
+    >
       {bleet.displayName}
     </p>
     {#if bleet.verified}
