@@ -162,7 +162,7 @@ const ReceiveDebuggers: DebugEventCallback[] = [
     },
   },
   {
-    action: "resource:close",
+    action: "phone:close",
     handler: () => {
       console.log("closed");
     },

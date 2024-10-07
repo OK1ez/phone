@@ -1,7 +1,7 @@
-import { DebugEventSend } from "@/utils/eventsHandlers";
+import { VISIBLE } from "@/stores/stores";
 /**
  * The debug response for the visibility debug action.
  */
 export function toggleVisible(visible: boolean): void {
-  DebugEventSend("resource:visible", visible);
+  VISIBLE.set(visible);
 }

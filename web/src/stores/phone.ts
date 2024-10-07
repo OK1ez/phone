@@ -1,7 +1,5 @@
 import { writable } from "svelte/store";
 
-export const VISIBLE = writable<boolean>(true);
-
 export const IS_LOCKED = writable<boolean>(true);
 
 export const APPS = writable({
@@ -9,7 +7,7 @@ export const APPS = writable({
   bleeter: { name: "Bleeter" },
   phone: { name: "Phone" },
   messages: { name: "Messages" },
-  mail: { name: "Mail" }
+  mail: { name: "Mail" },
 });
 
 export const SELECTED_APP = writable<string | null>(null);

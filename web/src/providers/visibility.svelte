@@ -3,7 +3,7 @@
   import { ReceiveEvent, SendEvent } from "@/utils/eventsHandlers";
   import { onMount } from "svelte";
 
-  ReceiveEvent("resource:visible", (visible: boolean): void => {
+  ReceiveEvent("phone:visible", (visible: boolean): void => {
     $VISIBLE = visible;
   });
 
@@ -12,7 +12,7 @@
 
     const keyHandler = (e: KeyboardEvent) => {
       if ($VISIBLE && ["Escape"].includes(e.code)) {
-        SendEvent("resource:close");
+        SendEvent("phone:close");
       }
     };
     window.addEventListener("keydown", keyHandler);

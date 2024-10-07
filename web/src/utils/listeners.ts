@@ -1,13 +1,12 @@
 import type { DebugEventCallback } from "@/typings/events";
 import { ReceiveEvent } from "./eventsHandlers";
+import { VISIBLE } from "@/stores/stores";
 
 const AlwaysListened: DebugEventCallback[] = [
   {
-    action: "resource:visible",
-    handler: (data: string) => {
-      console.log(
-        "This is always listened to because it is in the AlwaysListened array.",
-      );
+    action: "phone:visible",
+    handler: () => {
+      VISIBLE.set(true);
     },
   },
 ];
