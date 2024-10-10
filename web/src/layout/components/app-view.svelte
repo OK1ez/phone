@@ -1,8 +1,8 @@
 <script lang="ts">
   import { SELECTED_APP } from "@/stores/phone";
-  import { scale } from 'svelte/transition';
+  import { scale } from "svelte/transition";
   import Indicator from "./indicator.svelte";
-  import { onMount } from 'svelte';
+  import { onMount } from "svelte";
 
   import BleeterApp from "@/apps/bleeter/bleeter-app.svelte";
   import SettingsApp from "@/apps/settings/settings-app.svelte";

@@ -74,33 +74,32 @@
         {/if}
       </div>
       <div class="mt-4 text-gray-400 text-sm">
-        <p>
-          01:32 · 07.10.2024 ·
-          <span class=" text-foreground font-medium">1,4M</span> views
-        </p>
+        <p>01:32 · 07.10.2024</p>
       </div>
       <div class="flex gap-8 mt-4">
-        <button
-          class="flex items-center w-16 text-gray-400 hover:text-blue-400"
-        >
-          <MessageSquare size={20} />
-          <span class="ml-2">524</span>
+        <button class="flex items-center w-16 text-gray-400 group">
+          <MessageSquare
+            size="20"
+            class="group-hover:fill-blue-400 group-hover:text-blue-400"
+          />
+          <span class="ml-2">{$SELECTED_BLEET.comments}</span>
         </button>
-        <button
-          class="flex items-center w-16 text-gray-400 hover:text-emerald-500"
-        >
-          <Repeat2 size={20} />
-          <span class="ml-2">1,5k</span>
+        <button class="flex items-center w-16 text-gray-400 group">
+          <Repeat2
+            size="20"
+            class="group-hover:fill-emerald-500 group-hover:text-emerald-500"
+          />
+          <span class="ml-2">{$SELECTED_BLEET.rebleets}</span>
         </button>
-        <button
-          class="flex items-center w-16 text-gray-400 hover:text-rose-600"
-        >
-          <Heart size={20} />
-          <span class="ml-2">26k</span>
+        <button class="flex items-center w-16 text-gray-400 group">
+          <Heart
+            size="20"
+            class="group-hover:fill-rose-500 group-hover:text-rose-500"
+          />
+          <span class="ml-2">{$SELECTED_BLEET.likes}</span>
         </button>
       </div>
     </div>
-
     <div class="p-4 border-b">
       <h2 class="text-lg font-semibold">Comments</h2>
     </div>

@@ -8,6 +8,12 @@ export const APPS = writable({
   phone: { name: "Phone" },
   messages: { name: "Messages" },
   mail: { name: "Mail" },
+  // notes: { name: "Notes" },
+  // groups: { name: "Groups" },
+  // banking: { name: "Bank" }, // inspo: https://dribbble.com/shots/24646331-Digital-Banking-Mobile-Application
+  // gallery: { name: "Gallery" },
+  // camera: { name: "Camera" },
+  // market: { name: "Market" },
 });
 
 export const SELECTED_APP = writable<string | null>(null);

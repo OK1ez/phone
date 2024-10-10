@@ -21,21 +21,7 @@
 </script>
 
 {#if $VISIBLE}
-  <main>
+  <main class=" absolute left-0 top-0 p-0 m-0 w-full h-full overflow-hidden">
     <slot />
   </main>
 {/if}
-
-<style>
-  main {
-    position: absolute;
-    left: 0;
-    top: 0;
-    user-select: none;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    height: 100vh;
-    width: 100vw;
-  }
-</style>

@@ -2,19 +2,44 @@
   import { Heart, MessageSquare, Repeat2 } from "lucide-svelte";
 
   export let bleet: any;
+
+  function likeBleet(event: MouseEvent) {
+    event.stopPropagation();
+    bleet.likes++;
+  }
+
+  function rebleetBleet(event: MouseEvent) {
+    event.stopPropagation();
+    bleet.rebleets++;
+  }
 </script>
 
 <div class="flex gap-8 mt-4">
-  <button class="flex items-center w-16 text-gray-400 hover:text-blue-400">
-    <MessageSquare size={20} />
+  <button class="flex items-center w-16 text-gray-400 group">
+    <MessageSquare
+      size="20"
+      class="group-hover:fill-blue-400 group-hover:text-blue-400"
+    />
     <span class="ml-2">{bleet.comments}</span>
   </button>
-  <button class="flex items-center w-16 text-gray-400 hover:text-emerald-500">
-    <Repeat2 size={20} />
+  <button
+    on:click={rebleetBleet}
+    class="flex items-center w-16 text-gray-400 group"
+  >
+    <Repeat2
+      size="20"
+      class="group-hover:fill-emerald-500 group-hover:text-emerald-500"
+    />
     <span class="ml-2">{bleet.rebleets}</span>
   </button>
-  <button class="flex items-center w-16 text-gray-400 hover:text-rose-600">
-    <Heart size={20} />
+  <button
+    on:click={likeBleet}
+    class="flex items-center w-16 text-gray-400 group"
+  >
+    <Heart
+      size="20"
+      class="group-hover:fill-rose-500 group-hover:text-rose-500"
+    />
     <span class="ml-2">{bleet.likes}</span>
   </button>
 </div>
