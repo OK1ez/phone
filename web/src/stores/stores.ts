@@ -1,10 +1,11 @@
-import { IsEnvBrowser } from '@/utils/eventsHandlers';
-import { get, writable } from 'svelte/store';
+import { IsEnvBrowser } from "@/utils/eventsHandlers";
+import { get, writable } from "svelte/store";
 
+export type VisibilityState = "visible" | "half-visible" | "hidden";
 
 export const CONFIG = writable<any>({
   /** Fallback resource name for when the resource name cannot be found. */
-  fallbackResourceName: 'phone',
+  fallbackResourceName: "phone",
 
   /** Whether the escape key should make visibility false. */
   allowEscapeKey: true,
@@ -25,8 +26,9 @@ export const RESOURCE_NAME = writable<string>(
  * @type {Writable<boolean>}
  */
 export const IS_BROWSER = writable<boolean>(!(window as any).invokeNative);
+
 /**
- * Whether the debug menu is visible or not.
- * @type {Writable<boolean>}
+ * The visibility state of the phone.
+ * @type {Writable<VisibilityState>}
  */
-export const VISIBLE = writable<boolean>(false);
+export const VISIBLE = writable<VisibilityState>("hidden");

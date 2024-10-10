@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
   import { IS_LOCKED, SELECTED_APP } from "@/stores/phone";
   import Lockscreen from "./components/lockscreen.svelte";

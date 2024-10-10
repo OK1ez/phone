@@ -4,14 +4,15 @@
   import Header from "./header.svelte";
   import Content from "./content.svelte";
   import Actions from "./actions.svelte";
+  import type { Bleet } from "@/typings/bleeter";
 
-  export let bleet: any;
+  export let bleet: Bleet;
 
-  function openBleetFullView() {
+  function openBleetFullView(): void {
     SELECTED_BLEET.set(bleet);
   }
 
-  function selectUser(event: MouseEvent) {
+  function selectUser(event: MouseEvent): void {
     event.stopPropagation();
     SELECTED_USER.set(bleet.username);
   }

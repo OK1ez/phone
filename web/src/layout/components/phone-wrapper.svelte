@@ -1,17 +1,29 @@
 <script lang="ts">
+  import { fly } from "svelte/transition";
   import { Signal, WifiHigh } from "lucide-svelte";
   import { IS_LOCKED } from "@/stores/phone";
   import Notch from "./notch.svelte";
   import Notifications from "./notifications.svelte";
+  import { VISIBLE } from "@/stores/stores";
 
-  function lock() {
+  /**
+   * Locks the phone.
+   */
+  function lock(): void {
     IS_LOCKED.set(true);
   }
+
+  $: flyParams = {
+    y: $VISIBLE === "half-visible" ? 200 : 800,
+    duration: 350,
+  };
 </script>
 
 <div
-  class="absolute flex w-[30rem] h-[63rem] right-0 bottom-0"
+  class="absolute flex w-[30rem] h-[63rem] right-0 bottom-0 transition-all duration-300 {$VISIBLE ===
+    'half-visible' && '-mb-[43rem]'}"
   style="scale: 0.8"
+  transition:fly={flyParams}
 >
   <button
     class="absolute w-1.5 h-32 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full top-48 right-[-10px]"

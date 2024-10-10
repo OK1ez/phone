@@ -1,16 +1,16 @@
 <script lang="ts">
   import { SELECTED_APP } from "@/stores/phone";
   import { scale } from "svelte/transition";
-  import Indicator from "./indicator.svelte";
-  import { onMount } from "svelte";
+  import type { SvelteComponent } from "svelte";
 
+  import Indicator from "./indicator.svelte";
   import BleeterApp from "@/apps/bleeter/bleeter-app.svelte";
   import SettingsApp from "@/apps/settings/settings-app.svelte";
   import MessagesApp from "@/apps/messages/messages-app.svelte";
   import PhoneApp from "@/apps/phone/phone-app.svelte";
   import MailApp from "@/apps/mail/mail-app.svelte";
 
-  const appComponents: { [key: string]: any } = {
+  const appComponents: Record<string, typeof SvelteComponent> = {
     bleeter: BleeterApp,
     settings: SettingsApp,
     messages: MessagesApp,
@@ -18,7 +18,10 @@
     mail: MailApp,
   };
 
-  function closeApp() {
+  /**
+   * Closes the currently open app.
+   */
+  function closeApp(): void {
     SELECTED_APP.set(null);
   }
 </script>

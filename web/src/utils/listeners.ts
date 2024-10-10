@@ -6,7 +6,7 @@ const AlwaysListened: DebugEventCallback[] = [
   {
     action: "phone:visible",
     handler: () => {
-      VISIBLE.set(true);
+      VISIBLE.set("visible");
     },
   },
 ];

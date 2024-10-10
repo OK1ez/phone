@@ -2,7 +2,11 @@
   import Background from "@/assets/backgrounds/background.webp";
   import { APPS, SELECTED_APP } from "@/stores/phone";
 
-  function openApp(appName: string) {
+  /**
+   * Opens the specified app.
+   * @param appName - The name of the app to open.
+   */
+  function openApp(appName: string): void {
     SELECTED_APP.set(appName);
   }
 </script>
@@ -18,9 +22,8 @@
         on:click={() => openApp(appName)}
       >
         <div
-          src={app.icon}
-          alt={appName}
           class="size-[4.5rem] rounded-2xl bg-secondary"
+          style="background-image: url({app.icon});"
         ></div>
         <p class="text-center text-sm">{app.name}</p>
       </button>

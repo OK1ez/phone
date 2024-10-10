@@ -15,7 +15,10 @@
 </script>
 
 <div class="flex gap-8 mt-4">
-  <button class="flex items-center w-16 text-gray-400 group">
+  <button
+    class="flex items-center w-16 text-gray-400 group"
+    aria-label="Comment"
+  >
     <MessageSquare
       size="20"
       class="group-hover:fill-blue-400 group-hover:text-blue-400"
@@ -25,6 +28,7 @@
   <button
     on:click={rebleetBleet}
     class="flex items-center w-16 text-gray-400 group"
+    aria-label="Rebleet"
   >
     <Repeat2
       size="20"
@@ -35,6 +39,7 @@
   <button
     on:click={likeBleet}
     class="flex items-center w-16 text-gray-400 group"
+    aria-label="Like"
   >
     <Heart
       size="20"

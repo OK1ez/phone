@@ -3,15 +3,15 @@
   import { ReceiveEvent, SendEvent } from "@/utils/eventsHandlers";
   import { onMount } from "svelte";
 
-  ReceiveEvent("phone:visible", (visible: boolean): void => {
-    $VISIBLE = visible;
+  ReceiveEvent("phone:visible", (state: string): void => {
+    $VISIBLE = state;
   });
 
   onMount(() => {
     if (!$CONFIG.allowEscapeKey) return;
 
     const keyHandler = (e: KeyboardEvent) => {
-      if ($VISIBLE && ["Escape"].includes(e.code)) {
+      if ($VISIBLE === "visible" && ["Escape"].includes(e.code)) {
         SendEvent("phone:close");
       }
     };
@@ -20,7 +20,7 @@
   });
 </script>
 
-{#if $VISIBLE}
+{#if $VISIBLE === "visible" || $VISIBLE === "half-visible"}
   <main class=" absolute left-0 top-0 p-0 m-0 w-full h-full overflow-hidden">
     <slot />
   </main>

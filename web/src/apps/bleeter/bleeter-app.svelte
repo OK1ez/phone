@@ -9,21 +9,30 @@
   import BottomNav from "@/components/shared/bottom-nav.svelte";
   import BleetPage from "./pages/bleet/bleet-page.svelte";
 
-  const pageComponents: { [key: string]: any } = {
+  interface PageComponent {
+    [key: string]: ComponentType;
+  }
+
+  interface NavButton {
+    icon: ComponentType;
+    page: string;
+  }
+
+  const pageComponents: PageComponent = {
     home: HomePage,
     search: SearchPage,
     notifications: NotificationsPage,
     profile: ProfilePage,
   };
 
-  const buttons = [
+  const buttons: NavButton[] = [
     { icon: Home, page: "home" },
     { icon: Search, page: "search" },
     { icon: BellDot, page: "notifications" },
     { icon: User, page: "profile" },
   ];
 
-  function setActivePage(page: string) {
+  function setActivePage(page: string): void {
     ACTIVE_PAGE.set(page);
     SELECTED_USER.set(null);
     SELECTED_BLEET.set(null);
@@ -53,6 +62,7 @@
 
   <button
     class="absolute bottom-0 right-0 flex items-center justify-center m-4 rounded-full shadow-md size-16 mb-28 bg-secondary hover:opacity-80 group"
+    aria-label="New bleet"
   >
     <Plus class="text-gray-400 group-hover:text-foreground" />
   </button>
