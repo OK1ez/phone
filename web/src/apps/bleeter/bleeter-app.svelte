@@ -32,6 +32,10 @@
     { icon: User, page: "profile" },
   ];
 
+  /**
+   * Sets the active page and resets user and bleet selection.
+   * @param {string} page - The page to set as active.
+   */
   function setActivePage(page: string): void {
     ACTIVE_PAGE.set(page);
     SELECTED_USER.set(null);

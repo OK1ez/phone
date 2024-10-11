@@ -3,14 +3,24 @@
 
   export let bleet: any;
 
-  function likeBleet(event: MouseEvent) {
+  /**
+   * Handles the like action for a bleet.
+   * @param {MouseEvent} event - The click event.
+   */
+  function likeBleet(event: MouseEvent): void {
     event.stopPropagation();
     bleet.likes++;
+    // TODO: move to utils
   }
 
-  function rebleetBleet(event: MouseEvent) {
+  /**
+   * Handles the rebleet action for a bleet.
+   * @param {MouseEvent} event - The click event.
+   */
+  function rebleetBleet(event: MouseEvent): void {
     event.stopPropagation();
     bleet.rebleets++;
+    // TODO: move to utils
   }
 </script>
 
