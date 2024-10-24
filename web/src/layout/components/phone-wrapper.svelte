@@ -6,6 +6,12 @@
   import Notifications from "./notifications.svelte";
   import { VISIBLE } from "@/stores/stores";
 
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
+
   /**
    * Locks the phone.
    */
@@ -13,10 +19,10 @@
     IS_LOCKED.set(true);
   }
 
-  $: flyParams = {
+  let flyParams = $derived({
     y: $VISIBLE === "half-visible" ? 200 : 800,
     duration: 350,
-  };
+  });
 </script>
 
 <div
@@ -32,22 +38,22 @@
   <button
     class="absolute w-1.5 h-32 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full top-48 right-[-10px]"
     aria-label="Lock"
-    on:click={lock}
-  />
+    onclick={lock}
+></button>
 
   <div class="h-32 w-1.5 absolute flex flex-col left-[-10px] top-36">
     <button
       class="w-full min-h-12 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full mb-8"
       aria-label="Mute"
-    />
+></button>
     <button
       class="w-full min-h-24 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full mb-4"
       aria-label="Volume up"
-    />
+></button>
     <button
       class="w-full min-h-24 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full"
       aria-label="Volume down"
-    />
+></button>
   </div>
 
   <!-- Phone content -->
@@ -68,7 +74,7 @@
         </button>
       </header>
       <Notifications />
-      <slot />
+      {@render children?.()}
     </div>
   </div>
 </div>

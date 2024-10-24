@@ -2,6 +2,11 @@
   import { VISIBLE, CONFIG } from "@/stores/stores";
   import { ReceiveEvent, SendEvent } from "@/utils/eventsHandlers";
   import { onMount } from "svelte";
+  interface Props {
+    children?: import('svelte').Snippet;
+  }
+
+  let { children }: Props = $props();
 
   ReceiveEvent("phone:visible", (state: string): void => {
     $VISIBLE = state ? "visible" : "hidden";
@@ -22,6 +27,6 @@
 
 {#if $VISIBLE === "visible" || $VISIBLE === "half-visible"}
   <main class=" absolute left-0 top-0 p-0 m-0 w-full h-full overflow-hidden">
-    <slot />
+    {@render children?.()}
   </main>
 {/if}

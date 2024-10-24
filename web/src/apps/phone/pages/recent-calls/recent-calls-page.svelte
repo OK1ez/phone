@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import { SendEvent } from "@/utils/eventsHandlers";
 
-  let recentCalls = [];
+  let recentCalls = $state([]);
 
   onMount(async () => {
     recentCalls = await SendEvent("phone:fetchRecents", {});

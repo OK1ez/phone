@@ -1,22 +1,39 @@
 <script lang="ts">
+  import { createBubbler } from 'svelte/legacy';
+
+  const bubble = createBubbler();
   import { type Events, type Props, buttonVariants } from "./index.js";
   import { cn } from "@/utils/misc";
 
   type $$Props = Props;
   type $$Events = Events;
 
-  let className: $$Props["class"] = undefined;
-  export let variant: $$Props["variant"] = "default";
-  export let size: $$Props["size"] = "default";
-  export { className as class };
+  interface Props_1 {
+    class?: $$Props["class"];
+    variant?: $$Props["variant"];
+    size?: $$Props["size"];
+    children?: import('svelte').Snippet;
+    [key: string]: any
+  }
+
+  let {
+    class: className = undefined,
+    variant = "default",
+    size = "default",
+    children,
+    onkeydown,
+    onclick,
+    ...rest
+  }: Props_1 = $props();
+
 </script>
 
 <button
   class={cn(buttonVariants({ variant, size, className }))}
   type="button"
-  {...$$restProps}
-  on:click
-  on:keydown
+  {...rest}
+  {onclick}
+  {onkeydown}
 >
-  <slot />
+  {@render children?.()}
 </button>

@@ -6,9 +6,9 @@
   import { APPS } from "@/stores/phone";
   import { onMount } from "svelte";
 
-  let appName = "";
-  let notificationsEnabled = false;
-  let soundsEnabled = false;
+  let appName = $state("");
+  let notificationsEnabled = $state(false);
+  let soundsEnabled = $state(false);
 
   onMount(() => {
     if ($SELECTED_NOTIFICATION_APP && $APPS[$SELECTED_NOTIFICATION_APP]) {
@@ -33,7 +33,7 @@
 </script>
 
 <header class="flex items-center w-full gap-4 px-6 pb-4 mt-16 border-b">
-  <button on:click={handleGoBack} class="text-gray-400 hover:text-foreground">
+  <button onclick={handleGoBack} class="text-gray-400 hover:text-foreground">
     <ChevronLeft className="w-6 h-6" />
   </button>
   <p class="font-medium">{appName}</p>

@@ -24,7 +24,7 @@
   }
 </script>
 
-<div class="absolute w-full h-full -z-50 bg-foreground" />
+<div class="absolute w-full h-full -z-50 bg-foreground"></div>
 
 <div class="absolute top-0 left-0 m-2 flex flex-col gap-2">
   <Button

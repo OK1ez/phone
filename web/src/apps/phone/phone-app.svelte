@@ -20,10 +20,12 @@
     { icon: Contact, page: "contacts" },
     { icon: Grip, page: "keypad" }
   ];
+
+  const SvelteComponent = $derived(pageComponents[$ACTIVE_PAGE]);
 </script>
 
 <div class="relative flex flex-col w-full h-full bg-background">
-  <svelte:component this={pageComponents[$ACTIVE_PAGE]} />
+  <SvelteComponent />
   <BottomNav
     {buttons}
     setActivePage={(page) => ACTIVE_PAGE.set(page)}

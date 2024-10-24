@@ -1,15 +1,20 @@
 <script lang="ts">
   import { cn } from "@/utils/misc";
 
-  let className: string | undefined = undefined;
-  export let src: string | undefined = undefined;
-  export let alt: string | undefined = undefined;
-  export { className as class };
+  interface Props {
+    class?: string | undefined;
+    src?: string | undefined;
+    alt?: string | undefined;
+    [key: string]: any
+  }
+
+  let { class: className = undefined, src = undefined, alt = undefined, ...rest }: Props = $props();
+  
 </script>
 
 <img
   {src}
   {alt}
   class={cn("aspect-square h-full w-full", className)}
-  {...$$restProps}
+  {...rest}
 />

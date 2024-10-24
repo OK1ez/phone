@@ -2,10 +2,15 @@
   import { createEventDispatcher } from "svelte";
   import { cn } from "@/utils/misc";
 
-  export let checked = false;
-  export let disabled = false;
-  let className: string | undefined = undefined;
-  export { className as class };
+  interface Props {
+    checked?: boolean;
+    disabled?: boolean;
+    class?: string | undefined;
+    [key: string]: any
+  }
+
+  let { checked = $bindable(false), disabled = false, class: className = undefined, ...rest }: Props = $props();
+  
 
   const dispatch = createEventDispatcher();
 
@@ -34,14 +39,14 @@
     checked ? "bg-primary" : "bg-input",
     className,
   )}
-  on:click={toggle}
-  on:keydown={handleKeyDown}
-  {...$$restProps}
+  onclick={toggle}
+  onkeydown={handleKeyDown}
+  {...rest}
 >
   <span
     class={cn(
       "bg-background pointer-events-none block h-5 w-5 rounded-full shadow-lg ring-0 transition-transform",
       checked ? "translate-x-5" : "translate-x-0",
     )}
-  />
+></span>
 </button>

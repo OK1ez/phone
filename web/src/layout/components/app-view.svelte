@@ -18,9 +18,7 @@
     mail: MailApp,
   };
 
-  /**
-   * Closes the currently open app.
-   */
+  // Closes the currently open app.
   function closeApp(): void {
     SELECTED_APP.set(null);
   }
@@ -31,7 +29,8 @@
   transition:scale={{ start: 0.5, duration: 250 }}
 >
   {#if $SELECTED_APP}
-    <svelte:component this={appComponents[$SELECTED_APP]} />
+    {@const AppComponent = appComponents[$SELECTED_APP]}
+    <AppComponent />
   {/if}
-  <Indicator on:click={closeApp} />
+  <Indicator onclick={closeApp} />
 </div>

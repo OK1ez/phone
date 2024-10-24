@@ -19,7 +19,7 @@
 </script>
 
 <header class="flex items-center w-full gap-4 px-6 pb-4 mt-16 border-b">
-  <button on:click={closeBleet}>
+  <button onclick={closeBleet}>
     <ChevronLeft class="w-6 h-6 text-gray-400 hover:text-foreground" />
   </button>
   <h1 class="font-medium">Bleet</h1>

@@ -6,8 +6,12 @@
   import { cn } from "@/utils/misc";
   import { SendEvent } from "@/utils/eventsHandlers";
 
-  export let conversationId: number;
-  let conversation: any;
+  interface Props {
+    conversationId: number;
+  }
+
+  let { conversationId }: Props = $props();
+  let conversation: any = $state();
 
   onMount(async () => {
     conversation = await SendEvent(
@@ -20,7 +24,7 @@
 <header
   class="flex items-center justify-between w-full gap-4 px-6 pb-4 mt-[4.5rem] border-b"
 >
-  <button on:click={goBack}>
+  <button onclick={goBack}>
     <ChevronLeft class="w-6 h-6 text-gray-400 hover:text-foreground" />
   </button>
   <p class="font-medium">{conversation?.name || "Conversation"}</p>

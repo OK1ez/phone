@@ -1,17 +1,23 @@
 <script lang="ts">
   import { cn } from "@/utils/misc";
 
-  let className: string | undefined = undefined;
-  export { className as class };
+  interface Props {
+    class?: string | undefined;
+    children?: import('svelte').Snippet;
+    [key: string]: any
+  }
+
+  let { onclick, class: className = undefined, children, ...rest }: Props = $props();
+
 </script>
 
 <div
-  on:click
+  {onclick}
   class={cn(
     "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
     className,
   )}
-  {...$$restProps}
+  {...rest}
 >
-  <slot />
+  {@render children?.()}
 </div>

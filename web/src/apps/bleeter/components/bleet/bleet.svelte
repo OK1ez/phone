@@ -6,7 +6,11 @@
   import Actions from "./actions.svelte";
   import type { Bleet } from "@/typings/bleeter";
 
-  export let bleet: Bleet;
+  interface Props {
+    bleet: Bleet;
+  }
+
+  let { bleet }: Props = $props();
 
   function openBleetFullView(): void {
     SELECTED_BLEET.set(bleet);
@@ -20,9 +24,9 @@
 
 <div
   class="flex w-full gap-4 p-4 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20 hover:cursor-pointer"
-  on:click={openBleetFullView}
+  onclick={openBleetFullView}
 >
-  <Avatar.Root on:click={selectUser}>
+  <Avatar.Root onclick={selectUser}>
     <Avatar.Image src={bleet.avatar} alt={`@${bleet.username}`} />
     <Avatar.Fallback>{bleet.displayName[0]}</Avatar.Fallback>
   </Avatar.Root>

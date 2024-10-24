@@ -1,10 +1,16 @@
 <script lang="ts">
   import { getContext } from "svelte";
   import { cn } from "@/utils/misc";
+  import type { Snippet } from 'svelte';
 
-  export let value: string;
-  let className: string | undefined = undefined;
-  export { className as class };
+  interface Props {
+    value: string;
+    class?: string | undefined;
+    children?: Snippet;
+    [key: string]: any;
+  }
+
+  let { value, class: className = undefined, children, ...rest }: Props = $props();
 
   const { registerTab, selectedTab } = getContext("tabs");
   const { select } = registerTab(value);
@@ -16,8 +22,8 @@
     className,
   )}
   data-state={$selectedTab === value ? "active" : "inactive"}
-  on:click={select}
-  {...$$restProps}
+  onclick={select}
+  {...rest}
 >
-  <slot />
+  {@render children?.()}
 </button>

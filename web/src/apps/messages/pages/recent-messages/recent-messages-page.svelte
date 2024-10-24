@@ -6,7 +6,7 @@
   import { truncate } from "@/utils/misc";
   import { SendEvent } from "@/utils/eventsHandlers";
 
-  let recentMessages: any[];
+  let recentMessages: any[] = $state();
 
   onMount(async () => {
     recentMessages = await SendEvent("messages:fetchRecents");
@@ -37,7 +37,7 @@
   {#if recentMessages}
     {#each recentMessages as conversation}
       <button
-        on:click={() => openConversation(conversation.id)}
+        onclick={() => openConversation(conversation.id)}
         class="flex flex-col w-full px-6 py-4 text-left border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
       >
         <div class="flex justify-between w-full">

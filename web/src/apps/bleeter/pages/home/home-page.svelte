@@ -6,8 +6,8 @@
   import type { Bleet as BleetType } from "@/typings/bleeter";
   import { SendEvent } from "@/utils/eventsHandlers";
 
-  let currentTab = "for-you";
-  let bleets: BleetType[] = [];
+  let currentTab = $state("for-you");
+  let bleets: BleetType[] = $state([]);
 
   function handleTabChange(event) {
     currentTab = event.detail;

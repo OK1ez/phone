@@ -8,18 +8,14 @@
   import { onMount } from "svelte";
   import { LOGGED_IN_AS, SELECTED_USER } from "../../stores/bleeter";
 
-  export let isOverlay = false;
-
-  let profile = {};
-  let bleets = [];
-
-  $: username = isOverlay ? $SELECTED_USER : $LOGGED_IN_AS;
-
-  $: {
-    if (username) {
-      loadProfile(username);
-    }
+  interface Props {
+    isOverlay?: boolean;
   }
+
+  let { isOverlay = false }: Props = $props();
+
+  let profile = $state({});
+  let bleets = $state([]);
 
   async function loadProfile(username) {
     profile = await SendEvent("bleeter:fetchProfile", username);
@@ -31,11 +27,19 @@
       SELECTED_USER.set(null);
     }
   }
+
+  let username = $derived(isOverlay ? $SELECTED_USER : $LOGGED_IN_AS);
+
+  $effect(() => {
+    if (username) {
+      loadProfile(username);
+    }
+  });
 </script>
 
 {#if isOverlay}
   <header class="flex items-center w-full gap-4 px-6 pb-4 mt-16 border-b">
-    <button on:click={closeOverlay}>
+    <button onclick={closeOverlay}>
       <ChevronLeft class="w-6 h-6 text-gray-400 hover:text-foreground" />
     </button>
   </header>
@@ -49,7 +53,7 @@
         alt="Profile banner"
         class="object-cover w-full h-40"
       />
-      <div class="absolute inset-0 bg-black/40" />
+      <div class="absolute inset-0 bg-black/40"></div>
       <div class="absolute flex items-end justify-between w-full px-4 -mt-6">
         <Avatar.Root class="w-20 h-20 border-4 border-background">
           <Avatar.Image src={profile.avatar} alt={`@${profile.username}`} />

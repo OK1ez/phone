@@ -6,7 +6,7 @@
   import { onMount } from "svelte";
   import { SendEvent } from "@/utils/eventsHandlers";
 
-  let mails = [];
+  let mails = $state([]);
 
   onMount(async () => {
     mails = await SendEvent("mail:fetchRecents", {});
@@ -24,7 +24,7 @@
     {#each mails as mail}
       <button
         class="flex flex-col w-full px-6 py-4 text-left border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
-        on:click={() => openMail(mail.id)}
+        onclick={() => openMail(mail.id)}
       >
         <div class="flex justify-between w-full">
           <span class="text-base font-medium">{mail.subject}</span>

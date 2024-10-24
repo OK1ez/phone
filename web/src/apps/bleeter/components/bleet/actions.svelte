@@ -1,7 +1,11 @@
 <script lang="ts">
   import { Heart, MessageSquare, Repeat2 } from "lucide-svelte";
 
-  export let bleet: any;
+  interface Props {
+    bleet: any;
+  }
+
+  let { bleet = $bindable() }: Props = $props();
 
   /**
    * Handles the like action for a bleet.
@@ -36,7 +40,7 @@
     <span class="ml-2">{bleet.comments}</span>
   </button>
   <button
-    on:click={rebleetBleet}
+    onclick={rebleetBleet}
     class="flex items-center w-16 text-gray-400 group"
     aria-label="Rebleet"
   >
@@ -47,7 +51,7 @@
     <span class="ml-2">{bleet.rebleets}</span>
   </button>
   <button
-    on:click={likeBleet}
+    onclick={likeBleet}
     class="flex items-center w-16 text-gray-400 group"
     aria-label="Like"
   >

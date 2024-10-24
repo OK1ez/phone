@@ -1,13 +1,37 @@
 <script lang="ts">
-  import { writable } from "svelte/store";
   import { setContext, createEventDispatcher } from "svelte";
+  import type { Snippet } from 'svelte';
 
-  export let value: string;
+  interface Props {
+    value: string;
+    children?: Snippet;
+    [key: string]: any;
+  }
+
+  let { value, children, ...rest }: Props = $props();
+  let selectedTab = $state(value);
+
+  $effect(() => {
+    selectedTab = value;
+  });
 
   const dispatch = createEventDispatcher();
-  const selectedTab = writable(value);
 
-  $: selectedTab.set(value);
+  const selectedTabStore = {
+    subscribe: (fn: (value: string) => void) => {
+      fn(selectedTab);
+
+      const effectCleanup = $effect.root(() => {
+        $effect(() => {
+          fn(selectedTab);
+        });
+      });
+
+      return () => {
+        if (effectCleanup) effectCleanup();
+      };
+    }
+  };
 
   setContext("tabs", {
     registerTab: (tabValue: string) => {
@@ -17,10 +41,11 @@
         },
       };
     },
-    selectedTab,
+    selectedTab: selectedTabStore
   });
 </script>
 
-<div {...$$restProps}>
-  <slot />
+
+<div {...rest}>
+  {@render children?.()}
 </div>

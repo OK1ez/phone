@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import { SendEvent } from "@/utils/eventsHandlers";
 
-  let contacts = [];
+  let contacts = $state([]);
 
   onMount(async () => {
     contacts = await SendEvent("phone:fetchContacts", {});

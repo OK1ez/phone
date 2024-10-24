@@ -19,7 +19,7 @@
     {#each Object.entries($APPS) as [appName, app]}
       <button
         class="flex flex-col items-center justify-center rounded-lg space-y-1"
-        on:click={() => openApp(appName)}
+        onclick={() => openApp(appName)}
       >
         <div
           class="size-[4.5rem] rounded-2xl bg-secondary"

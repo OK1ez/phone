@@ -6,9 +6,9 @@
   import Homescreen from "./components/homescreen.svelte";
   import PhoneWrapper from "./components/phone-wrapper.svelte";
 
-  let showHomescreen = true;
+  let showHomescreen = $state(true);
 
-  $: {
+  $effect(() => {
     if ($SELECTED_APP) {
       setTimeout(() => {
         showHomescreen = false;
@@ -16,7 +16,7 @@
     } else {
       showHomescreen = true;
     }
-  }
+  });
 </script>
 
 <PhoneWrapper>

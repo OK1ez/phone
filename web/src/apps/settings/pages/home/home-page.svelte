@@ -22,7 +22,7 @@
 
 <ScrollArea class="flex flex-col w-full h-full max-h-[49.5rem] overflow-y-auto">
   <button
-    on:click={() => navigateTo("cloud")}
+    onclick={() => navigateTo("cloud")}
     class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
   >
     <div class="flex items-center space-x-4">
@@ -66,7 +66,7 @@
   </div>
 
   <button
-    on:click={() => navigateTo("general")}
+    onclick={() => navigateTo("general")}
     class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
   >
     <div class="flex items-center space-x-4">
@@ -82,7 +82,7 @@
   </button>
 
   <button
-    on:click={() => navigateTo("notifications")}
+    onclick={() => navigateTo("notifications")}
     class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
   >
     <div class="flex items-center space-x-4">
@@ -96,7 +96,7 @@
   </button>
 
   <button
-    on:click={() => navigateTo("sounds")}
+    onclick={() => navigateTo("sounds")}
     class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
   >
     <div class="flex items-center space-x-4">
@@ -110,7 +110,7 @@
   </button>
 
   <button
-    on:click={() => navigateTo("unlock")}
+    onclick={() => navigateTo("unlock")}
     class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
   >
     <div class="flex items-center space-x-4">
@@ -124,7 +124,7 @@
   </button>
 
   <button
-    on:click={() => navigateTo("display")}
+    onclick={() => navigateTo("display")}
     class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
   >
     <div class="flex items-center space-x-4">
@@ -140,7 +140,7 @@
   </button>
 
   <button
-    on:click={() => navigateTo("wallpapers")}
+    onclick={() => navigateTo("wallpapers")}
     class="flex items-center justify-between w-full h-20 px-6 border-b hover:bg-secondary/70 dark:hover:bg-secondary/20"
   >
     <div class="flex items-center space-x-4">

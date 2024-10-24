@@ -1,13 +1,24 @@
 <script lang="ts">
   import { cn } from "@/utils/misc";
 
-  let className: string | undefined = undefined;
-  export { className as class };
-  export let orientation: "vertical" | "horizontal" | "both" = "vertical";
-  export let scrollbarXClasses: string = "";
-  export let scrollbarYClasses: string = "";
+  
+  interface Props {
+    class?: string | undefined;
+    orientation?: "vertical" | "horizontal" | "both";
+    scrollbarXClasses?: string;
+    scrollbarYClasses?: string;
+    children?: import('svelte').Snippet;
+  }
 
-  let viewportEl: HTMLDivElement;
+  let {
+    class: className = undefined,
+    orientation = "vertical",
+    scrollbarXClasses = "",
+    scrollbarYClasses = "",
+    children
+  }: Props = $props();
+
+  let viewportEl: HTMLDivElement = $state();
 
   function handleScroll() {
     if (viewportEl) {
@@ -55,10 +66,10 @@
   <div
     bind:this={viewportEl}
     class="h-full w-full rounded-[inherit] overflow-auto"
-    on:scroll={handleScroll}
+    onscroll={handleScroll}
   >
     <div>
-      <slot />
+      {@render children?.()}
     </div>
   </div>
   {#if orientation === "horizontal" || orientation === "both"}

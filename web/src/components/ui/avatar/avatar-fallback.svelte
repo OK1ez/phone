@@ -1,8 +1,14 @@
 <script lang="ts">
   import { cn } from "@/utils/misc";
 
-  let className: string | undefined = undefined;
-  export { className as class };
+  interface Props {
+    class?: string | undefined;
+    children?: import('svelte').Snippet;
+    [key: string]: any
+  }
+
+  let { class: className = undefined, children, ...rest }: Props = $props();
+  
 </script>
 
 <div
@@ -10,7 +16,7 @@
     "bg-muted flex h-full w-full items-center justify-center rounded-full",
     className,
   )}
-  {...$$restProps}
+  {...rest}
 >
-  <slot />
+  {@render children?.()}
 </div>

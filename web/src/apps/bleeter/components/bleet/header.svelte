@@ -8,15 +8,19 @@
     Flag,
   } from "lucide-svelte";
 
-  export let bleet: any;
-  export let selectUser: (event: MouseEvent) => void;
+  interface Props {
+    bleet: any;
+    selectUser: (event: MouseEvent) => void;
+  }
+
+  let { bleet, selectUser }: Props = $props();
 </script>
 
 <div class="flex justify-between w-full">
   <div class="flex items-center">
     <p
       class="text-base font-medium cursor-pointer hover:underline"
-      on:click={selectUser}
+      onclick={selectUser}
     >
       {bleet.displayName}
     </p>

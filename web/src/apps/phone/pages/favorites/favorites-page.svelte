@@ -5,7 +5,7 @@
   import { onMount } from "svelte";
   import { SendEvent } from "@/utils/eventsHandlers";
 
-  let favorites = [];
+  let favorites = $state([]);
 
   onMount(async () => {
     favorites = await SendEvent("phone:fetchFavorites", {});

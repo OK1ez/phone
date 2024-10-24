@@ -19,5 +19,5 @@
   out:slide={{ duration: 400, easing: quintOut, axis: "y" }}
 >
   <p class="text-lg font-medium mb-36">21:10</p>
-  <Indicator on:click={unlock} />
+  <Indicator onclick={unlock} />
 </div>

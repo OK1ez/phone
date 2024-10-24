@@ -41,10 +41,12 @@
     SELECTED_USER.set(null);
     SELECTED_BLEET.set(null);
   }
+
+  const SvelteComponent = $derived(pageComponents[$ACTIVE_PAGE]);
 </script>
 
 <div class="relative flex flex-col w-full h-full bg-background">
-  <svelte:component this={pageComponents[$ACTIVE_PAGE]} />
+  <SvelteComponent />
 
   {#if $SELECTED_USER}
     <div

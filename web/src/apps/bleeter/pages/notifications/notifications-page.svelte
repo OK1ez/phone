@@ -5,7 +5,7 @@
   import { SendEvent } from "@/utils/eventsHandlers";
   import { onMount } from "svelte";
 
-  let notifications = [];
+  let notifications = $state([]);
 
   onMount(async () => {
     // fetch 20/30 latest notifications by username, scroll to fetch more
