@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
 
   ReceiveEvent("phone:visible", (state: string): void => {
-    $VISIBLE = state;
+    $VISIBLE = state ? "visible" : "hidden";
   });
 
   onMount(() => {

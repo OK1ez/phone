@@ -14,14 +14,20 @@ description 'A phone'
 shared_script '@ox_lib/init.lua'
 
 client_scripts {
-    'client/main.lua'
+    'phone/client.lua'
 }
 
 server_scripts {
-    'server/main.lua'
+    'phone/server.lua'
 }
 
 files {
     'locales/*.json',
-    'config/*.lua'
+    'config/*.lua',
+    'web/build/index.html',
+    'web/build/*.js',
+    'web/build/*.css',
 }
+
+-- ui_page 'web/build/index.html'
+ui_page 'http://localhost:5173/'

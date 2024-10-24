@@ -1,9 +1,9 @@
 <script lang="ts">
   import { Bug, Sun, Moon, Eye } from "lucide-svelte";
   import { Button } from "@/components/ui/button/index";
-  import { toggleMode } from "mode-watcher";
   import { sendNotification } from "@/stores/notifications";
   import { toggleVisible } from "@/utils/debug/visibility";
+  import { IS_DARK_MODE } from "@/stores/phone";
 
   let visible: boolean = true;
 
@@ -18,10 +18,21 @@
       app: "bleeter",
     });
   }
+
+  function toggleMode() {
+    IS_DARK_MODE.update((value) => !value);
+  }
 </script>
 
+<div class="absolute w-full h-full -z-50 bg-foreground" />
+
 <div class="absolute top-0 left-0 m-2 flex flex-col gap-2">
-  <Button on:click={toggleMode} variant="outline" size="icon" class="w-8 h-8">
+  <Button
+    on:click={toggleMode}
+    variant="outline"
+    size="icon"
+    class="w-8 h-8 text-white bg-black border-black"
+  >
     <Sun
       class="w-4 h-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
     />
@@ -33,7 +44,7 @@
     on:click={toggleVisibility}
     variant="outline"
     size="icon"
-    class="w-8 h-8"
+    class="w-8 h-8 text-white bg-black border-black"
   >
     <Eye class="w-4 h-4" />
   </Button>
@@ -41,7 +52,7 @@
     on:click={testNotification}
     variant="outline"
     size="icon"
-    class="w-8 h-8"
+    class="w-8 h-8 text-white bg-black border-black"
   >
     <Bug class="w-4 h-4" />
   </Button>

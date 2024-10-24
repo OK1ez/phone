@@ -1,12 +1,14 @@
 import type { DebugEventCallback } from "@/typings/events";
 import { ReceiveEvent } from "./eventsHandlers";
 import { VISIBLE } from "@/stores/stores";
+import { get } from "svelte/store";
 
 const AlwaysListened: DebugEventCallback[] = [
   {
     action: "phone:visible",
-    handler: () => {
-      VISIBLE.set("visible");
+    handler: (data: any) => {
+      VISIBLE.set(data.visible ? "visible" : "hidden");
+      console.log("phone:visible", get(VISIBLE));
     },
   },
 ];

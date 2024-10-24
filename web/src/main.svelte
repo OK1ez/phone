@@ -1,10 +1,9 @@
 <script>
   import { onMount } from "svelte";
-  import { CONFIG } from "./stores/stores";
+  import { CONFIG, IS_BROWSER } from "./stores/stores";
   import { InitialiseListen } from "@/utils/listeners";
   import { InitialiseDebugSenders } from "@/utils/debug/init";
   import { InitialiseDebugReceivers } from "@/utils/debug/receivers";
-  import { ModeWatcher } from "mode-watcher";
 
   import Visibility from "@/providers/visibility.svelte";
   import Phone from "@/layout/phone.svelte";
@@ -16,8 +15,10 @@
   });
 
   onMount(() => {
-    InitialiseDebugSenders();
-    InitialiseDebugReceivers();
+    if ($IS_BROWSER) {
+      InitialiseDebugSenders();
+      InitialiseDebugReceivers();
+    }
   });
 
   InitialiseListen();
@@ -27,5 +28,6 @@
   <Phone />
 </Visibility>
 
-<Dev />
-<ModeWatcher />
+{#if $IS_BROWSER}
+  <Dev />
+{/if}

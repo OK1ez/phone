@@ -1,5 +1,7 @@
 import { writable } from "svelte/store";
 
+export const IS_DARK_MODE = writable<boolean>(true);
+
 export const IS_LOCKED = writable<boolean>(true);
 
 export const APPS = writable({
