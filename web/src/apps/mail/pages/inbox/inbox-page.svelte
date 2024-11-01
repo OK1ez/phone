@@ -1,5 +1,5 @@
 <script>
-  import { ChevronRight,Edit } from "lucide-svelte";
+  import { ChevronRight, SendHorizontal } from "lucide-svelte";
   import { ScrollArea } from "@/components/ui/scroll-area";
   import { truncate } from "@/utils/misc";
   import { openMail} from "../../stores/mail";
@@ -8,7 +8,6 @@
   import { SendEvent } from "@/utils/eventsHandlers";
 
 
-  import NewMail from '../newmail/new-page.svelte';
   import { fly } from 'svelte/transition';
   let showNewMail = $state(false);
   let subject = $state("");
@@ -65,21 +64,38 @@
 
 
 {#if showNewMail}
+
   <div transition:fly={{ y: 500, duration: 300 }} class="absolute bottom-0 flex flex-col  items-stretch  justify-center w-full h-1/2  pb-6 border-t bg-primary-foreground rounded-t-[22px]">
+    
     <button class="absolute top-5 left-5 text-blue-500 cursor-pointer text-[20px]" onclick={CancelNewMail}>
       Cancel
     </button>
+
+
     <div class=" w-full h-[90%] absolute bottom-0">
+
       <h2 class="text-[42px] font-bold p-3 truncate " >{subject || 'New message'}</h2>
+
       <input type="text" placeholder="To:" class="w-full mb-3 p-2 border-b-[2px] outline-none rounded bg-primary-foreground" />
+
       <input type="text" placeholder="Subject:" bind:value={subject} class="w-full mb-3 p-2 border-b-[2px] outline-none rounded bg-primary-foreground" />
+
       <textarea placeholder="Write your message..." class="w-full h-52 p-2 resize-none outline-none overflow-y-a rounded bg-primary-foreground "></textarea>
+
     </div>
+
   </div>
+
 {/if}
+
 {#if !showNewMail}
+
   <div class="absolute bottom-0 flex items-center justify-center w-full h-24 px-16 pb-6 border-t bg-background">
+
     <span>{mails.length} Mails</span>
-    <Edit onclick={openNewMail} class="absolute right-7 bottom-13 w-6 h-9 cursor-pointer" />
+
+    <SendHorizontal  onclick={openNewMail} class="absolute right-7 bottom-13 w-6 h-9 cursor-pointer" />
+
   </div>
+
 {/if}
