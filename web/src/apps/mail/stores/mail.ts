@@ -54,3 +54,5 @@ export function openMail(id: string) {
   SELECTED_MAIL_ID.set(id);
   ACTIVE_PAGE.set("view");
 }
+
+

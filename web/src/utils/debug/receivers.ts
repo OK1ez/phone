@@ -92,6 +92,18 @@ const ReceiveDebuggers: DebugEventCallback[] = [
       return mail;
     },
   },
+
+  {
+    action: "mail:deleteById",
+    handler: (mailId: string) => {
+      delete mockMails[mailId];
+      return true
+    },
+  },
+
+
+
+
   {
     action: "bleeter:fetchRecents",
     handler: () => {
