@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { fly } from "svelte/transition";
   import { Signal, WifiHigh, Volume2, VolumeX, Volume1 } from "lucide-svelte";
   import { IS_LOCKED, IS_DARK_MODE } from "@/stores/phone";
@@ -16,16 +17,19 @@
    * Control volume.
    */
 
+  let volumeSlider: HTMLDivElement;
   let volume = $state(0);
   let showVolume = $state(false);
   let volumeTimeout: ReturnType<typeof setTimeout>;
 
-  function volumeUp() {
+  function volumeUp(event: MouseEvent) {
+    event.stopPropagation();
     volume = Math.min(volume + 20, 100);
     showVolumeControl();
   }
 
-  function volumeDown() {
+  function volumeDown(event: MouseEvent) {
+    event.stopPropagation();
     volume = Math.max(volume - 20, 0);
     showVolumeControl();
   }
@@ -38,13 +42,31 @@
     }, 2000);
   }
 
+  function handleClickOutside(event: MouseEvent) {
+    if (
+      showVolume &&
+      volumeSlider &&
+      !volumeSlider.contains(event.target as Node)
+    ) {
+      showVolume = false;
+    }
+  }
+
+  $effect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  });
+
   /**
    * Mute phone.
    */
 
   let muted = $state(false);
 
-  function mutePhone() {
+  function mutePhone(event: MouseEvent) {
+    event.stopPropagation();
     muted = true;
     volume = 0;
     showVolumeControl();
@@ -121,26 +143,27 @@
 
     {#if showVolume}
       <div
-        class="w-[3.4375rem] h-[12.5rem] top-[13.75rem] left-[1.25rem] rounded-[0.9375rem] bg-muted absolute overflow-hidden"
+        bind:this={volumeSlider}
+        class="w-[3.4375rem] h-[12.5rem] top-[13.75rem] left-[1.25rem] rounded-xl bg-muted absolute overflow-hidden"
         transition:fly={{ x: -10, duration: 500 }}
       >
-        <div class="absolute bottom-0 w-full" style="height: {volume}%; ">
+        <div class="absolute bottom-0 w-full" style="height: {volume}%;">
           <div class="bg-white w-full h-full"></div>
         </div>
         {#if volume === 0}
           <VolumeX
             color="#4f4f4f"
-            class="w-[100%] h-[1.875rem] absolute bottom-[0.875rem]"
+            class="w-full h-[1.875rem] absolute bottom-[0.875rem]"
           />
         {:else if volume < 50}
           <Volume1
             color="#4f4f4f"
-            class="w-[100%] h-[1.875rem] absolute bottom-[0.875rem]"
+            class="w-full h-[1.875rem] absolute bottom-[0.875rem]"
           />
         {:else}
           <Volume2
             color="#4f4f4f"
-            class="w-[100%] h-[1.875rem] absolute bottom-[0.875rem]"
+            class="w-full h-[1.875rem] absolute bottom-[0.875rem]"
           />
         {/if}
       </div>
