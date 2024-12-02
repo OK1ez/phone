@@ -1,34 +1,32 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
-  import { Signal, WifiHigh,Volume2,VolumeX,Volume1 } from "lucide-svelte";
+  import { Signal, WifiHigh, Volume2, VolumeX, Volume1 } from "lucide-svelte";
   import { IS_LOCKED, IS_DARK_MODE } from "@/stores/phone";
   import Notch from "./notch.svelte";
   import Notifications from "./notifications.svelte";
   import { VISIBLE } from "@/stores/stores";
 
   interface Props {
-    children?: import('svelte').Snippet;
+    children?: import("svelte").Snippet;
   }
 
   let { children }: Props = $props();
 
-
-  
   /**
    * Control volume.
-  */
+   */
 
   let volume = $state(0);
   let showVolume = $state(false);
   let volumeTimeout: ReturnType<typeof setTimeout>;
 
-  function VolumeUp() {
-    volume = Math.min(volume + 5, 100);
+  function volumeUp() {
+    volume = Math.min(volume + 20, 100);
     showVolumeControl();
   }
 
-  function VolumeDown() {
-    volume = Math.max(volume - 5, 0);
+  function volumeDown() {
+    volume = Math.max(volume - 20, 0);
     showVolumeControl();
   }
 
@@ -40,19 +38,17 @@
     }, 2000);
   }
 
-
   /**
    * Mute phone.
-  */
+   */
 
-  let Muted = $state(false)
+  let muted = $state(false);
 
-  function MutePhone(){
-    Muted = true
-    volume = 0
+  function mutePhone() {
+    muted = true;
+    volume = 0;
     showVolumeControl();
   }
-
 
   /**
    * Locks the phone.
@@ -67,9 +63,6 @@
   });
 </script>
 
-
-
-
 <div
   class="absolute flex w-[30rem] h-[63rem] right-0 bottom-0 transition-all duration-300 {$VISIBLE ===
   'half-visible'
@@ -80,41 +73,35 @@
   class:dark={$IS_DARK_MODE}
   class:text-foreground={$IS_DARK_MODE}
 >
-
-
   <button
     class="absolute w-1.5 h-32 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full top-48 right-[-10px]"
     aria-label="Lock"
     onclick={lock}
-></button>
+  ></button>
 
   <div class="h-32 w-1.5 absolute flex flex-col left-[-10px] top-36">
     <button
       class="w-full min-h-12 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full mb-8"
       aria-label="Mute"
-      onclick={MutePhone}
-></button>
+      onclick={mutePhone}
+    ></button>
     <button
       class="w-full min-h-24 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full mb-4"
       aria-label="Volume up"
-      onclick={VolumeUp}
-></button>
-
-
-
-
+      onclick={volumeUp}
+    ></button>
 
     <button
-          class="w-full min-h-24 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full"
-          aria-label="Volume down"
-          onclick={VolumeDown}
+      class="w-full min-h-24 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full"
+      aria-label="Volume down"
+      onclick={volumeDown}
     ></button>
   </div>
 
   <!-- Phone content -->
-  <div class="w-full h-full bg-black rounded-[3.4rem] shadow-frame flex z-10 p-2 overflow-hidden" >
-
-  
+  <div
+    class="w-full h-full bg-black rounded-[3.4rem] shadow-frame flex z-10 p-2 overflow-hidden"
+  >
     <!-- <Notch /> -->
     <div
       class="w-full h-full rounded-[3rem] bg-cover bg-black overflow-hidden relative"
@@ -133,22 +120,30 @@
     </div>
 
     {#if showVolume}
-      <div class="w-[3.4375rem] h-[12.5rem] top-[13.75rem] left-[1.25rem] rounded-[0.9375rem] bg-muted absolute overflow-hidden"
-          transition:fly={{ x: -10, duration: 500 }}>
+      <div
+        class="w-[3.4375rem] h-[12.5rem] top-[13.75rem] left-[1.25rem] rounded-[0.9375rem] bg-muted absolute overflow-hidden"
+        transition:fly={{ x: -10, duration: 500 }}
+      >
         <div class="absolute bottom-0 w-full" style="height: {volume}%; ">
           <div class="bg-white w-full h-full"></div>
         </div>
         {#if volume === 0}
-          <VolumeX color="#4f4f4f" class="w-[100%] h-[1.875rem] absolute bottom-[0.875rem]" />
+          <VolumeX
+            color="#4f4f4f"
+            class="w-[100%] h-[1.875rem] absolute bottom-[0.875rem]"
+          />
         {:else if volume < 50}
-          <Volume1 color="#4f4f4f" class="w-[100%] h-[1.875rem] absolute bottom-[0.875rem]" />
+          <Volume1
+            color="#4f4f4f"
+            class="w-[100%] h-[1.875rem] absolute bottom-[0.875rem]"
+          />
         {:else}
-          <Volume2 color="#4f4f4f" class="w-[100%] h-[1.875rem] absolute bottom-[0.875rem]" />
+          <Volume2
+            color="#4f4f4f"
+            class="w-[100%] h-[1.875rem] absolute bottom-[0.875rem]"
+          />
         {/if}
       </div>
     {/if}
-    
-    
-    
   </div>
 </div>
