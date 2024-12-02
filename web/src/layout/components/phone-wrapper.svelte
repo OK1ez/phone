@@ -1,16 +1,76 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { fly } from "svelte/transition";
-  import { Signal, WifiHigh } from "lucide-svelte";
+  import { Signal, WifiHigh, Volume2, VolumeX, Volume1 } from "lucide-svelte";
   import { IS_LOCKED, IS_DARK_MODE } from "@/stores/phone";
   import Notch from "./notch.svelte";
   import Notifications from "./notifications.svelte";
   import { VISIBLE } from "@/stores/stores";
 
   interface Props {
-    children?: import('svelte').Snippet;
+    children?: import("svelte").Snippet;
   }
 
   let { children }: Props = $props();
+
+  /**
+   * Control volume.
+   */
+
+  let volumeSlider: HTMLDivElement;
+  let volume = $state(0);
+  let showVolume = $state(false);
+  let volumeTimeout: ReturnType<typeof setTimeout>;
+
+  function volumeUp(event: MouseEvent) {
+    event.stopPropagation();
+    volume = Math.min(volume + 20, 100);
+    showVolumeControl();
+  }
+
+  function volumeDown(event: MouseEvent) {
+    event.stopPropagation();
+    volume = Math.max(volume - 20, 0);
+    showVolumeControl();
+  }
+
+  function showVolumeControl() {
+    showVolume = true;
+    clearTimeout(volumeTimeout);
+    volumeTimeout = setTimeout(() => {
+      showVolume = false;
+    }, 2000);
+  }
+
+  function handleClickOutside(event: MouseEvent) {
+    if (
+      showVolume &&
+      volumeSlider &&
+      !volumeSlider.contains(event.target as Node)
+    ) {
+      showVolume = false;
+    }
+  }
+
+  $effect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  });
+
+  /**
+   * Mute phone.
+   */
+
+  let muted = $state(false);
+
+  function mutePhone(event: MouseEvent) {
+    event.stopPropagation();
+    muted = true;
+    volume = 0;
+    showVolumeControl();
+  }
 
   /**
    * Locks the phone.
@@ -39,21 +99,25 @@
     class="absolute w-1.5 h-32 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full top-48 right-[-10px]"
     aria-label="Lock"
     onclick={lock}
-></button>
+  ></button>
 
   <div class="h-32 w-1.5 absolute flex flex-col left-[-10px] top-36">
     <button
       class="w-full min-h-12 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full mb-8"
       aria-label="Mute"
-></button>
+      onclick={mutePhone}
+    ></button>
     <button
       class="w-full min-h-24 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full mb-4"
       aria-label="Volume up"
-></button>
+      onclick={volumeUp}
+    ></button>
+
     <button
       class="w-full min-h-24 bg-gray-500 shadow-inner shadow-[#241D24] rounded-full"
       aria-label="Volume down"
-></button>
+      onclick={volumeDown}
+    ></button>
   </div>
 
   <!-- Phone content -->
@@ -76,5 +140,33 @@
       <Notifications />
       {@render children?.()}
     </div>
+
+    {#if showVolume}
+      <div
+        bind:this={volumeSlider}
+        class="w-[3.4375rem] h-[12.5rem] top-[13.75rem] left-[1.25rem] rounded-xl bg-muted absolute overflow-hidden"
+        transition:fly={{ x: -10, duration: 500 }}
+      >
+        <div class="absolute bottom-0 w-full" style="height: {volume}%;">
+          <div class="bg-white w-full h-full"></div>
+        </div>
+        {#if volume === 0}
+          <VolumeX
+            color="#4f4f4f"
+            class="w-full h-[1.875rem] absolute bottom-[0.875rem]"
+          />
+        {:else if volume < 50}
+          <Volume1
+            color="#4f4f4f"
+            class="w-full h-[1.875rem] absolute bottom-[0.875rem]"
+          />
+        {:else}
+          <Volume2
+            color="#4f4f4f"
+            class="w-full h-[1.875rem] absolute bottom-[0.875rem]"
+          />
+        {/if}
+      </div>
+    {/if}
   </div>
 </div>
