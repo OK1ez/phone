@@ -1,0 +1,25 @@
+import Recents from "./pages/recents/recents.svelte";
+import Conversation from "./pages/conversation/conversation.svelte";
+
+export class Messages {
+  routes = {
+    recents: {
+      label: "Recents",
+      route: Recents,
+    },
+    conversation: {
+      label: "Conversation",
+      route: Conversation,
+    },
+  };
+
+  currentRoute: keyof typeof this.routes = $state("conversation");
+  direction: "forward" | "back" = $state("forward");
+
+  navigate(id: keyof typeof this.routes, back?: boolean) {
+    this.direction = back ? "back" : "forward";
+    this.currentRoute = id;
+  }
+}
+
+export const messages = new Messages();

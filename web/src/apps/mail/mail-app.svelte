@@ -1,26 +1,20 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
-  import { ACTIVE_PAGE } from "./stores/mail";
-  import InboxPage from "./pages/inbox/inbox-page.svelte";
-  import ViewPage from "./pages/view/view-page.svelte";
+  import { mail } from "./mail.svelte";
 
+  import { getTransitionDirection } from "@/lib/utils/utils";
+
+  let CurrentRoute = $derived(mail.routes[mail.currentRoute].route);
 </script>
 
 <div class="relative flex flex-col w-full h-full bg-background">
-  {#if $ACTIVE_PAGE === "inbox"}
+  {#key mail.currentRoute}
     <div
-      class="absolute w-full h-full"
-      transition:fly={{ x: -500, duration: 300 }}
+      class="w-full h-full absolute"
+      in:fly={getTransitionDirection(mail.direction).in}
+      out:fly={getTransitionDirection(mail.direction).out}
     >
-    <InboxPage />
-
+      <CurrentRoute />
     </div>
-  {:else if $ACTIVE_PAGE === "view"}
-    <div
-      class="absolute w-full h-full"
-      transition:fly={{ x: 500, duration: 300 }}
-    >
-      <ViewPage />
-    </div>
-  {/if}
+  {/key}
 </div>

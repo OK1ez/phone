@@ -1,12 +1,10 @@
-import { defineConfig, type PluginOption } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 import path from "path";
-import { visualizer } from "rollup-plugin-visualizer";
 
-// https://vitejs.dev/config/
+// https://vite.dev/config/
 export default defineConfig({
-  plugins: [svelte(), visualizer() as PluginOption],
-  base: './',
+  base: "./",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -14,14 +12,15 @@ export default defineConfig({
   },
   build: {
     emptyOutDir: true,
-    outDir: './build',
-    assetsDir: './',
+    outDir: "../web/build",
+    assetsDir: "./",
     rollupOptions: {
       output: {
         entryFileNames: `[name].js`,
         chunkFileNames: `[name].js`,
-        assetFileNames: `[name].[ext]`
-      }
-    }
-  }
-})
+        assetFileNames: `[name].[ext]`,
+      },
+    },
+  },
+  plugins: [svelte()],
+});

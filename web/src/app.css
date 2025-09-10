@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.625rem;
+        --spacing: 0.25rem;
+        --background: 0 0% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 0 0% 3.9%;
+        --card-foreground: 0 0% 98%;
+        --popover: 0 0% 3.9%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 0 0% 9%;
+        --secondary: 0 0% 14.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 0 0% 14.9%;
+        --muted-foreground: 0 0% 63.9%;
+        --accent: 0 0% 14.9%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 359 99% 69%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 0 0% 14.9%;
+        --input: 0 0% 14.9%;
+        --ring: 0 0% 83.1%;
+        --chart-1: 40.67 100.24% 50.92%;
+        --chart-2: 218.16 90.04% 55.16%;
+        --chart-3: 223.81 0% 45.61%;
+        --chart-4: 223.81 0% 32.31%;
+        --chart-5: 223.81 0% 89.56%;
+        --sidebar-background: 223.81 0% 6.87%;
+        --sidebar-foreground: 223.81 -172.52% 100%;
+        --sidebar-primary: 223.81 -172.52% 100%;
+        --sidebar-primary-foreground: 0 0% 0%;
+        --sidebar-accent: 223.81 0% 19.89%;
+        --sidebar-accent-foreground: 223.81 -172.52% 100%;
+        --sidebar-border: 223.81 0% 19.89%;
+        --sidebar-ring: 223.81 0% 64.47%;
+        --selection: 330 0% 90%;
+        --selection-foreground: 330 0% 9%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    *:focus {
+        @apply outline-none;
+    }
+    body {
+        @apply font-sans text-foreground bg-background;
+    }
+    main {
+        @apply absolute z-10 w-screen h-screen;
+    }
+    ::selection {
+        @apply bg-selection text-selection-foreground;
+    }
+    ::-webkit-scrollbar {
+        display: none;
+        scrollbar-width: none;
+    }
+}
+
+@layer components {
+    .shadow-frame {
+        --tw-shadow: 0 0 0.15rem 0.15rem #2f2f2f, 0 0 0 0.25rem #6f6f6f;
+        --tw-shadow-colored:
+            0 0 0.3rem 0.3rem var(--tw-shadow-color),
+            0 0 0 0.4rem var(--tw-shadow-color);
+        box-shadow:
+            var(--tw-ring-offset-shadow, 0 0 #0000),
+            var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+    }
+}
