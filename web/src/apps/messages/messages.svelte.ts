@@ -13,7 +13,7 @@ export class Messages {
     },
   };
 
-  currentRoute: keyof typeof this.routes = $state("conversation");
+  currentRoute: keyof typeof this.routes = $state("recents");
   direction: "forward" | "back" = $state("forward");
 
   navigate(id: keyof typeof this.routes, back?: boolean) {

@@ -9,7 +9,7 @@ class PhoneState {
   isLocked = $state(false);
 
   apps: App[] = $state([]);
-  currentApp: string | null = $state("mail");
+  currentApp: string | null = $state(null);
 
   lock() {
     this.isLocked = true;
