@@ -1,12 +1,12 @@
 <script>
   import Background from "@/lib/assets/backgrounds/background.webp";
-  import { phone } from "@/lib/states/phone.svelte";
+  import { core } from "@/lib/states/core.svelte";
   import { quintOut } from "svelte/easing";
   import { slide } from "svelte/transition";
   import Indicator from "./indicator.svelte";
 
   function unlock() {
-    phone.isLocked = false;
+    core.isLocked = false;
   }
 </script>
 

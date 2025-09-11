@@ -1,11 +1,11 @@
 import { SendEvent } from "@/lib/utils/eventsHandlers";
-import { phone } from "@/lib/states/phone.svelte";
+import { core } from "@/lib/states/core.svelte";
 
 export function setupKeyHandler() {
   const keyHandler = (e: KeyboardEvent) => {
-    if (e.code === "Escape" && phone.visible) {
+    if (e.code === "Escape" && core.visible) {
       SendEvent("hide");
-      phone.visible = false;
+      core.visible = false;
     }
   };
 

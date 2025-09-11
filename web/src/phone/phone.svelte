@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { phone } from "@/lib/states/phone.svelte";
+  import { core } from "@/lib/states/core.svelte";
 
   import Wifi from "lucide-svelte/icons/wifi";
   import Signal from "lucide-svelte/icons/signal";
@@ -12,7 +12,7 @@
 
   // makes app opening look nice
   $effect(() => {
-    if (phone.currentApp) {
+    if (core.currentApp) {
       const timeout = setTimeout(() => {
         showHomescreen = false;
       }, 250);
@@ -34,7 +34,7 @@
   <button
     class="absolute w-1.5 h-28 bg-[#6f6f6f] shadow-inner shadow-[#2f2f2f] rounded-full top-36 -right-2"
     aria-label="Lock Phone"
-    onclick={() => phone.lock()}
+    onclick={() => core.lock()}
   ></button>
 {/snippet}
 
@@ -66,14 +66,14 @@
     >
       {@render statusBar()}
       <div class="h-full">
-        {#if phone.isLocked}
+        {#if core.isLocked}
           <Lockscreen />
         {:else}
           {#if showHomescreen}
             <Homescreen />
           {/if}
 
-          {#if phone.currentApp}
+          {#if core.currentApp}
             <AppView />
           {/if}
         {/if}

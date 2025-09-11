@@ -1,7 +1,7 @@
 <script>
   import Background from "@/lib/assets/backgrounds/background.webp";
 
-  import { phone } from "@/lib/states/phone.svelte";
+  import { core } from "@/lib/states/core.svelte";
 </script>
 
 <div
@@ -11,6 +11,7 @@
   <div class="grid grid-cols-4 gap-x-4 gap-y-6 absolute">
     <button
       class="flex flex-col items-center justify-center rounded-lg space-y-2"
+      onclick={() => core.openApp("phone")}
     >
       <div
         class="size-[3.3rem] rounded-xl bg-secondary"
@@ -20,7 +21,7 @@
     </button>
     <button
       class="flex flex-col items-center justify-center rounded-lg space-y-2"
-      onclick={() => phone.openApp("messages")}
+      onclick={() => core.openApp("messages")}
     >
       <div
         class="size-[3.3rem] rounded-xl bg-secondary"
@@ -39,7 +40,7 @@
     </button>
     <button
       class="flex flex-col items-center justify-center rounded-lg space-y-2"
-      onclick={() => phone.openApp("settings")}
+      onclick={() => core.openApp("settings")}
     >
       <div
         class="size-[3.3rem] rounded-xl bg-secondary"
@@ -58,7 +59,7 @@
     </button>
     <button
       class="flex flex-col items-center justify-center rounded-lg space-y-2"
-      onclick={() => phone.openApp("mail")}
+      onclick={() => core.openApp("mail")}
     >
       <div
         class="size-[3.3rem] rounded-xl bg-secondary"

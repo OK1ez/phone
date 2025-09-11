@@ -1,4 +1,4 @@
-import { phone } from "@/lib/states/phone.svelte";
+import { core } from "@/lib/states/core.svelte";
 import type { DebugEventCallback } from "../types/events";
 import { ReceiveEvent } from "./eventsHandlers";
 
