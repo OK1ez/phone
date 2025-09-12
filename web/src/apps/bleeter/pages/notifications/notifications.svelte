@@ -12,7 +12,7 @@
         alt="avatar"
         class="size-8 rounded-full"
       />
-      <span class="text-xs font-medium">Zoo liked your post</span>
+      <span class="text-xs">Zoo liked your post</span>
     </div>
     <span class="text-xs text-muted-foreground">1h</span>
   </button>
@@ -25,7 +25,7 @@
         alt="avatar"
         class="size-8 rounded-full"
       />
-      <span class="text-xs font-medium">OKiez commented on your post</span>
+      <span class="text-xs">OKiez commented on your post</span>
     </div>
     <span class="text-xs text-muted-foreground">3h</span>
   </button>
@@ -38,7 +38,7 @@
         alt="avatar"
         class="size-8 rounded-full"
       />
-      <span class="text-xs font-medium">Quasar resold your project</span>
+      <span class="text-xs">Quasar resold your project</span>
     </div>
     <span class="text-xs text-muted-foreground">7h</span>
   </button>
@@ -51,7 +51,7 @@
         alt="avatar"
         class="size-8 rounded-full"
       />
-      <span class="text-xs font-medium">Zoo commented on your post</span>
+      <span class="text-xs">Zoo commented on your post</span>
     </div>
     <span class="text-xs text-muted-foreground">Yesterday</span>
   </button>

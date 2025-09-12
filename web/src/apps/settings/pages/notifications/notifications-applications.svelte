@@ -43,7 +43,10 @@
     onclick={togglePhoneNotifications}
   >
     <div class="flex items-center h-full space-x-4">
-      <PlaneTakeoff class="size-5" />
+      <div
+        class="size-7 rounded-lg bg-secondary"
+        style="background-image: url('');"
+      ></div>
       <p class="text-xs">Phone</p>
     </div>
     <Switch
@@ -56,7 +59,10 @@
     onclick={toggleMessagesNotifications}
   >
     <div class="flex items-center h-full space-x-4">
-      <PlaneTakeoff class="size-5" />
+      <div
+        class="size-7 rounded-lg bg-secondary"
+        style="background-image: url('');"
+      ></div>
       <p class="text-xs">Messages</p>
     </div>
     <Switch
@@ -69,7 +75,10 @@
     onclick={toggleBleeterNotifications}
   >
     <div class="flex items-center h-full space-x-4">
-      <PlaneTakeoff class="size-5" />
+      <div
+        class="size-7 rounded-lg bg-secondary"
+        style="background-image: url('');"
+      ></div>
       <p class="text-xs">Bleeter</p>
     </div>
     <Switch
