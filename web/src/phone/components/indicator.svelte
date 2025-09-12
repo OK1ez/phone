@@ -3,7 +3,7 @@
 </script>
 
 <button
-  class="absolute bottom-0 z-50 flex items-center justify-center w-full h-6 group outline-none focus:outline-none"
+  class="absolute bottom-0 z-50 flex items-center justify-center w-full h-5 group outline-none focus:outline-none"
   aria-label="indicator"
   {onclick}
 >

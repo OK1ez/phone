@@ -16,31 +16,31 @@
     </div>
   {/key}
   <div
-    class="absolute bottom-0 flex items-center justify-between w-full h-20 px-12 pb-4 border-t bg-background"
+    class="absolute bottom-0 flex items-center justify-center space-x-6 w-full h-20 px-12 pb-4 border-t bg-background"
   >
     <button
-      class="text-muted-foreground hover:text-foreground"
+      class="text-muted-foreground hover:text-foreground p-4"
       class:text-foreground={phoneApp.currentRoute === "favorites"}
       onclick={() => phoneApp.navigate("favorites")}
     >
       <Star class="size-5" />
     </button>
     <button
-      class="text-muted-foreground hover:text-foreground"
+      class="text-muted-foreground hover:text-foreground p-4"
       class:text-foreground={phoneApp.currentRoute === "recents"}
       onclick={() => phoneApp.navigate("recents")}
     >
       <Clock class="size-5" />
     </button>
     <button
-      class="text-muted-foreground hover:text-foreground"
+      class="text-muted-foreground hover:text-foreground p-4"
       class:text-foreground={phoneApp.currentRoute === "contacts"}
       onclick={() => phoneApp.navigate("contacts")}
     >
       <Contact class="size-5" />
     </button>
     <button
-      class="text-muted-foreground hover:text-foreground"
+      class="text-muted-foreground hover:text-foreground p-4"
       class:text-foreground={phoneApp.currentRoute === "keypad"}
       onclick={() => phoneApp.navigate("keypad")}
     >
