@@ -59,7 +59,7 @@
   </div>
 
   <div
-    class="w-full h-full bg-black rounded-[2rem] shadow-frame flex z-10 p-1.5 overflow-hidden"
+    class="w-full h-full bg-black rounded-[2rem] shadow-frame flex p-1.5 overflow-hidden"
   >
     <div
       class="w-full h-full rounded-[1.8rem] bg-cover overflow-hidden relative"

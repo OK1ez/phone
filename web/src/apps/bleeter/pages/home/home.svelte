@@ -32,11 +32,13 @@
 
 <div class="flex flex-col w-full h-[calc(100%-11.15rem)] overflow-y-auto">
   <div class="w-full border-b px-6 py-4 space-x-4 flex hover:bg-secondary/20">
-    <img
-      src="https://static.wikia.nocookie.net/gtawiki/images/c/c0/Bleeter_GTAVpc_rockford_captain67.png"
-      alt="avatar"
-      class="size-9 rounded-full"
-    />
+    <div class="max-h-9 max-w-9 min-w-9 min-h-9 overflow-hidden rounded-full">
+      <img
+        src="https://static.wikia.nocookie.net/gtawiki/images/c/c0/Bleeter_GTAVpc_rockford_captain67.png"
+        alt="avatar"
+        class="w-full h-full object-cover"
+      />
+    </div>
     <div class="flex flex-col w-full space-y-1">
       <div class="flex justify-between items-center w-full">
         <div class="flex items-center space-x-0.5">
@@ -52,9 +54,11 @@
           <MoreHorizontal class="size-4" />
         </button>
       </div>
-      <p class="text-sm leading-relaxed">
+      <p class="text-xs leading-relaxed">
         Cillum esse minim proident. Esse aliquip occaecat cupidatat consequat
-        est aute est enim culpa ullamco id aliqua.
+        est aute est enim culpa ullamco id aliqua. Duis consequat nulla mollit
+        laborum cillum ipsum est deserunt adipisicing ut officia dolor laboris
+        amet esse. Esse ea ad culpa in magna reprehenderit dolor.
       </p>
       <div class="flex items-center justify-between !mt-3">
         <button
