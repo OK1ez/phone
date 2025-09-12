@@ -4,7 +4,7 @@
 
 <div class="flex flex-col w-full h-[calc(100%-11.15rem)] overflow-y-auto">
   <button
-    class="flex items-center justify-between w-full min-h-12 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
+    class="flex items-center justify-between w-full min-h-14 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
   >
     <div class="flex items-center space-x-3">
       <img
@@ -17,7 +17,7 @@
     <span class="text-xs text-muted-foreground">1h</span>
   </button>
   <button
-    class="flex items-center justify-between w-full min-h-12 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
+    class="flex items-center justify-between w-full min-h-14 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
   >
     <div class="flex items-center space-x-3">
       <img
@@ -30,7 +30,7 @@
     <span class="text-xs text-muted-foreground">3h</span>
   </button>
   <button
-    class="flex items-center justify-between w-full min-h-12 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
+    class="flex items-center justify-between w-full min-h-14 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
   >
     <div class="flex items-center space-x-3">
       <img
@@ -43,7 +43,7 @@
     <span class="text-xs text-muted-foreground">7h</span>
   </button>
   <button
-    class="flex items-center justify-between w-full min-h-12 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
+    class="flex items-center justify-between w-full min-h-14 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
   >
     <div class="flex items-center space-x-3">
       <img
