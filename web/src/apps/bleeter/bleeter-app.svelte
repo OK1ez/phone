@@ -1,10 +1,10 @@
 <script lang="ts">
   import { bleeterApp } from "./bleeter.svelte";
 
-  import Star from "lucide-svelte/icons/star";
-  import Clock from "lucide-svelte/icons/clock";
-  import Contact from "lucide-svelte/icons/contact";
-  import Grip from "lucide-svelte/icons/grip";
+  import Home from "lucide-svelte/icons/home";
+  import Search from "lucide-svelte/icons/search";
+  import BellDot from "lucide-svelte/icons/bell-dot";
+  import User from "lucide-svelte/icons/user";
 
   let CurrentRoute = $derived(bleeterApp.routes[bleeterApp.currentRoute].route);
 </script>
@@ -19,32 +19,36 @@
     class="absolute bottom-0 flex items-center justify-center space-x-6 w-full h-20 px-12 pb-4 border-t bg-background"
   >
     <button
-      class="text-muted-foreground hover:text-foreground p-4"
-      class:text-foreground={bleeterApp.currentRoute === "home"}
+      class="p-4 {bleeterApp.currentRoute === 'home'
+        ? 'text-foreground'
+        : 'text-muted-foreground hover:text-foreground'}"
       onclick={() => bleeterApp.navigate("home")}
     >
-      <Star class="size-5" />
+      <Home class="size-5" />
     </button>
     <button
-      class="text-muted-foreground hover:text-foreground p-4"
-      class:text-foreground={bleeterApp.currentRoute === "home"}
-      onclick={() => bleeterApp.navigate("home")}
+      class="p-4 {bleeterApp.currentRoute === 'search'
+        ? 'text-foreground'
+        : 'text-muted-foreground hover:text-foreground'}"
+      onclick={() => bleeterApp.navigate("search")}
     >
-      <Clock class="size-5" />
+      <Search class="size-5" />
     </button>
     <button
-      class="text-muted-foreground hover:text-foreground p-4"
-      class:text-foreground={bleeterApp.currentRoute === "home"}
-      onclick={() => bleeterApp.navigate("home")}
+      class="p-4 {bleeterApp.currentRoute === 'notifications'
+        ? 'text-foreground'
+        : 'text-muted-foreground hover:text-foreground'}"
+      onclick={() => bleeterApp.navigate("notifications")}
     >
-      <Contact class="size-5" />
+      <BellDot class="size-5" />
     </button>
     <button
-      class="text-muted-foreground hover:text-foreground p-4"
-      class:text-foreground={bleeterApp.currentRoute === "home"}
-      onclick={() => bleeterApp.navigate("home")}
+      class="p-4 {bleeterApp.currentRoute === 'profile'
+        ? 'text-foreground'
+        : 'text-muted-foreground hover:text-foreground'}"
+      onclick={() => bleeterApp.navigate("profile")}
     >
-      <Grip class="size-5" />
+      <User class="size-5" />
     </button>
   </div>
 </div>

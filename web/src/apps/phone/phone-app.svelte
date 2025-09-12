@@ -19,29 +19,33 @@
     class="absolute bottom-0 flex items-center justify-center space-x-6 w-full h-20 px-12 pb-4 border-t bg-background"
   >
     <button
-      class="text-muted-foreground hover:text-foreground p-4"
-      class:text-foreground={phoneApp.currentRoute === "favorites"}
+      class="p-4 {phoneApp.currentRoute === 'favorites'
+        ? 'text-foreground'
+        : 'text-muted-foreground hover:text-foreground'}"
       onclick={() => phoneApp.navigate("favorites")}
     >
       <Star class="size-5" />
     </button>
     <button
-      class="text-muted-foreground hover:text-foreground p-4"
-      class:text-foreground={phoneApp.currentRoute === "recents"}
+      class="p-4 {phoneApp.currentRoute === 'recents'
+        ? 'text-foreground'
+        : 'text-muted-foreground hover:text-foreground'}"
       onclick={() => phoneApp.navigate("recents")}
     >
       <Clock class="size-5" />
     </button>
     <button
-      class="text-muted-foreground hover:text-foreground p-4"
-      class:text-foreground={phoneApp.currentRoute === "contacts"}
+      class="p-4 {phoneApp.currentRoute === 'contacts'
+        ? 'text-foreground'
+        : 'text-muted-foreground hover:text-foreground'}"
       onclick={() => phoneApp.navigate("contacts")}
     >
       <Contact class="size-5" />
     </button>
     <button
-      class="text-muted-foreground hover:text-foreground p-4"
-      class:text-foreground={phoneApp.currentRoute === "keypad"}
+      class="p-4 {phoneApp.currentRoute === 'keypad'
+        ? 'text-foreground'
+        : 'text-muted-foreground hover:text-foreground'}"
       onclick={() => phoneApp.navigate("keypad")}
     >
       <Grip class="size-5" />

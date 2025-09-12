@@ -30,14 +30,14 @@
   </button>
 </header>
 
-<div class="flex flex-col w-full h-[calc(100%-11.8rem)] overflow-y-auto">
+<div class="flex flex-col w-full h-[calc(100%-11.15rem)] overflow-y-auto">
   <div class="w-full border-b px-6 py-4 space-x-4 flex hover:bg-secondary/20">
     <img
       src="https://static.wikia.nocookie.net/gtawiki/images/c/c0/Bleeter_GTAVpc_rockford_captain67.png"
       alt="avatar"
       class="size-9 rounded-full"
     />
-    <div class="flex flex-col w-full space-y-0.5">
+    <div class="flex flex-col w-full space-y-1">
       <div class="flex justify-between items-center w-full">
         <div class="flex items-center space-x-0.5">
           <span
@@ -46,17 +46,30 @@
             OKiez
           </span>
           <BadgeCheck class="size-[1.1rem] text-background" fill="#60a5fa" />
-          <!-- <span class="text-muted-foreground text-xs">@ok1ez</span> -->
+          <span class="text-muted-foreground text-xs">2h</span>
         </div>
         <button class="text-muted-foreground hover:text-foreground">
           <MoreHorizontal class="size-4" />
         </button>
       </div>
       <p class="text-sm leading-relaxed">
-        Hey, how are you? Hey, how are you? Hey, how are you? Hey, how are you?
-        Hey, how are you? Hey, how are you? Hey, how are you?
+        Cillum esse minim proident. Esse aliquip occaecat cupidatat consequat
+        est aute est enim culpa ullamco id aliqua.
       </p>
       <div class="flex items-center justify-between !mt-3">
+        <button
+          class="flex items-center space-x-2 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        >
+          <Heart
+            size="14"
+            class="group-hover:text-rose-500 transition-colors"
+          />
+          <span
+            class="text-xs font-medium group-hover:text-rose-500 transition-colors"
+          >
+            24
+          </span>
+        </button>
         <button
           class="flex items-center space-x-2 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
         >
@@ -81,19 +94,6 @@
             class="text-xs font-medium group-hover:text-emerald-500 transition-colors"
           >
             422
-          </span>
-        </button>
-        <button
-          class="flex items-center space-x-2 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
-        >
-          <Heart
-            size="14"
-            class="group-hover:text-rose-500 transition-colors"
-          />
-          <span
-            class="text-xs font-medium group-hover:text-rose-500 transition-colors"
-          >
-            24
           </span>
         </button>
       </div>

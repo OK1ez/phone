@@ -1,10 +1,25 @@
 import Home from "./pages/home/home.svelte";
+import Notifications from "./pages/notifications/notifications.svelte";
+import Search from "./pages/search/search.svelte";
+import Profile from "./pages/profile/profile.svelte";
 
 class BleeterApp {
   routes = {
     home: {
       label: "Home",
       route: Home,
+    },
+    search: {
+      label: "Search",
+      route: Search,
+    },
+    notifications: {
+      label: "Notifications",
+      route: Notifications,
+    },
+    profile: {
+      label: "Profile",
+      route: Profile,
     },
   };
 
