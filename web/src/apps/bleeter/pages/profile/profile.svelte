@@ -26,8 +26,11 @@
 >
   <div class="px-6 pb-5 border-b">
     <div class="flex justify-between">
-      <div class="">
-        <h1 class="text-base font-bold">OKiez</h1>
+      <div class="flex flex-col">
+        <div class="flex items-center space-x-0.5">
+          <h1 class="text-base font-bold">OKiez</h1>
+          <BadgeCheck class="size-[1.1rem] text-background" fill="#60a5fa" />
+        </div>
         <span class="text-xs text-muted-foreground">ok1ez</span>
       </div>
       <img
