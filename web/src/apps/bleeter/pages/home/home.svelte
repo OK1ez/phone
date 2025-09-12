@@ -52,30 +52,51 @@
           <MoreHorizontal class="size-4" />
         </button>
       </div>
-      <p class="text-sm">
+      <p class="text-sm leading-relaxed">
         Hey, how are you? Hey, how are you? Hey, how are you? Hey, how are you?
         Hey, how are you? Hey, how are you? Hey, how are you?
       </p>
-      <!-- <div class="flex space-x-2 pt-2">
+      <div class="flex items-center justify-between !mt-3">
         <button
-          class="flex items-center w-16 text-muted-foreground group space-x-2"
+          class="flex items-center space-x-2 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
         >
-          <MessageSquare class="size-4" />
-          <span class="text-sm">422</span>
+          <MessageSquare
+            size="15"
+            class="group-hover:text-blue-500 transition-colors"
+          />
+          <span
+            class="text-xs font-medium group-hover:text-blue-500 transition-colors"
+          >
+            422
+          </span>
         </button>
         <button
-          class="flex items-center w-16 text-muted-foreground group space-x-2"
+          class="flex items-center space-x-2 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
         >
-          <Repeat2 class="size-4" />
-          <span class="text-sm">7</span>
+          <Repeat2
+            size="18"
+            class="group-hover:text-emerald-500 transition-colors"
+          />
+          <span
+            class="text-xs font-medium group-hover:text-emerald-500 transition-colors"
+          >
+            422
+          </span>
         </button>
         <button
-          class="flex items-center w-16 text-muted-foreground group space-x-2"
+          class="flex items-center space-x-2 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
         >
-          <Heart class="size-4" />
-          <span class="text-sm">24</span>
+          <Heart
+            size="14"
+            class="group-hover:text-rose-500 transition-colors"
+          />
+          <span
+            class="text-xs font-medium group-hover:text-rose-500 transition-colors"
+          >
+            24
+          </span>
         </button>
-      </div> -->
+      </div>
     </div>
   </div>
 </div>
