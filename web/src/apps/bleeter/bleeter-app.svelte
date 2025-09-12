@@ -5,6 +5,7 @@
   import Search from "lucide-svelte/icons/search";
   import BellDot from "lucide-svelte/icons/bell-dot";
   import User from "lucide-svelte/icons/user";
+  import Plus from "lucide-svelte/icons/plus";
 
   let CurrentRoute = $derived(bleeterApp.routes[bleeterApp.currentRoute].route);
 </script>
@@ -16,7 +17,7 @@
     </div>
   {/key}
   <div
-    class="absolute bottom-0 flex items-center justify-center space-x-6 w-full h-20 px-12 pb-4 border-t bg-background"
+    class="absolute bottom-0 flex items-center justify-center space-x-3 w-full h-20 px-12 pb-4 border-t bg-background"
   >
     <button
       class="p-4 {bleeterApp.currentRoute === 'home'
@@ -33,6 +34,9 @@
       onclick={() => bleeterApp.navigate("search")}
     >
       <Search class="size-5" />
+    </button>
+    <button class="p-4 text-muted-foreground hover:text-foreground">
+      <Plus class="size-5" />
     </button>
     <button
       class="p-4 {bleeterApp.currentRoute === 'notifications'
