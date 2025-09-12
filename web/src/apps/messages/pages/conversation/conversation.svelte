@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { messages } from "../../messages.svelte";
+  import { messagesApp } from "../../messages.svelte";
 
   import ChevronLeft from "lucide-svelte/icons/chevron-left";
   import PhoneIcon from "lucide-svelte/icons/phone";
@@ -83,7 +83,7 @@
 >
   <button
     class="group relative flex items-center justify-center size-10 -m-3"
-    onclick={() => messages.navigate("recents", true)}
+    onclick={() => messagesApp.navigate("recents", true)}
   >
     <ChevronLeft
       class="size-5 text-muted-foreground group-hover:text-foreground"

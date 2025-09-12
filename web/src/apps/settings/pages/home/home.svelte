@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settings } from "../../settings.svelte";
+  import { settingsApp } from "../../settings.svelte";
 
   import { Switch } from "@/lib/components/ui/switch";
 
@@ -66,7 +66,7 @@
   </button>
   <button
     class="flex items-center justify-between w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 group"
-    onclick={() => settings.navigate("notifications")}
+    onclick={() => settingsApp.navigate("notifications")}
   >
     <div class="flex items-center h-full space-x-4">
       <BellDot class="size-5" />

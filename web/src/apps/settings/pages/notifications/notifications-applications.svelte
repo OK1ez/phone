@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settings } from "../../settings.svelte";
+  import { settingsApp } from "../../settings.svelte";
 
   import { Switch } from "@/lib/components/ui/switch";
 
@@ -31,7 +31,7 @@
 
 <button
   class="flex items-center w-full space-x-2 mt-[4.5rem] px-6 pb-4 border-b"
-  onclick={() => settings.navigate("notifications", true)}
+  onclick={() => settingsApp.navigate("notifications", true)}
 >
   <ChevronLeft class="size-5 text-muted-foreground hover:text-foreground" />
   <p class="font-medium text-sm">Applications</p>

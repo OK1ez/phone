@@ -1,10 +1,25 @@
 import Recents from "./pages/recents/recents.svelte";
+import Favorites from "./pages/favorites/favorites.svelte";
+import Contacts from "./pages/contacts/contacts.svelte";
+import Keypad from "./pages/keypad/keypad.svelte";
 
-export class PhoneApp {
+class PhoneApp {
   routes = {
+    favorites: {
+      label: "Favorites",
+      route: Favorites,
+    },
     recents: {
       label: "Recents",
       route: Recents,
+    },
+    contacts: {
+      label: "Contacts",
+      route: Contacts,
+    },
+    keypad: {
+      label: "Keypad",
+      route: Keypad,
     },
   };
 

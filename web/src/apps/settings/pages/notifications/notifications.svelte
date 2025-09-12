@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { settings } from "../../settings.svelte";
+  import { settingsApp } from "../../settings.svelte";
 
   import { Switch } from "@/lib/components/ui/switch";
 
@@ -19,7 +19,7 @@
 
 <button
   class="flex items-center w-full space-x-2 mt-[4.5rem] px-6 pb-4 border-b"
-  onclick={() => settings.navigate("settings", true)}
+  onclick={() => settingsApp.navigate("settings", true)}
 >
   <ChevronLeft class="size-5 text-muted-foreground hover:text-foreground" />
   <p class="font-medium text-sm">Notifications</p>
@@ -46,7 +46,7 @@
   </button>
   <button
     class="flex items-center justify-between w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 group"
-    onclick={() => settings.navigate("notifications_applications")}
+    onclick={() => settingsApp.navigate("notifications_applications")}
   >
     <div class="flex items-center h-full space-x-4">
       <Layers class="size-5" />

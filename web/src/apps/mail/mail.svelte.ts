@@ -1,7 +1,7 @@
 import Inbox from "./pages/inbox/inbox.svelte";
 import View from "./pages/view/view.svelte";
 
-export class Mails {
+class MailApp {
   routes = {
     inbox: {
       label: "Inbox",
@@ -22,4 +22,4 @@ export class Mails {
   }
 }
 
-export const mail = new Mails();
+export const mailApp = new MailApp();

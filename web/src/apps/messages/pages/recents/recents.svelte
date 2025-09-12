@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { messages } from "../../messages.svelte";
+  import { messagesApp } from "../../messages.svelte";
 
   import ChevronRight from "lucide-svelte/icons/chevron-right";
   import Search from "lucide-svelte/icons/search";
@@ -39,7 +39,7 @@
 <div class="flex flex-col w-full h-[calc(100%-7.9rem)] overflow-y-auto pb-6">
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -54,7 +54,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -69,7 +69,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -84,7 +84,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -99,7 +99,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -114,7 +114,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -129,7 +129,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -144,7 +144,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -159,7 +159,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -174,7 +174,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>
@@ -189,7 +189,7 @@
   </button>
   <button
     class="flex flex-col justify-center w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-    onclick={() => messages.navigate("conversation")}
+    onclick={() => messagesApp.navigate("conversation")}
   >
     <div class="flex justify-between">
       <span class="text-xs font-medium">Herman Jonsen</span>

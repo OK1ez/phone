@@ -1,7 +1,7 @@
 import Recents from "./pages/recents/recents.svelte";
 import Conversation from "./pages/conversation/conversation.svelte";
 
-export class Messages {
+class MessagesApp {
   routes = {
     recents: {
       label: "Recents",
@@ -22,4 +22,4 @@ export class Messages {
   }
 }
 
-export const messages = new Messages();
+export const messagesApp = new MessagesApp();

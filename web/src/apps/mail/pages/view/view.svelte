@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { mail } from "../../mail.svelte";
+  import { mailApp } from "../../mail.svelte";
 
   import ChevronLeft from "lucide-svelte/icons/chevron-left";
   import Trash from "lucide-svelte/icons/trash";
@@ -17,7 +17,7 @@
 >
   <button
     class="group relative flex items-center justify-center size-10 -m-3"
-    onclick={() => mail.navigate("inbox", true)}
+    onclick={() => mailApp.navigate("inbox", true)}
   >
     <ChevronLeft
       class="size-5 text-muted-foreground group-hover:text-foreground"

@@ -2,7 +2,7 @@ import Home from "./pages/home/home.svelte";
 import Notifications from "./pages/notifications/notifications.svelte";
 import NotificationsApplications from "./pages/notifications/notifications-applications.svelte";
 
-export class Settings {
+class Settings {
   routes = {
     settings: {
       label: "Settings",
@@ -27,4 +27,4 @@ export class Settings {
   }
 }
 
-export const settings = new Settings();
+export const settingsApp = new Settings();
