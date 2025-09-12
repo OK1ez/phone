@@ -13,7 +13,7 @@
   >
     <div class="flex items-center space-x-3">
       <img
-        src="https://github.com/ok1ez.png"
+        src="https://static.wikia.nocookie.net/gtawiki/images/c/c0/Bleeter_GTAVpc_rockford_captain67.png"
         alt="avatar"
         class="size-8 rounded-full"
       />
@@ -28,7 +28,7 @@
   >
     <div class="flex items-center space-x-3">
       <img
-        src="https://github.com/madsleander.png"
+        src="https://static.wikia.nocookie.net/gtawiki/images/3/37/Bleeter_GTAVpc_DevinWeston.png"
         alt="avatar"
         class="size-8 rounded-full"
       />
@@ -43,7 +43,7 @@
   >
     <div class="flex items-center space-x-3">
       <img
-        src="https://github.com/FjamZoo.png"
+        src="https://static.wikia.nocookie.net/gtawiki/images/e/ec/Bleeter_GTAVpc_lonnie_fig3.png"
         alt="avatar"
         class="size-8 rounded-full"
       />

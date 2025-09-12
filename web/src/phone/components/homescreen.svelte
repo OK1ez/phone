@@ -11,7 +11,7 @@
   <div class="grid grid-cols-4 gap-x-4 gap-y-6 absolute">
     {#each Object.entries(core.apps) as [id, app] (id)}
       <button
-        class="flex flex-col items-center justify-center rounded-lg space-y-2 disabled:opacity-60"
+        class="flex flex-col items-center justify-center rounded-lg space-y-2"
         onclick={() => core.openApp(id)}
       >
         <div

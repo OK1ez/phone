@@ -2,6 +2,7 @@ import SettingsApp from "@/apps/settings/settings-app.svelte";
 import MessagesApp from "@/apps/messages/messages-app.svelte";
 import MailApp from "@/apps/mail/mail-app.svelte";
 import PhoneApp from "@/apps/phone/phone-app.svelte";
+import BleeterApp from "@/apps/bleeter/bleeter-app.svelte";
 
 export interface App {
   id: string;
@@ -35,6 +36,10 @@ class CoreState {
     mail: {
       label: "Mail",
       component: MailApp,
+    },
+    bleeter: {
+      label: "Bleeter",
+      component: BleeterApp,
     },
   };
 
