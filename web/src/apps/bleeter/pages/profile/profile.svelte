@@ -20,9 +20,9 @@
 {/if}
 
 <div
-  class="flex flex-col w-full h-[calc(100%-4.9rem)] overflow-y-auto {isOwnProfile
-    ? 'mt-[4.5rem]'
-    : 'pt-5'}"
+  class="flex flex-col w-full overflow-y-auto {isOwnProfile
+    ? 'mt-[4.5rem] h-[calc(100%-9.4rem)]'
+    : 'pt-5 h-[calc(100%-11.6rem)]'}"
 >
   <div class="px-6 pb-5 border-b">
     <div class="flex justify-between">
