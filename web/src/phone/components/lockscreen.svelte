@@ -11,7 +11,7 @@
 </script>
 
 <div
-  class="absolute w-full h-full flex items-center justify-center bg-cover z-10"
+  class="absolute w-full h-full flex items-center justify-center bg-cover z-30"
   style="background-image: url({Background});"
   out:slide={{ duration: 400, easing: quintOut, axis: "y" }}
 >
