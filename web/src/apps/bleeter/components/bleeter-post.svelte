@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { bleeterApp } from "../bleeter.svelte";
   import BadgeCheck from "lucide-svelte/icons/badge-check";
   import MoreHorizontal from "lucide-svelte/icons/more-horizontal";
   import MessageSquare from "lucide-svelte/icons/message-square";
@@ -24,6 +25,41 @@
     comments: number;
     reposts: number;
   } = $props();
+
+  function handleUsernameClick() {
+    const profileData = {
+      username: username,
+      handle: `${username.toLowerCase()}`,
+      avatar: avatar,
+      verified: verified,
+      bio: "This is a sample bio for the user profile.",
+      followers: "12.5k",
+      posts: [
+        {
+          avatar: avatar,
+          username: username,
+          verified: verified,
+          timestamp: "1h",
+          content: "This is a sample post from the user's profile.",
+          likes: 123,
+          comments: 45,
+          reposts: 12,
+        },
+        {
+          avatar: avatar,
+          username: username,
+          verified: verified,
+          timestamp: "3h",
+          content: "Another post from this user showing their activity.",
+          likes: 89,
+          comments: 23,
+          reposts: 8,
+        },
+      ],
+    };
+
+    bleeterApp.openProfile(profileData);
+  }
 </script>
 
 <div class="w-full border-b px-6 py-4 space-x-4 flex hover:bg-secondary/20">
@@ -33,13 +69,18 @@
   <div class="flex flex-col w-full space-y-1">
     <div class="flex justify-between items-center w-full">
       <div class="flex items-center space-x-0.5">
-        <span class="text-sm font-medium hover:underline hover:cursor-pointer">
+        <button
+          class="text-sm font-medium hover:underline hover:cursor-pointer"
+          onclick={handleUsernameClick}
+        >
           {username}
-        </span>
+        </button>
         {#if verified}
           <BadgeCheck class="size-[1.1rem] text-background" fill="#60a5fa" />
         {/if}
-        <span class="text-muted-foreground text-xs">{timestamp}</span>
+        <span class="text-muted-foreground text-xs {!verified && '!ml-1'}">
+          {timestamp}
+        </span>
       </div>
       <button class="text-muted-foreground hover:text-foreground">
         <MoreHorizontal class="size-4" />

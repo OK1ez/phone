@@ -37,4 +37,34 @@
     comments={422}
     reposts={422}
   />
+  <BleeterPost
+    avatar="https://static.wikia.nocookie.net/gtawiki/images/e/ec/Bleeter_GTAVpc_lonnie_fig3.png"
+    username="Zoo"
+    verified={false}
+    timestamp="4h"
+    content="Cillum esse minim proident. Esse aliquip occaecat cupidatat consequat est aute est enim culpa ullamco id aliqua."
+    likes={89}
+    comments={23}
+    reposts={12}
+  />
+  <BleeterPost
+    avatar="https://static.wikia.nocookie.net/gtawiki/images/c/c0/Bleeter_GTAVpc_rockford_captain67.png"
+    username="OKiez"
+    verified={true}
+    timestamp="8h"
+    content="Esse aliquip occaecat cupidatat consequat est aute est enim culpa ullamco id aliqua"
+    likes={234}
+    comments={67}
+    reposts={34}
+  />
+  <BleeterPost
+    avatar="https://static.wikia.nocookie.net/gtawiki/images/c/c0/Bleeter_GTAVpc_rockford_captain67.png"
+    username="OKiez"
+    verified={true}
+    timestamp="8h"
+    content="Eaute est enim culpa ullamco id aliqua! Eaute est enim culpa ullamco id aliqua!"
+    likes={234}
+    comments={67}
+    reposts={34}
+  />
 </div>

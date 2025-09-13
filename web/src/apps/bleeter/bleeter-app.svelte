@@ -1,5 +1,6 @@
 <script lang="ts">
   import { bleeterApp } from "./bleeter.svelte";
+  import ProfileOverlay from "./components/profile-overlay.svelte";
 
   import Home from "lucide-svelte/icons/home";
   import Search from "lucide-svelte/icons/search";
@@ -10,14 +11,17 @@
   let CurrentRoute = $derived(bleeterApp.routes[bleeterApp.currentRoute].route);
 </script>
 
-<div class="relative flex flex-col w-full h-full bg-background">
+<div class=" flex flex-col w-full h-full bg-background">
   {#key bleeterApp.currentRoute}
     <div class="w-full h-full absolute">
       <CurrentRoute />
     </div>
   {/key}
+  {#if bleeterApp.profileOverlay.isOpen && bleeterApp.profileOverlay.profileData}
+    <ProfileOverlay profileData={bleeterApp.profileOverlay.profileData} />
+  {/if}
   <div
-    class="absolute bottom-0 flex items-center justify-center space-x-3 w-full h-20 px-12 pb-4 border-t bg-background"
+    class="absolute bottom-0 flex items-center justify-center space-x-3 w-full h-20 px-12 pb-4 border-t bg-background z-30"
   >
     <button
       class="p-4 {bleeterApp.currentRoute === 'home'
