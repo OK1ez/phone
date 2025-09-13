@@ -60,6 +60,19 @@
 
     bleeterApp.openProfile(profileData);
   }
+
+  let liked = $state(false);
+  let reposted = $state(false);
+
+  function handleLikeClick() {
+    liked = !liked;
+    likes = liked ? likes + 1 : likes - 1;
+  }
+
+  function handleRepostClick() {
+    reposted = !reposted;
+    reposts = reposted ? reposts + 1 : reposts - 1;
+  }
 </script>
 
 <div class="w-full border-b px-6 py-4 space-x-4 flex hover:bg-secondary/20">
@@ -91,9 +104,14 @@
     </p>
     <div class="flex items-center justify-between !mt-3">
       <button
-        class="flex items-center space-x-2 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        onclick={handleLikeClick}
       >
-        <Heart size="14" class="group-hover:text-rose-500 transition-colors" />
+        <Heart
+          size="14"
+          class="group-hover:text-rose-500 transition-colors {liked &&
+            'fill-rose-500 text-rose-500'}"
+        />
         <span
           class="text-xs font-medium group-hover:text-rose-500 transition-colors"
         >
@@ -101,7 +119,7 @@
         </span>
       </button>
       <button
-        class="flex items-center space-x-2 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
       >
         <MessageSquare
           size="15"
@@ -114,11 +132,13 @@
         </span>
       </button>
       <button
-        class="flex items-center space-x-2 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        onclick={handleRepostClick}
       >
         <Repeat2
           size="18"
-          class="group-hover:text-emerald-500 transition-colors"
+          class="group-hover:text-emerald-500 transition-colors {reposted &&
+            'text-emerald-500'}"
         />
         <span
           class="text-xs font-medium group-hover:text-emerald-500 transition-colors"
