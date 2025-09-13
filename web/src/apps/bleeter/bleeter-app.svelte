@@ -1,6 +1,7 @@
 <script lang="ts">
   import { bleeterApp } from "./bleeter.svelte";
   import ProfileOverlay from "./components/profile-overlay.svelte";
+  import PostView from "./components/post-view.svelte";
 
   import Home from "lucide-svelte/icons/home";
   import Search from "lucide-svelte/icons/search";
@@ -19,6 +20,9 @@
   {/key}
   {#if bleeterApp.profileOverlay.isOpen && bleeterApp.profileOverlay.profileData}
     <ProfileOverlay profileData={bleeterApp.profileOverlay.profileData} />
+  {/if}
+  {#if bleeterApp.postView.isOpen && bleeterApp.postView.postData}
+    <PostView postData={bleeterApp.postView.postData} />
   {/if}
   <div
     class="absolute bottom-0 flex items-center justify-center space-x-3 w-full h-20 px-12 pb-4 border-t bg-background z-30"

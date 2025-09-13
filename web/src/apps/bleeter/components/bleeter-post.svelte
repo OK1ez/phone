@@ -73,10 +73,68 @@
     reposted = !reposted;
     reposts = reposted ? reposts + 1 : reposts - 1;
   }
+
+  function handlePostClick() {
+    const postData = {
+      id: `post-${username}-${timestamp}`,
+      avatar: avatar,
+      username: username,
+      verified: verified,
+      timestamp: timestamp,
+      content: content,
+      likes: likes,
+      comments: comments,
+      reposts: reposts,
+      replies: [
+        {
+          id: "reply-1",
+          avatar:
+            "https://static.wikia.nocookie.net/gtawiki/images/e/ec/Bleeter_GTAVpc_lonnie_fig3.png",
+          username: "jane_doe",
+          verified: false,
+          timestamp: "2m",
+          content:
+            "This is a great point! I totally agree with your perspective on this.",
+          likes: 12,
+          comments: 2,
+          reposts: 1,
+        },
+        {
+          id: "reply-2",
+          avatar:
+            "https://static.wikia.nocookie.net/gtawiki/images/c/c0/Bleeter_GTAVpc_rockford_captain67.png",
+          username: "tech_guru",
+          verified: true,
+          timestamp: "5m",
+          content:
+            "Interesting take. Have you considered the implications of this approach?",
+          likes: 8,
+          comments: 0,
+          reposts: 3,
+        },
+        {
+          id: "reply-3",
+          avatar:
+            "https://static.wikia.nocookie.net/gtawiki/images/e/ec/Bleeter_GTAVpc_lonnie_fig3.png",
+          username: "developer_sam",
+          verified: false,
+          timestamp: "12m",
+          content: "Thanks for sharing this! Really helpful insights.",
+          likes: 5,
+          comments: 1,
+          reposts: 0,
+        },
+      ],
+    };
+
+    bleeterApp.openPostView(postData);
+  }
 </script>
 
-<div class="w-full border-b px-6 py-4 space-x-4 flex hover:bg-secondary/20">
-  <div class="max-h-9 max-w-9 min-w-9 min-h-9 overflow-hidden rounded-full">
+<div
+  class="w-full border-b px-6 py-4 space-x-4 flex hover:bg-secondary/20 cursor-pointer"
+>
+  <div class="max-h-8 max-w-8 min-w-8 min-h-8 overflow-hidden rounded-full">
     <img src={avatar} alt="avatar" class="w-full h-full object-cover" />
   </div>
   <div class="flex flex-col w-full space-y-1">
@@ -84,7 +142,10 @@
       <div class="flex items-center space-x-0.5">
         <button
           class="text-sm font-medium hover:underline hover:cursor-pointer"
-          onclick={handleUsernameClick}
+          onclick={(e) => {
+            e.stopPropagation();
+            handleUsernameClick();
+          }}
         >
           {username}
         </button>
@@ -102,7 +163,7 @@
     <p class="text-xs leading-relaxed">
       {content}
     </p>
-    <div class="flex items-center justify-between !mt-3">
+    <div class="flex items-center space-x-4 !mt-3">
       <button
         class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
         onclick={handleLikeClick}
@@ -120,6 +181,7 @@
       </button>
       <button
         class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        onclick={handlePostClick}
       >
         <MessageSquare
           size="15"

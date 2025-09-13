@@ -22,6 +22,29 @@ interface ProfileData {
   }>;
 }
 
+interface PostData {
+  id: string;
+  avatar: string;
+  username: string;
+  verified: boolean;
+  timestamp: string;
+  content: string;
+  likes: number;
+  comments: number;
+  reposts: number;
+  replies: Array<{
+    id: string;
+    avatar: string;
+    username: string;
+    verified: boolean;
+    timestamp: string;
+    content: string;
+    likes: number;
+    comments: number;
+    reposts: number;
+  }>;
+}
+
 class BleeterApp {
   routes = {
     home: {
@@ -50,11 +73,19 @@ class BleeterApp {
     profileData: null as ProfileData | null,
   });
 
+  postView = $state({
+    isOpen: false,
+    postData: null as PostData | null,
+  });
+
   navigate(id: keyof typeof this.routes, back?: boolean) {
     this.direction = back ? "back" : "forward";
     this.currentRoute = id;
     if (this.profileOverlay.isOpen) {
       this.closeProfile();
+    }
+    if (this.postView.isOpen) {
+      this.closePostView();
     }
   }
 
@@ -66,6 +97,16 @@ class BleeterApp {
   closeProfile() {
     this.profileOverlay.isOpen = false;
     this.profileOverlay.profileData = null;
+  }
+
+  openPostView(postData: PostData) {
+    this.postView.postData = postData;
+    this.postView.isOpen = true;
+  }
+
+  closePostView() {
+    this.postView.isOpen = false;
+    this.postView.postData = null;
   }
 }
 
