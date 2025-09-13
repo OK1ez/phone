@@ -7,8 +7,8 @@
   import Repeat2 from "lucide-svelte/icons/repeat-2";
   import Heart from "lucide-svelte/icons/heart";
   import Send from "lucide-svelte/icons/send";
+  import Images from "lucide-svelte/icons/images";
   import { fly } from "svelte/transition";
-  import BleeterPost from "./bleeter-post.svelte";
   import BleeterReply from "./bleeter-reply.svelte";
 
   interface PostData {
@@ -39,10 +39,21 @@
 
   let liked = $state(false);
   let reposted = $state(false);
-  let replyText = $state("");
 
   function closePostView() {
     bleeterApp.closePostView();
+  }
+
+  let replyText = $state("");
+  let textareaRef: HTMLTextAreaElement | null = null;
+
+  function autoResize() {
+    if (textareaRef) {
+      textareaRef.style.height = "1.5rem";
+      const maxHeight = 120;
+      const newHeight = Math.min(textareaRef.scrollHeight, maxHeight);
+      textareaRef.style.height = `${newHeight}px`;
+    }
   }
 </script>
 
@@ -136,11 +147,29 @@
       </div>
     </div>
 
+    <div class="px-6 py-4 border-b">
+      <textarea
+        bind:this={textareaRef}
+        bind:value={replyText}
+        oninput={autoResize}
+        placeholder="Reply to OKiez"
+        class="w-full bg-transparent h-6 placeholder:text-muted-foreground border-none outline-none resize-none text-sm max-h-[120px] overflow-y-auto"
+      ></textarea>
+      <div class="flex justify-between">
+        <button class="text-muted-foreground hover:text-foreground">
+          <Images class="size-5" />
+        </button>
+        <button
+          class="bg-primary/85 hover:bg-primary/90 text-primary-foreground h-7 px-3 text-xs font-medium rounded-md disabled:opacity-50 focus-visible:border-ring/20"
+          disabled
+        >
+          Send
+        </button>
+      </div>
+    </div>
+
     <div class="w-full">
       {#if postData.replies.length > 0}
-        <div class="px-6 py-3 border-b">
-          <p class="text-xs font-medium text-muted-foreground">Replies</p>
-        </div>
         {#each postData.replies as reply}
           <BleeterReply
             avatar={reply.avatar}
@@ -151,13 +180,6 @@
             likes={reply.likes}
           />
         {/each}
-      {:else}
-        <div class="px-6 py-8 text-center">
-          <p class="text-sm text-muted-foreground">No replies yet.</p>
-          <p class="text-xs text-muted-foreground mt-1">
-            Be the first to reply!
-          </p>
-        </div>
       {/if}
     </div>
   </div>
