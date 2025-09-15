@@ -3,6 +3,7 @@ import MessagesApp from "@/apps/messages/messages-app.svelte";
 import MailApp from "@/apps/mail/mail-app.svelte";
 import PhoneApp from "@/apps/phone/phone-app.svelte";
 import BleeterApp from "@/apps/bleeter/bleeter-app.svelte";
+import CameraApp from "@/apps/camera/camera-app.svelte";
 
 export interface App {
   id: string;
@@ -40,6 +41,10 @@ class CoreState {
     bleeter: {
       label: "Bleeter",
       component: BleeterApp,
+    },
+    camera: {
+      label: "Camera",
+      component: CameraApp,
     },
   };
 

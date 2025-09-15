@@ -65,7 +65,8 @@
             'fill-rose-500 text-rose-500'}"
         />
         <span
-          class="text-xs font-medium group-hover:text-rose-500 transition-colors"
+          class="text-xs font-medium group-hover:text-rose-500 transition-colors {liked &&
+            'text-rose-500'}"
         >
           {likes}
         </span>
