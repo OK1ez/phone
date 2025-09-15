@@ -1,6 +1,4 @@
-export type LocaleKey = string;
-export type LocaleValue = string;
+import locales from "~/locales/en.json";
 
-export interface LocaleState {
-  translations: Record<LocaleKey, LocaleValue>;
-}
+export type LocaleKey = keyof typeof locales;
+export type LocaleValue = string;
