@@ -1,27 +1,22 @@
 <script lang="ts">
   import { mailApp } from "../../mail.svelte";
 
-  import ChevronLeft from "lucide-svelte/icons/chevron-left";
-  import Trash from "lucide-svelte/icons/trash";
+  import ChevronLeft from "@lucide/svelte/icons/chevron-left";
+  import Trash from "@lucide/svelte/icons/trash";
 
   const mailData = {
     subject: "Important Meeting",
     timestamp: "Yesterday",
-    content:
-      "We need to discuss the upcoming project. Please prepare a brief summary.",
+    content: "We need to discuss the upcoming project. Please prepare a brief summary.",
   };
 </script>
 
-<header
-  class="flex items-center justify-between w-full mt-[4.5rem] px-6 pb-4 border-b"
->
+<header class="flex items-center justify-between w-full mt-[4.5rem] px-6 pb-4 border-b">
   <button
     class="group relative flex items-center justify-center size-10 -m-3"
     onclick={() => mailApp.navigate("inbox", true)}
   >
-    <ChevronLeft
-      class="size-5 text-muted-foreground group-hover:text-foreground"
-    />
+    <ChevronLeft class="size-5 text-muted-foreground group-hover:text-foreground" />
   </button>
   <button class="group relative flex items-center justify-center size-10 -m-3">
     <Trash class="size-4 text-muted-foreground group-hover:text-foreground" />

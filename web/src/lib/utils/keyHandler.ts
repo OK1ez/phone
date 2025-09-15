@@ -1,5 +1,5 @@
-import { SendEvent } from "@/lib/utils/eventsHandlers";
-import { core } from "@/lib/states/core.svelte";
+import { SendEvent } from "$lib/utils/eventsHandlers";
+import { core } from "$lib/states/core.svelte";
 
 export function setupKeyHandler() {
   const keyHandler = (e: KeyboardEvent) => {

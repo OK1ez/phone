@@ -1,8 +1,8 @@
 <script lang="ts">
   import { bleeterApp } from "../bleeter.svelte";
-  import BadgeCheck from "lucide-svelte/icons/badge-check";
-  import MoreHorizontal from "lucide-svelte/icons/more-horizontal";
-  import Heart from "lucide-svelte/icons/heart";
+  import BadgeCheck from "@lucide/svelte/icons/badge-check";
+  import MoreHorizontal from "@lucide/svelte/icons/more-horizontal";
+  import Heart from "@lucide/svelte/icons/heart";
 
   let {
     avatar,
@@ -35,9 +35,7 @@
   <div class="flex flex-col w-full space-y-1">
     <div class="flex justify-between items-center w-full">
       <div class="flex items-center space-x-0.5">
-        <button
-          class="text-sm font-medium hover:underline hover:cursor-pointer"
-        >
+        <button class="text-sm font-medium hover:underline hover:cursor-pointer">
           {username}
         </button>
         {#if verified}
@@ -59,15 +57,8 @@
         class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
         onclick={handleLikeClick}
       >
-        <Heart
-          size="14"
-          class="group-hover:text-rose-500 transition-colors {liked &&
-            'fill-rose-500 text-rose-500'}"
-        />
-        <span
-          class="text-xs font-medium group-hover:text-rose-500 transition-colors {liked &&
-            'text-rose-500'}"
-        >
+        <Heart size="14" class="group-hover:text-rose-500 transition-colors {liked && 'fill-rose-500 text-rose-500'}" />
+        <span class="text-xs font-medium group-hover:text-rose-500 transition-colors {liked && 'text-rose-500'}">
           {likes}
         </span>
       </button>

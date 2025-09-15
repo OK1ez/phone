@@ -1,4 +1,4 @@
-import type { LocaleKey, LocaleValue } from "@/lib/types/locales";
+import type { LocaleKey, LocaleValue } from "$lib/types/locales";
 
 export class LocaleManager {
   translations = $state<Record<LocaleKey, LocaleValue>>({});
@@ -15,5 +15,4 @@ export class LocaleManager {
 export const localeManager = new LocaleManager();
 
 // Helper function
-export const locale = (key: LocaleKey): LocaleValue =>
-  localeManager.getTranslation(key);
+export const locale = (key: LocaleKey): LocaleValue => localeManager.getTranslation(key);

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { bleeterApp } from "../bleeter.svelte";
-  import ChevronLeft from "lucide-svelte/icons/chevron-left";
-  import BadgeCheck from "lucide-svelte/icons/badge-check";
+  import ChevronLeft from "@lucide/svelte/icons/chevron-left";
+  import BadgeCheck from "@lucide/svelte/icons/badge-check";
   import BleeterPost from "./bleeter-post.svelte";
   import { fly, scale } from "svelte/transition";
 
@@ -38,10 +38,7 @@
   in:fly={{ x: 300, duration: 300 }}
   out:fly={{ x: 300, duration: 300 }}
 >
-  <button
-    class="flex items-center w-full space-x-2 mt-[4.5rem] px-6 pb-4 border-b"
-    onclick={closeProfile}
-  >
+  <button class="flex items-center w-full space-x-2 mt-[4.5rem] px-6 pb-4 border-b" onclick={closeProfile}>
     <ChevronLeft class="size-5 text-muted-foreground hover:text-foreground" />
     <p class="font-medium text-sm">Back</p>
   </button>
@@ -53,20 +50,12 @@
           <div class="flex items-center space-x-0.5">
             <h1 class="text-base font-bold">{profileData.username}</h1>
             {#if profileData.verified}
-              <BadgeCheck
-                class="size-[1.1rem] text-background"
-                fill="#60a5fa"
-              />
+              <BadgeCheck class="size-[1.1rem] text-background" fill="#60a5fa" />
             {/if}
           </div>
-          <span class="text-xs text-muted-foreground">{profileData.handle}</span
-          >
+          <span class="text-xs text-muted-foreground">{profileData.handle}</span>
         </div>
-        <img
-          src={profileData.avatar}
-          alt="avatar"
-          class="size-12 rounded-full object-cover"
-        />
+        <img src={profileData.avatar} alt="avatar" class="size-12 rounded-full object-cover" />
       </div>
       <p class="text-xs mt-3">
         {profileData.bio}

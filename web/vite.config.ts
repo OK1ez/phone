@@ -7,18 +7,22 @@ export default defineConfig({
   base: "./",
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src"),
+      $lib: path.resolve("./src/lib"),
+      $apps: path.resolve("./src/apps"),
+      $phone: path.resolve("./src/phone"),
+      "~": path.resolve("../"),
+      "@common": path.resolve("../src/common/"),
     },
   },
   build: {
+    outDir: "../dist/web",
     emptyOutDir: true,
-    outDir: "../web/build",
-    assetsDir: "./",
+    target: "es2023",
     rollupOptions: {
       output: {
-        entryFileNames: `[name].js`,
-        chunkFileNames: `[name].js`,
-        assetFileNames: `[name].[ext]`,
+        assetFileNames: "assets/[name][extname]",
+        entryFileNames: "assets/[name].js",
+        chunkFileNames: "assets/[name].js",
       },
     },
   },

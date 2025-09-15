@@ -1,6 +1,6 @@
 <script>
-  import ChevronLeft from "lucide-svelte/icons/chevron-left";
-  import BadgeCheck from "lucide-svelte/icons/badge-check";
+  import ChevronLeft from "@lucide/svelte/icons/chevron-left";
+  import BadgeCheck from "@lucide/svelte/icons/badge-check";
   import BleeterPost from "../../components/bleeter-post.svelte";
 
   let isOwnProfile = $state(true);
@@ -8,9 +8,7 @@
 </script>
 
 {#if !isOwnProfile}
-  <button
-    class="flex items-center w-full space-x-2 mt-[4.5rem] px-6 pb-4 border-b"
-  >
+  <button class="flex items-center w-full space-x-2 mt-[4.5rem] px-6 pb-4 border-b">
     <ChevronLeft class="size-5 text-muted-foreground hover:text-foreground" />
     <p class="font-medium text-sm">Back</p>
   </button>
@@ -36,9 +34,7 @@
         class="size-12 rounded-full object-cover"
       />
     </div>
-    <p class="text-xs mt-3">
-      Occaecat irure magna irure dolor ipsum aliquip Lorem commodo.
-    </p>
+    <p class="text-xs mt-3">Occaecat irure magna irure dolor ipsum aliquip Lorem commodo.</p>
     <p class="text-xs text-muted-foreground mt-3">25k Followers</p>
     {#if !isOwnProfile}
       {#if !isFollowing}

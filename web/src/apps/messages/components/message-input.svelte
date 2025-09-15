@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Images from "lucide-svelte/icons/images";
-  import SendHorizontal from "lucide-svelte/icons/send-horizontal";
+  import Images from "@lucide/svelte/icons/images";
+  import SendHorizontal from "@lucide/svelte/icons/send-horizontal";
 
   interface Props {
     value?: string;
@@ -101,9 +101,7 @@
         onclick={handleImageUpload}
         aria-label="Upload image"
       >
-        <Images
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <Images class="size-4 text-muted-foreground group-hover:text-foreground" />
       </button>
       <button
         type="button"
@@ -113,9 +111,7 @@
         aria-label="Send message"
       >
         <SendHorizontal
-          class="size-4 text-muted-foreground group-hover:text-foreground {!value.trim()
-            ? 'opacity-50'
-            : ''}"
+          class="size-4 text-muted-foreground group-hover:text-foreground {!value.trim() ? 'opacity-50' : ''}"
         />
       </button>
     </div>

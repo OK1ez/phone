@@ -1,7 +1,6 @@
 {
   "files": {
-    "include": ["./src/**/*.ts", "./web/**/*.ts", "./web/**/*.tsx"],
-    "ignore": ["**/*.d.ts"]
+    "include": ["./src/**/*.ts", "./web/**/*.ts", "./web/**/*.svelte", "./scripts/*.ts"]
   },
   "linter": {
     "enabled": true,
@@ -10,18 +9,19 @@
         "noConfusingLabels": "off",
         "noAssignInExpressions": "off",
         "noExplicitAny": "off",
-        "noFallthroughSwitchClause": "off",
-        "noGlobalIsNan": "off",
-        "noControlCharactersInRegex": "off"
+        "noFallthroughSwitchClause": "off"
       },
       "correctness": {
-        "noUnusedLabels": "off"
+        "noUnusedLabels": "off",
+        "noVoidTypeReturn": "off"
       },
       "style": {
         "useEnumInitializers": "off",
         "noNonNullAssertion": "off",
         "noParameterAssign": "off",
         "noArguments": "off",
+        "noInferrableTypes": "off",
+        "useConst": "off",
         "noUnusedTemplateLiteral": {
           "fix": "safe"
         }
@@ -31,8 +31,8 @@
       },
       "complexity": {
         "noForEach": "off",
-        "noStaticOnlyClass": "off",
-        "noThisInStatic": "off"
+        "noUselessConstructor": "off",
+        "noBannedTypes": "off"
       }
     }
   },

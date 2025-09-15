@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Input } from "@/lib/components/ui/input";
+  import { Input } from "$lib/components/ui/input";
 
   let {
     value = $bindable(0),
@@ -69,11 +69,8 @@
 
 <div class="flex items-center gap-4 {className}">
   <div class="relative flex w-full touch-none select-none items-center">
-    <span
-      class="bg-secondary text-secondary-foreground relative h-2 w-full grow overflow-hidden rounded-full"
-    >
-      <span class="bg-primary absolute h-full" bind:this={rangeFillElement}
-      ></span>
+    <span class="bg-secondary text-secondary-foreground relative h-2 w-full grow overflow-hidden rounded-full">
+      <span class="bg-primary absolute h-full" bind:this={rangeFillElement}></span>
     </span>
     <input
       type="range"

@@ -2,7 +2,7 @@
   import { fly } from "svelte/transition";
   import { mailApp } from "./mail.svelte";
 
-  import { getTransitionDirection } from "@/lib/utils/utils";
+  import { getTransitionDirection } from "$lib/utils/utils";
 
   let CurrentRoute = $derived(mailApp.routes[mailApp.currentRoute].route);
 </script>

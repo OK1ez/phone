@@ -1,15 +1,13 @@
 <script>
-  import Zap from "lucide-svelte/icons/zap";
-  import Settings from "lucide-svelte/icons/settings";
-  import Images from "lucide-svelte/icons/images";
-  import RefreshCcw from "lucide-svelte/icons/refresh-ccw";
-  import Camera from "lucide-svelte/icons/camera";
+  import Zap from "@lucide/svelte/icons/zap";
+  import Settings from "@lucide/svelte/icons/settings";
+  import Images from "@lucide/svelte/icons/images";
+  import RefreshCcw from "@lucide/svelte/icons/refresh-ccw";
+  import Camera from "@lucide/svelte/icons/camera";
 </script>
 
 <div class="flex flex-col w-full h-full bg-background">
-  <header
-    class="flex items-center justify-between w-full mt-[4.5rem] px-6 pb-4 border-b"
-  >
+  <header class="flex items-center justify-between w-full mt-[4.5rem] px-6 pb-4 border-b">
     <button>
       <Zap class="size-5 text-muted-foreground hover:text-foreground" />
     </button>
@@ -25,9 +23,7 @@
       class="object-cover"
     />
   </div>
-  <footer
-    class="border-t w-full flex items-center justify-between mt-auto px-6 pb-12 pt-6"
-  >
+  <footer class="border-t w-full flex items-center justify-between mt-auto px-6 pb-12 pt-6">
     <button>
       <Images class="size-5 text-muted-foreground hover:text-foreground" />
     </button>

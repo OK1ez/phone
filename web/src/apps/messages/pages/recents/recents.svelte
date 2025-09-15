@@ -1,17 +1,13 @@
 <script lang="ts">
   import { messagesApp } from "../../messages.svelte";
 
-  import ChevronRight from "lucide-svelte/icons/chevron-right";
-  import Search from "lucide-svelte/icons/search";
-  import CirclePlus from "lucide-svelte/icons/plus-circle";
+  import ChevronRight from "@lucide/svelte/icons/chevron-right";
+  import Search from "@lucide/svelte/icons/search";
+  import CirclePlus from "@lucide/svelte/icons/plus-circle";
 </script>
 
-<header
-  class="flex items-center justify-between w-full mt-[4.5rem] px-5 pb-4 border-b space-x-2"
->
-  <div
-    class="bg-input/40 h-9 rounded-full w-full flex items-center justify-between px-3"
-  >
+<header class="flex items-center justify-between w-full mt-[4.5rem] px-5 pb-4 border-b space-x-2">
+  <div class="bg-input/40 h-9 rounded-full w-full flex items-center justify-between px-3">
     <div class="flex items-center space-x-2">
       <Search class="size-4 text-muted-foreground" />
       <input
@@ -27,12 +23,8 @@
       </button>
     {/if} -->
   </div>
-  <button
-    class="bg-input/40 hover:bg-input/60 min-w-9 min-h-9 rounded-full flex items-center justify-center group"
-  >
-    <CirclePlus
-      class="size-4 text-muted-foreground group-hover:text-foreground"
-    />
+  <button class="bg-input/40 hover:bg-input/60 min-w-9 min-h-9 rounded-full flex items-center justify-center group">
+    <CirclePlus class="size-4 text-muted-foreground group-hover:text-foreground" />
   </button>
 </header>
 
@@ -45,9 +37,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -60,9 +50,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -75,9 +63,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -90,9 +76,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -105,9 +89,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -120,9 +102,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -135,9 +115,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -150,9 +128,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -165,9 +141,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -180,9 +154,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>
@@ -195,9 +167,7 @@
       <span class="text-xs font-medium">Herman Jonsen</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground"> Hey how are you? </span>

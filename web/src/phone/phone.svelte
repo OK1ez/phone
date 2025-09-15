@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { core } from "@/lib/states/core.svelte";
+  import { core } from "$lib/states/core.svelte";
 
-  import Wifi from "lucide-svelte/icons/wifi";
-  import Signal from "lucide-svelte/icons/signal";
+  import Wifi from "@lucide/svelte/icons/wifi";
+  import Signal from "@lucide/svelte/icons/signal";
 
   import Lockscreen from "./components/lockscreen.svelte";
   import Homescreen from "./components/homescreen.svelte";
@@ -25,9 +25,7 @@
 </script>
 
 {#snippet volumeButton()}
-  <div
-    class="w-full min-h-20 bg-[#6f6f6f] shadow-inner shadow-[#2f2f2f] rounded-full"
-  ></div>
+  <div class="w-full min-h-20 bg-[#6f6f6f] shadow-inner shadow-[#2f2f2f] rounded-full"></div>
 {/snippet}
 
 {#snippet lockButton()}
@@ -39,9 +37,7 @@
 {/snippet}
 
 {#snippet statusBar()}
-  <header
-    class="absolute z-50 flex items-center justify-between w-full px-8 pt-6"
-  >
+  <header class="absolute z-50 flex items-center justify-between w-full px-8 pt-6">
     <p class="font-medium">20:07</p>
     <div class="flex space-x-2">
       <Wifi class="size-5" />
@@ -58,12 +54,8 @@
     {@render volumeButton()}
   </div>
 
-  <div
-    class="w-full h-full bg-black rounded-[2rem] shadow-frame flex p-1.5 overflow-hidden"
-  >
-    <div
-      class="w-full h-full rounded-[1.8rem] bg-cover overflow-hidden relative"
-    >
+  <div class="w-full h-full bg-black rounded-[2rem] shadow-frame flex p-1.5 overflow-hidden">
+    <div class="w-full h-full rounded-[1.8rem] bg-cover overflow-hidden relative">
       {@render statusBar()}
       <div class="h-full">
         {#if core.isLocked}

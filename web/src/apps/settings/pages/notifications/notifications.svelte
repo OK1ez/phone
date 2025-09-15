@@ -1,12 +1,12 @@
 <script lang="ts">
   import { settingsApp } from "../../settings.svelte";
 
-  import { Switch } from "@/lib/components/ui/switch";
+  import { Switch } from "$lib/components/ui/switch";
 
-  import ChevronLeft from "lucide-svelte/icons/chevron-left";
-  import ChevronRight from "lucide-svelte/icons/chevron-right";
-  import Layers from "lucide-svelte/icons/layers";
-  import BellDot from "lucide-svelte/icons/bell-dot";
+  import ChevronLeft from "@lucide/svelte/icons/chevron-left";
+  import ChevronRight from "@lucide/svelte/icons/chevron-right";
+  import Layers from "@lucide/svelte/icons/layers";
+  import BellDot from "@lucide/svelte/icons/bell-dot";
 
   // temp logic
 
@@ -34,15 +34,10 @@
       <BellDot class="size-5" />
       <div class="text-left space-y-0.5">
         <p class="text-xs">General</p>
-        <p class="text-xs text-muted-foreground">
-          Toggle notifications on everything
-        </p>
+        <p class="text-xs text-muted-foreground">Toggle notifications on everything</p>
       </div>
     </div>
-    <Switch
-      checked={muteNotifications}
-      onChange={(value) => (muteNotifications = value)}
-    />
+    <Switch checked={muteNotifications} onChange={(value) => (muteNotifications = value)} />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 group"
@@ -52,13 +47,9 @@
       <Layers class="size-5" />
       <div class="text-left space-y-0.5">
         <p class="text-xs">Applications</p>
-        <p class="text-xs text-muted-foreground">
-          Manage notifications per app
-        </p>
+        <p class="text-xs text-muted-foreground">Manage notifications per app</p>
       </div>
     </div>
-    <ChevronRight
-      class="w-4 h-4 text-muted-foreground group-hover:text-foreground"
-    />
+    <ChevronRight class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
   </button>
 </div>

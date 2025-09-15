@@ -1,6 +1,6 @@
 <script>
-  import Background from "@/lib/assets/backgrounds/background.webp";
-  import { core } from "@/lib/states/core.svelte";
+  import Background from "$lib/assets/backgrounds/background.webp";
+  import { core } from "$lib/states/core.svelte";
   import { quintOut } from "svelte/easing";
   import { slide } from "svelte/transition";
   import Indicator from "./indicator.svelte";

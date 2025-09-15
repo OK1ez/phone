@@ -1,6 +1,6 @@
 <script lang="ts">
-  import ChevronDown from "lucide-svelte/icons/chevron-down";
-  import Check from "lucide-svelte/icons/check";
+  import ChevronDown from "@lucide/svelte/icons/chevron-down";
+  import Check from "@lucide/svelte/icons/check";
 
   type Item = {
     label: string;
@@ -33,9 +33,7 @@
     onChange(item.value);
   }
 
-  let selectedLabel = $derived(
-    processedItems?.find((item) => item.value === value)?.label ?? placeholder,
-  );
+  let selectedLabel = $derived(processedItems?.find((item) => item.value === value)?.label ?? placeholder);
 
   function toggleDropdown() {
     isOpen = !isOpen;
@@ -64,18 +62,14 @@
   >
     <span>{selectedLabel}</span>
     <ChevronDown
-      class="h-4 w-4 text-muted-foreground transition-transform duration-200 {isOpen
-        ? 'rotate-180'
-        : 'rotate-0'}"
+      class="h-4 w-4 text-muted-foreground transition-transform duration-200 {isOpen ? 'rotate-180' : 'rotate-0'}"
     />
   </button>
 
   <input type="hidden" {name} value={value || ""} />
 
   {#if isOpen && processedItems?.length > 0}
-    <div
-      class="absolute w-full mt-1 bg-background border rounded-md shadow-lg max-h-60 overflow-auto z-50 p-1"
-    >
+    <div class="absolute w-full mt-1 bg-background border rounded-md shadow-lg max-h-60 overflow-auto z-50 p-1">
       <ul>
         {#each processedItems as item}
           <li

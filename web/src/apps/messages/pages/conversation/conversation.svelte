@@ -1,8 +1,8 @@
 <script lang="ts">
   import { messagesApp } from "../../messages.svelte";
 
-  import ChevronLeft from "lucide-svelte/icons/chevron-left";
-  import PhoneIcon from "lucide-svelte/icons/phone";
+  import ChevronLeft from "@lucide/svelte/icons/chevron-left";
+  import PhoneIcon from "@lucide/svelte/icons/phone";
   import MessageInput from "../../components/message-input.svelte";
 
   let messageValue = $state("");
@@ -78,35 +78,22 @@
   ]);
 </script>
 
-<header
-  class="flex items-center justify-between w-full mt-[4.5rem] px-6 pb-4 border-b"
->
+<header class="flex items-center justify-between w-full mt-[4.5rem] px-6 pb-4 border-b">
   <button
     class="group relative flex items-center justify-center size-10 -m-3"
     onclick={() => messagesApp.navigate("recents", true)}
   >
-    <ChevronLeft
-      class="size-5 text-muted-foreground group-hover:text-foreground"
-    />
+    <ChevronLeft class="size-5 text-muted-foreground group-hover:text-foreground" />
   </button>
   <p class="font-medium text-xs">Mads</p>
   <button class="group relative flex items-center justify-center size-10 -m-3">
-    <PhoneIcon
-      class="size-4 text-muted-foreground group-hover:text-foreground"
-    />
+    <PhoneIcon class="size-4 text-muted-foreground group-hover:text-foreground" />
   </button>
 </header>
 
-<div
-  bind:this={messagesContainer}
-  class="flex flex-col w-full overflow-y-auto p-6 space-y-4 h-[33rem]"
->
+<div bind:this={messagesContainer} class="flex flex-col w-full overflow-y-auto p-6 space-y-4 h-[33rem]">
   {#each messagesMockData as message}
-    <div
-      class="flex w-full {message.sender === 'me'
-        ? 'justify-end'
-        : 'justify-start'}"
-    >
+    <div class="flex w-full {message.sender === 'me' ? 'justify-end' : 'justify-start'}">
       <div
         class="px-3 py-2 rounded-2xl max-w-72 text-xs {message.sender === 'me'
           ? ' bg-sky-600 rounded-br-none'

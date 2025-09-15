@@ -3,11 +3,11 @@
   import ProfileOverlay from "./components/profile-overlay.svelte";
   import PostView from "./components/post-view.svelte";
 
-  import Home from "lucide-svelte/icons/home";
-  import Search from "lucide-svelte/icons/search";
-  import BellDot from "lucide-svelte/icons/bell-dot";
-  import User from "lucide-svelte/icons/user";
-  import Plus from "lucide-svelte/icons/plus";
+  import Home from "@lucide/svelte/icons/home";
+  import Search from "@lucide/svelte/icons/search";
+  import BellDot from "@lucide/svelte/icons/bell-dot";
+  import User from "@lucide/svelte/icons/user";
+  import Plus from "@lucide/svelte/icons/plus";
 
   let CurrentRoute = $derived(bleeterApp.routes[bleeterApp.currentRoute].route);
 </script>

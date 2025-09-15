@@ -1,6 +1,6 @@
 <script>
   import { fly } from "svelte/transition";
-  import X from "lucide-svelte/icons/x";
+  import X from "@lucide/svelte/icons/x";
 
   let {
     title = "Dialog",

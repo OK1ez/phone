@@ -2,11 +2,9 @@
   import { fly } from "svelte/transition";
   import { messagesApp } from "./messages.svelte";
 
-  import { getTransitionDirection } from "@/lib/utils/utils";
+  import { getTransitionDirection } from "$lib/utils/utils";
 
-  let CurrentRoute = $derived(
-    messagesApp.routes[messagesApp.currentRoute].route,
-  );
+  let CurrentRoute = $derived(messagesApp.routes[messagesApp.currentRoute].route);
 </script>
 
 <div class="relative flex flex-col w-full h-full bg-background">

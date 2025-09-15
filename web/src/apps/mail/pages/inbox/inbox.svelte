@@ -1,8 +1,8 @@
 <script>
-  import { turncate } from "@/lib/utils/utils";
+  import { turncate } from "$lib/utils/utils";
   import { mailApp } from "../../mail.svelte";
 
-  import ChevronRight from "lucide-svelte/icons/chevron-right";
+  import ChevronRight from "@lucide/svelte/icons/chevron-right";
 </script>
 
 <header class="flex items-center w-full mt-[4.5rem] px-6 pb-4 border-b">
@@ -18,16 +18,11 @@
       <span class="text-xs font-medium">Important Meeting</span>
       <div class="flex items-center space-x-1 text-muted-foreground">
         <span class="text-xs -mt-[0.1rem]">Yesterday</span>
-        <ChevronRight
-          class="size-4 text-muted-foreground group-hover:text-foreground"
-        />
+        <ChevronRight class="size-4 text-muted-foreground group-hover:text-foreground" />
       </div>
     </div>
     <span class="text-xs text-muted-foreground">
-      {turncate(
-        "We need to discuss the upcoming project. Please prepare a brief summary.",
-        50,
-      )}
+      {turncate("We need to discuss the upcoming project. Please prepare a brief summary.", 50)}
     </span>
   </button>
 </div>

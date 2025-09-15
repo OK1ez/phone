@@ -1,6 +1,6 @@
 <script>
   import { scale } from "svelte/transition";
-  import { core } from "@/lib/states/core.svelte";
+  import { core } from "$lib/states/core.svelte";
 
   import Indicator from "./indicator.svelte";
 
@@ -11,10 +11,7 @@
   }
 </script>
 
-<div
-  class="relative flex flex-col w-full h-full bg-background z-20"
-  transition:scale={{ start: 0.5, duration: 250 }}
->
+<div class="relative flex flex-col w-full h-full bg-background z-20" transition:scale={{ start: 0.5, duration: 250 }}>
   {#if CurrentApp}
     <CurrentApp />
   {/if}

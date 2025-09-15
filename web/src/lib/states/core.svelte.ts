@@ -1,9 +1,9 @@
-import SettingsApp from "@/apps/settings/settings-app.svelte";
-import MessagesApp from "@/apps/messages/messages-app.svelte";
-import MailApp from "@/apps/mail/mail-app.svelte";
-import PhoneApp from "@/apps/phone/phone-app.svelte";
-import BleeterApp from "@/apps/bleeter/bleeter-app.svelte";
-import CameraApp from "@/apps/camera/camera-app.svelte";
+import SettingsApp from "$apps/settings/settings-app.svelte";
+import MessagesApp from "$apps/messages/messages-app.svelte";
+import MailApp from "$apps/mail/mail-app.svelte";
+import PhoneApp from "$apps/phone/phone-app.svelte";
+import BleeterApp from "$apps/bleeter/bleeter-app.svelte";
+import CameraApp from "$apps/camera/camera-app.svelte";
 
 export interface App {
   id: string;
@@ -65,9 +65,7 @@ class CoreState {
   }
 
   getCurrentAppComponent() {
-    return this.currentApp
-      ? (this.apps[this.currentApp]?.component ?? null)
-      : null;
+    return this.currentApp ? (this.apps[this.currentApp]?.component ?? null) : null;
   }
 }
 

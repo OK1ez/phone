@@ -1,5 +1,5 @@
-import { app } from "@/lib/states/app.svelte";
-import type { DebugEvent, NuiMessage } from "@/lib/types/events";
+import { app } from "$lib/states/app.svelte";
+import type { DebugEvent, NuiMessage } from "$lib/types/events";
 import { onDestroy, onMount } from "svelte";
 
 const debugEventListeners: DebugEvent[] = [];
@@ -12,10 +12,7 @@ export const IsEnvBrowser = (): boolean => !(window as any).invokeNative;
  * @param data The data to send with the event
  * @returns {Promise<T>} The callback response from the Client
  **/
-export async function SendEvent<T = any, P = any>(
-  eventName: string,
-  data: T = {} as T,
-): Promise<P> {
+export async function SendEvent<T = any, P = any>(eventName: string, data: T = {} as T): Promise<P> {
   if (app.isBrowser == true) {
     const debugReturn = await DebugEventCallback<T>(eventName, data);
     return Promise.resolve(debugReturn);
@@ -28,10 +25,7 @@ export async function SendEvent<T = any, P = any>(
     body: JSON.stringify(data),
   };
 
-  const resp: Response = await fetch(
-    `https://${app.resourceName}/${eventName}`,
-    options,
-  );
+  const resp: Response = await fetch(`https://${app.resourceName}/${eventName}`, options);
   return await resp.json();
 }
 
@@ -41,10 +35,7 @@ export async function SendEvent<T = any, P = any>(
  * @param handler The callback to run when the event is received
  * @returns {void}
  **/
-export function ReceiveEvent<T = unknown>(
-  action: string,
-  handler: (data: T) => void,
-) {
+export function ReceiveEvent<T = unknown>(action: string, handler: (data: T) => void) {
   const eventListener = (event: MessageEvent<NuiMessage<T>>) => {
     const { action: eventAction, data } = event.data;
 
@@ -105,10 +96,7 @@ export async function DebugEventSend<P>(action: string, data?: P, timer = 0) {
  * @param handler The callback to run when the event is received
  * @returns {void}
  **/
-export async function DebugEventReceive<T>(
-  action: string,
-  handler?: (data: T) => unknown,
-) {
+export async function DebugEventReceive<T>(action: string, handler?: (data: T) => unknown) {
   if (!app.isBrowser) return;
 
   if (debugEventListeners[action] !== undefined) {

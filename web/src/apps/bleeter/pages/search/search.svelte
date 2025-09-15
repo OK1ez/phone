@@ -1,13 +1,9 @@
 <script lang="ts">
-  import Search from "lucide-svelte/icons/search";
+  import Search from "@lucide/svelte/icons/search";
 </script>
 
-<header
-  class="flex items-center justify-between w-full mt-[4.5rem] px-5 pb-4 border-b space-x-2"
->
-  <div
-    class="bg-input/40 h-9 rounded-full w-full flex items-center justify-between px-3"
-  >
+<header class="flex items-center justify-between w-full mt-[4.5rem] px-5 pb-4 border-b space-x-2">
+  <div class="bg-input/40 h-9 rounded-full w-full flex items-center justify-between px-3">
     <div class="flex items-center space-x-2">
       <Search class="size-4 text-muted-foreground" />
       <input

@@ -1,6 +1,6 @@
 <script>
   import { phoneApp } from "../../phone.svelte";
-  import InfoIcon from "lucide-svelte/icons/info";
+  import InfoIcon from "@lucide/svelte/icons/info";
 </script>
 
 <header class="flex items-center w-full mt-[4.5rem] px-6 pb-4 border-b">
@@ -19,9 +19,7 @@
       />
       <span class="text-xs font-medium">OKiez</span>
     </div>
-    <InfoIcon
-      class="size-4 text-muted-foreground group-hover:text-foreground"
-    />
+    <InfoIcon class="size-4 text-muted-foreground group-hover:text-foreground" />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-14 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
@@ -34,9 +32,7 @@
       />
       <span class="text-xs font-medium">Mads</span>
     </div>
-    <InfoIcon
-      class="size-4 text-muted-foreground group-hover:text-foreground"
-    />
+    <InfoIcon class="size-4 text-muted-foreground group-hover:text-foreground" />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-14 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 text-left group"
@@ -49,8 +45,6 @@
       />
       <span class="text-xs font-medium">Zoo</span>
     </div>
-    <InfoIcon
-      class="size-4 text-muted-foreground group-hover:text-foreground"
-    />
+    <InfoIcon class="size-4 text-muted-foreground group-hover:text-foreground" />
   </button>
 </div>

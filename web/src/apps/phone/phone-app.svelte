@@ -1,10 +1,10 @@
 <script lang="ts">
   import { phoneApp } from "./phone.svelte";
 
-  import Star from "lucide-svelte/icons/star";
-  import Clock from "lucide-svelte/icons/clock";
-  import Contact from "lucide-svelte/icons/contact";
-  import Grip from "lucide-svelte/icons/grip";
+  import Star from "@lucide/svelte/icons/star";
+  import Clock from "@lucide/svelte/icons/clock";
+  import Contact from "@lucide/svelte/icons/contact";
+  import Grip from "@lucide/svelte/icons/grip";
 
   let CurrentRoute = $derived(phoneApp.routes[phoneApp.currentRoute].route);
 </script>

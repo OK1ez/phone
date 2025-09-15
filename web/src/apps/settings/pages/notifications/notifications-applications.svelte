@@ -1,10 +1,10 @@
 <script lang="ts">
   import { settingsApp } from "../../settings.svelte";
 
-  import { Switch } from "@/lib/components/ui/switch";
+  import { Switch } from "$lib/components/ui/switch";
 
-  import ChevronLeft from "lucide-svelte/icons/chevron-left";
-  import PlaneTakeoff from "lucide-svelte/icons/plane-takeoff";
+  import ChevronLeft from "@lucide/svelte/icons/chevron-left";
+  import PlaneTakeoff from "@lucide/svelte/icons/plane-takeoff";
 
   // temp logic
 
@@ -43,47 +43,29 @@
     onclick={togglePhoneNotifications}
   >
     <div class="flex items-center h-full space-x-4">
-      <div
-        class="size-7 rounded-lg bg-secondary"
-        style="background-image: url('');"
-      ></div>
+      <div class="size-7 rounded-lg bg-secondary" style="background-image: url('');"></div>
       <p class="text-xs">Phone</p>
     </div>
-    <Switch
-      checked={phoneNotifications}
-      onChange={(value) => (phoneNotifications = value)}
-    />
+    <Switch checked={phoneNotifications} onChange={(value) => (phoneNotifications = value)} />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-14 px-6 border-b hover:bg-secondary/20 disabled:opacity-50"
     onclick={toggleMessagesNotifications}
   >
     <div class="flex items-center h-full space-x-4">
-      <div
-        class="size-7 rounded-lg bg-secondary"
-        style="background-image: url('');"
-      ></div>
+      <div class="size-7 rounded-lg bg-secondary" style="background-image: url('');"></div>
       <p class="text-xs">Messages</p>
     </div>
-    <Switch
-      checked={messagesNotifications}
-      onChange={(value) => (messagesNotifications = value)}
-    />
+    <Switch checked={messagesNotifications} onChange={(value) => (messagesNotifications = value)} />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-14 px-6 border-b hover:bg-secondary/20 disabled:opacity-50"
     onclick={toggleBleeterNotifications}
   >
     <div class="flex items-center h-full space-x-4">
-      <div
-        class="size-7 rounded-lg bg-secondary"
-        style="background-image: url('');"
-      ></div>
+      <div class="size-7 rounded-lg bg-secondary" style="background-image: url('');"></div>
       <p class="text-xs">Bleeter</p>
     </div>
-    <Switch
-      checked={bleeterNotifications}
-      onChange={(value) => (bleeterNotifications = value)}
-    />
+    <Switch checked={bleeterNotifications} onChange={(value) => (bleeterNotifications = value)} />
   </button>
 </div>

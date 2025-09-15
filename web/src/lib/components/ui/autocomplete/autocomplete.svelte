@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Input } from "@/components/ui/input";
-  import X from "lucide-svelte/icons/x";
+  import X from "@lucide/svelte/icons/x";
   import type { Item, AutocompleteProps } from "@/types/autocomplete";
   import { fetchData } from "@/utils/fetchData";
   import { actionsManager } from "@/states/actions.svelte";
@@ -22,13 +22,9 @@
 
   const isStaticItems = $derived(Array.isArray(items));
   const itemsKey = $derived(!isStaticItems ? (items as string) : null);
-  const actualItems = $derived(
-    isStaticItems ? (items as Item[]) : fetchedItems,
-  );
+  const actualItems = $derived(isStaticItems ? (items as Item[]) : fetchedItems);
   const filteredItems = $derived(
-    actualItems?.filter((item) =>
-      item.label.toLowerCase().includes(inputValue.toLowerCase()),
-    ) || [],
+    actualItems?.filter((item) => item.label.toLowerCase().includes(inputValue.toLowerCase())) || [],
   );
 
   $effect(async () => {
@@ -72,9 +68,7 @@
       inputValue = "";
       value = "";
     } else if (currentValue) {
-      const selectedItem = actualItems?.find(
-        (item) => item.value === currentValue,
-      );
+      const selectedItem = actualItems?.find((item) => item.value === currentValue);
       if (selectedItem) {
         inputValue = selectedItem.label;
         value = selectedItem.value as string;
@@ -94,11 +88,7 @@
 </script>
 
 <div class="relative {className}">
-  <div
-    class="relative"
-    onmouseenter={() => (inputHovered = true)}
-    onmouseleave={() => (inputHovered = false)}
-  >
+  <div class="relative" onmouseenter={() => (inputHovered = true)} onmouseleave={() => (inputHovered = false)}>
     <Input
       value={inputValue}
       oninput={(e) => (inputValue = e.target.value)}
@@ -122,9 +112,7 @@
   <input type="hidden" {name} value={value || ""} />
 
   {#if isOpen && filteredItems?.length > 0}
-    <div
-      class="absolute w-full mt-1 bg-background border rounded-md shadow-lg max-h-60 overflow-auto z-50 p-1"
-    >
+    <div class="absolute w-full mt-1 bg-background border rounded-md shadow-lg max-h-60 overflow-auto z-50 p-1">
       <ul>
         {#each filteredItems as item}
           <li

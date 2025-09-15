@@ -1,14 +1,14 @@
 <script lang="ts">
   import { settingsApp } from "../../settings.svelte";
 
-  import { Switch } from "@/lib/components/ui/switch";
+  import { Switch } from "$lib/components/ui/switch";
 
-  import ChevronRight from "lucide-svelte/icons/chevron-right";
-  import PlaneTakeoff from "lucide-svelte/icons/plane-takeoff";
-  import Video from "lucide-svelte/icons/video";
-  import BellDot from "lucide-svelte/icons/bell-dot";
-  import AudioLines from "lucide-svelte/icons/audio-lines";
-  import Image from "lucide-svelte/icons/image";
+  import ChevronRight from "@lucide/svelte/icons/chevron-right";
+  import PlaneTakeoff from "@lucide/svelte/icons/plane-takeoff";
+  import Video from "@lucide/svelte/icons/video";
+  import BellDot from "@lucide/svelte/icons/bell-dot";
+  import AudioLines from "@lucide/svelte/icons/audio-lines";
+  import Image from "@lucide/svelte/icons/image";
 
   // temp logic
 
@@ -38,15 +38,10 @@
       <PlaneTakeoff class="size-5" />
       <div class="text-left space-y-0.5">
         <p class="text-xs">Airplane mode</p>
-        <p class="text-xs text-muted-foreground">
-          Fake a flight and dodge distractions!
-        </p>
+        <p class="text-xs text-muted-foreground">Fake a flight and dodge distractions!</p>
       </div>
     </div>
-    <Switch
-      checked={airplaneMode}
-      onChange={(value) => (airplaneMode = value)}
-    />
+    <Switch checked={airplaneMode} onChange={(value) => (airplaneMode = value)} />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50"
@@ -59,10 +54,7 @@
         <p class="text-xs text-muted-foreground">Hides sensitive information</p>
       </div>
     </div>
-    <Switch
-      checked={streamerMode}
-      onChange={(value) => (streamerMode = value)}
-    />
+    <Switch checked={streamerMode} onChange={(value) => (streamerMode = value)} />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 group"
@@ -72,14 +64,10 @@
       <BellDot class="size-5" />
       <div class="text-left space-y-0.5">
         <p class="text-xs">Notifications</p>
-        <p class="text-xs text-muted-foreground">
-          Where chaos begins (or ends)
-        </p>
+        <p class="text-xs text-muted-foreground">Where chaos begins (or ends)</p>
       </div>
     </div>
-    <ChevronRight
-      class="w-4 h-4 text-muted-foreground group-hover:text-foreground"
-    />
+    <ChevronRight class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 group"
@@ -92,9 +80,7 @@
         <p class="text-xs text-muted-foreground">Change ringtone and alerts</p>
       </div>
     </div>
-    <ChevronRight
-      class="w-4 h-4 text-muted-foreground group-hover:text-foreground"
-    />
+    <ChevronRight class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-16 px-6 border-b hover:bg-secondary/20 disabled:opacity-50 group"
@@ -107,8 +93,6 @@
         <p class="text-xs text-muted-foreground">Customize your phone</p>
       </div>
     </div>
-    <ChevronRight
-      class="w-4 h-4 text-muted-foreground group-hover:text-foreground"
-    />
+    <ChevronRight class="w-4 h-4 text-muted-foreground group-hover:text-foreground" />
   </button>
 </div>
