@@ -27,8 +27,10 @@
     <button>
       <Images class="size-5 text-muted-foreground hover:text-foreground" />
     </button>
-    <button>
-      <Camera class="size-5 text-muted-foreground hover:text-foreground" />
+    <button class="size-14 rounded-full flex items-center justify-center group bg-primary/90" aria-label="Take photo">
+      <div class="size-12 rounded-full bg-background flex items-center justify-center">
+        <div class="size-11 rounded-full bg-primary/90 hover:bg-primary/70"></div>
+      </div>
     </button>
     <button>
       <RefreshCcw class="size-5 text-muted-foreground hover:text-foreground" />
