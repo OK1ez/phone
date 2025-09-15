@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
+  import { localeManager } from "$lib/states/locales.svelte";
+
   import { InitialiseListeners } from "$lib/utils/listeners";
   import { SendEvent, IsEnvBrowser } from "$lib/utils/eventsHandlers";
   import { setupKeyHandler } from "$lib/utils/keyHandler";
@@ -16,7 +18,10 @@
     InitialiseDebugReceivers();
   }
 
-  // async function initializeData() {}
+  async function initializeData() {
+    let translations = await SendEvent("fetchLocales");
+    localeManager.setTranslations(translations);
+  }
 
   onMount(() => {
     // initializeData();

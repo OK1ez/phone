@@ -1,5 +1,4 @@
 {
   "hello": "hello ${world}",
-  "world": "world",
-  "nui_test": "Locale Test"
+  "world": "world"
 }
