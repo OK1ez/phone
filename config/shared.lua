@@ -1,3 +1,0 @@
-return {
-    framework = 'custom'
-}

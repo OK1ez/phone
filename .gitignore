@@ -1,2 +1,4 @@
-
-phone.sql
+node_modules
+/dist
+/fxmanifest.lua
+/.yarn.installed
