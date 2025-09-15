@@ -53,7 +53,7 @@
         @apply outline-none;
     }
     body {
-        @apply font-sans text-foreground bg-background;
+        @apply font-sans text-foreground;
     }
     main {
         @apply absolute z-10 w-screen h-screen;
@@ -65,6 +65,14 @@
         display: none;
         scrollbar-width: none;
     }
+}
+
+:root {
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
 }
 
 @layer components {
