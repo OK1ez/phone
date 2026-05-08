@@ -212,7 +212,6 @@ export class PhoneManager implements PhoneShell {
       return null;
     }
 
-    },
     this.applyPhoneData(phoneData);
     return phoneData;
   }
