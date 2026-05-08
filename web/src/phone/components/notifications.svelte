@@ -4,11 +4,12 @@
   import { fly } from "svelte/transition";
   import PhoneOff from "@lucide/svelte/icons/phone-off";
 
+  import { calls } from "$phone/state/calls.svelte";
   import { phone } from "$phone/state/phone.svelte";
   import { notifications } from "$phone/state/notifications.svelte";
 
-  let showActiveCall = $derived(phone.telephony.status !== "idle" && phone.telephony.currentCall !== null);
-  let activeCallParticipant = $derived(phone.telephony.currentCall?.participant ?? null);
+  let showActiveCall = $derived(calls.status !== "idle" && calls.currentCall !== null);
+  let activeCallParticipant = $derived(calls.currentCall?.participant ?? null);
 </script>
 
 {#if notifications?.items?.length > 0 || showActiveCall}
@@ -79,7 +80,7 @@
                   : "scale-100 opacity-100 delay-150",
               ]}
               aria-label="Hang up"
-              onclick={() => phone.telephony.endCall()}
+              onclick={() => calls.endCall()}
             >
               <PhoneOff class="size-3.5" />
             </button>

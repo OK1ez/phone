@@ -267,7 +267,7 @@ class CameraState {
   };
 
   openLatestMedia = () => {
-    phone.device.openApp("gallery");
+    phone.openApp("gallery");
 
     if (!this.latestMedia) {
       galleryApp.navigate("libary");
@@ -457,7 +457,7 @@ class CameraState {
   }
 
   private async uploadMedia(type: SharedMediaAsset["type"], blob: Blob): Promise<boolean> {
-    const cloudId = phone.data.activeCloudId;
+    const cloudId = phone.cloudId;
     if (!cloudId) {
       return false;
     }

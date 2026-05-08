@@ -88,7 +88,7 @@ export const galleryApp = {
     return mediaItems;
   },
   async importImage(url: string, uploadToFivemanage = false) {
-    const cloudId = phone.data.activeCloudId;
+    const cloudId = phone.cloudId;
     const trimmedUrl = url.trim();
 
     if (!cloudId || trimmedUrl === "") {

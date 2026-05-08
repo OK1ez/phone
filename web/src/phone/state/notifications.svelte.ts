@@ -1,5 +1,5 @@
-import { phone } from "./phone.svelte";
 import type { PhoneNotification } from "./types";
+import { settings } from "./settings.svelte";
 
 const AUTO_DISMISS_MS = 4000;
 
@@ -10,8 +10,8 @@ export class NotificationsManager {
   timers = new Map<string, ReturnType<typeof setTimeout>>();
 
   // Derived values
-  muted = $derived(phone.settings.notifications?.muted ?? false);
-  preferences = $derived(phone.settings.notifications?.preferences ?? {});
+  muted = $derived(settings.notifications?.muted ?? false);
+  preferences = $derived(settings.notifications?.preferences ?? {});
 
   private isAppEnabled(appId: string): boolean {
     return this.preferences[appId]?.enabled ?? true;
@@ -53,7 +53,7 @@ export class NotificationsManager {
     this.compactCall = !this.compactCall;
   }
 
-  showCall(): void {
+  resetCallDisplay(): void {
     this.compactCall = false;
   }
 
@@ -74,11 +74,11 @@ export class NotificationsManager {
   }
 
   async setMuted(value: boolean): Promise<boolean> {
-    return phone.settings.setNotificationsMuted(value);
+    return settings.setNotificationsMuted(value);
   }
 
   async setAppEnabled(appId: string, enabled: boolean): Promise<boolean> {
-    return phone.settings.setNotificationAppEnabled(appId, enabled);
+    return settings.setNotificationAppEnabled(appId, enabled);
   }
 
   reset(): void {

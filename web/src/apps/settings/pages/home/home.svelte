@@ -5,7 +5,7 @@
   import PlaneTakeoff from "@lucide/svelte/icons/plane-takeoff";
   import Video from "@lucide/svelte/icons/video";
   import BellDot from "@lucide/svelte/icons/bell-dot";
-  import { phone } from "$phone/state/phone.svelte";
+  import { settings } from "$phone/state/settings.svelte";
 
   import { settingsApp } from "../../state/settings-app.svelte";
 </script>
@@ -17,33 +17,31 @@
 <div class="flex flex-col w-full h-[calc(100%-6.9rem)] overflow-y-auto pb-6">
   <button
     class="flex items-center justify-between w-full min-h-14 px-4 border-b hover:bg-secondary/20 disabled:opacity-50"
-    onclick={() =>
-      void phone.settings.setDeviceSetting("airplaneMode", !(phone.settings.device?.airplaneMode ?? false))}
+    onclick={() => void settings.setDeviceSetting("airplaneMode", !(settings.device?.airplaneMode ?? false))}
   >
     <div class="flex items-center h-full space-x-4">
       <PlaneTakeoff class="size-5" />
       <p class="text-xs">Airplane mode</p>
     </div>
     <Switch
-      checked={phone.settings.device?.airplaneMode ?? false}
+      checked={settings.device?.airplaneMode ?? false}
       onChange={(value) => {
-        void phone.settings.setDeviceSetting("airplaneMode", value);
+        void settings.setDeviceSetting("airplaneMode", value);
       }}
     />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-14 px-4 border-b hover:bg-secondary/20 disabled:opacity-50"
-    onclick={() =>
-      void phone.settings.setDeviceSetting("streamerMode", !(phone.settings.device?.streamerMode ?? false))}
+    onclick={() => void settings.setDeviceSetting("streamerMode", !(settings.device?.streamerMode ?? false))}
   >
     <div class="flex items-center h-full space-x-4">
       <Video class="size-5" />
       <p class="text-xs">Streamer mode</p>
     </div>
     <Switch
-      checked={phone.settings.device?.streamerMode ?? false}
+      checked={settings.device?.streamerMode ?? false}
       onChange={(value) => {
-        void phone.settings.setDeviceSetting("streamerMode", value);
+        void settings.setDeviceSetting("streamerMode", value);
       }}
     />
   </button>

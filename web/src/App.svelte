@@ -3,6 +3,7 @@
   import { InitialiseListeners } from "$lib/utils/listeners";
 
   import { phone } from "./phone/state/phone.svelte";
+  import { mediaViewer } from "./phone/state/media-viewer.svelte";
 
   import DebugMenu from "$lib/components/debug-menu.svelte";
   import ImageViewer from "$lib/components/image-viewer.svelte";
@@ -11,7 +12,7 @@
   InitialiseListeners();
 
   function handleKeydown(event: KeyboardEvent) {
-    if (event.code === "Escape" && phone.device.visible) {
+    if (event.code === "Escape" && phone.visible) {
       void phone.hide();
     }
   }
@@ -24,4 +25,4 @@
   <Phone />
 </main>
 
-<ImageViewer image={phone.mediaViewer.activeImage} onClose={() => phone.mediaViewer.closeImage()} />
+<ImageViewer image={mediaViewer.activeImage} onClose={() => mediaViewer.closeImage()} />

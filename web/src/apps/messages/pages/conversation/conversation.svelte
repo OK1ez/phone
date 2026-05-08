@@ -1,6 +1,8 @@
 <script lang="ts">
   import { tick } from "svelte";
+  import { calls } from "$phone/state/calls.svelte";
   import { phone } from "$phone/state/phone.svelte";
+  import { mediaViewer } from "$phone/state/media-viewer.svelte";
   import SharedImage from "$lib/components/shared-image.svelte";
   import Video from "@lucide/svelte/icons/video";
   import UserPlus from "@lucide/svelte/icons/user-plus";
@@ -110,7 +112,7 @@
   }
 
   function startCall() {
-    phone.telephony.startOutgoingCall({
+    calls.startOutgoingCall({
       name: "Mads",
       number: "+47 400 22 222",
     });
@@ -129,7 +131,7 @@
   }
 
   function openImageViewer(image: SharedImageAsset) {
-    phone.mediaViewer.openImage(image);
+    mediaViewer.openImage(image);
   }
 
   $effect(() => {

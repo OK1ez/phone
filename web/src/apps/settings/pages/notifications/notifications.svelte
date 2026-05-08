@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { notifications } from "$phone/state/notifications.svelte";
+  import { settings } from "$phone/state/settings.svelte";
 
   import { Switch } from "$lib/components/ui/switch";
 
@@ -22,13 +22,16 @@
 <div class="flex flex-col w-full h-full">
   <button
     class="flex items-center justify-between w-full min-h-14 px-4 border-b hover:bg-secondary/20 disabled:opacity-50"
-    onclick={() => notifications.setMuted(!notifications.muted)}
+    onclick={() => settings.setNotificationsMuted(!(settings.notifications?.muted ?? false))}
   >
     <div class="flex items-center h-full space-x-4">
       <BellDot class="size-5" />
       <p class="text-xs">Mute all notifications</p>
     </div>
-    <Switch checked={notifications.muted} onChange={(value) => notifications.setMuted(value)} />
+    <Switch
+      checked={settings.notifications?.muted ?? false}
+      onChange={(value) => settings.setNotificationsMuted(value)}
+    />
   </button>
   <button
     class="flex items-center justify-between w-full min-h-14 px-4 border-b hover:bg-secondary/20 disabled:opacity-50 group"

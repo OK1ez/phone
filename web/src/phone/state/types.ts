@@ -1,21 +1,10 @@
 import type { AppDefinition } from "$apps/types";
-import type { SharedImageAsset } from "$lib/types/media";
 
 export interface DeviceState {
   visible: boolean;
   isLocked: boolean;
   activeAppId: string | null;
   showHomescreen: boolean;
-}
-
-export interface DeviceDomain extends DeviceState {
-  openApp(appId: string): void;
-  closeApp(): void;
-  reset(): void;
-  hide(): void;
-  show(): void;
-  lock(): void;
-  unlock(): void;
 }
 
 export interface PhoneDataResponse {
@@ -47,21 +36,15 @@ export interface PhoneCloudAccount {
   phoneNumber: number;
 }
 
-export interface PhoneDataState {
-  activePhoneId: number | null;
-  activeCloudId: number | null;
+export interface PhoneSessionState {
+  phoneId: number | null;
+  cloudId: number | null;
+  name: string | null;
+  phoneNumber: number | null;
+  owner: number | null;
   openState: PhoneOpenState | null;
   setupClouds: PhoneCloudAccount[];
-  data: PhoneDataResponse | null;
-  isLoading: boolean;
   error: string | null;
-}
-
-export interface PhoneDataDomain extends PhoneDataState {
-  setSetupState(phoneId: number, setupClouds: PhoneCloudAccount[]): void;
-  setShellState(shell: PhoneShellResponse): void;
-  setPhoneData(phoneData?: PhoneDataResponse | null): PhoneDataResponse | null;
-  reset(): void;
 }
 
 export interface NotificationPreference {
@@ -96,18 +79,7 @@ export interface PhoneNotification {
   timestamp: string;
 }
 
-export interface SettingsDomain {
-  value: PhoneSettings | null;
-  device: DeviceSettings | null;
-  notifications: NotificationSettings | null;
-  appearance: AppearanceSettings | null;
-  update(nextSettings: PhoneSettings): Promise<boolean>;
-  setDeviceSetting<TKey extends keyof DeviceSettings>(key: TKey, value: DeviceSettings[TKey]): Promise<boolean>;
-  setNotificationsMuted(value: boolean): Promise<boolean>;
-  setNotificationAppEnabled(appId: string, enabled: boolean): Promise<boolean>;
-}
-
-export type TelephonyStatus = "idle" | "incoming" | "outgoing" | "active";
+export type CallStatus = "idle" | "incoming" | "outgoing" | "active";
 
 export interface CallParticipant {
   name: string;
@@ -121,12 +93,12 @@ export interface CallSession {
   startedAt: string;
 }
 
-export interface TelephonyState {
-  status: TelephonyStatus;
+export interface CallsState {
+  status: CallStatus;
   currentCall: CallSession | null;
 }
 
-export interface TelephonyDomain extends TelephonyState {
+export interface CallsDomain extends CallsState {
   receiveIncomingCall(participant: CallParticipant): void;
   startOutgoingCall(participant: CallParticipant): void;
   answerCall(): void;
@@ -134,28 +106,20 @@ export interface TelephonyDomain extends TelephonyState {
   endCall(): void;
 }
 
-export interface MediaViewerState {
-  activeImage: SharedImageAsset | null;
-}
-
-export interface MediaViewerDomain extends MediaViewerState {
-  openImage(image: SharedImageAsset): void;
-  closeImage(): void;
-}
-
-export interface PhoneShell {
+export interface PhoneShell extends DeviceState, PhoneSessionState {
   readonly apps: AppDefinition[];
   readonly activeApp: AppDefinition | null;
   readonly activeAppComponent: AppDefinition["component"] | null;
-  readonly device: DeviceDomain;
-  readonly data: PhoneDataDomain;
-  readonly settings: SettingsDomain;
-  readonly telephony: TelephonyDomain;
-  readonly mediaViewer: MediaViewerDomain;
   openApp(appId: string): void;
   closeApp(): void;
-  openPhone(payload: OpenPhonePayload): Promise<void>;
+  reset(): void;
   hide(): Promise<void>;
+  show(): void;
   lock(): void;
   unlock(): void;
+  setSetupState(phoneId: number, setupClouds: PhoneCloudAccount[]): void;
+  setShellState(shell: PhoneShellResponse): void;
+  setPhoneData(phoneData?: PhoneDataResponse | null): PhoneDataResponse | null;
+  resetData(): void;
+  openPhone(payload: OpenPhonePayload): Promise<void>;
 }

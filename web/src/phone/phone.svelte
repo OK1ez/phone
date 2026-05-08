@@ -5,6 +5,7 @@
   import Wifi from "@lucide/svelte/icons/wifi";
 
   import { phone } from "./state/phone.svelte";
+  import { calls } from "./state/calls.svelte";
   import { notifications } from "./state/notifications.svelte";
 
   import AppView from "./components/app-view.svelte";
@@ -13,11 +14,11 @@
   import Notifications from "./components/notifications.svelte";
   import Setup from "./components/setup/setup.svelte";
 
-  let showActiveCallPill = $derived(phone.telephony.status !== "idle" && phone.telephony.currentCall !== null);
-  let shouldPeek = $derived(!phone.device.visible && (notifications.items.length > 0 || showActiveCallPill));
-  let shouldRenderShell = $derived(phone.device.visible || shouldPeek);
+  let showActiveCallPill = $derived(calls.status !== "idle" && calls.currentCall !== null);
+  let shouldPeek = $derived(!phone.visible && (notifications.items.length > 0 || showActiveCallPill));
+  let shouldRenderShell = $derived(phone.visible || shouldPeek);
 
-  let showSetup = $derived(phone.device.visible && phone.data.openState === "setup");
+  let showSetup = $derived(phone.visible && phone.openState === "setup");
 </script>
 
 {#snippet volumeButton()}
@@ -61,13 +62,13 @@
         <Notifications />
         <div class="h-full">
           {#if showSetup}
-            {#key phone.data.activePhoneId}
+            {#key phone.phoneId}
               <Setup />
             {/key}
-          {:else if phone.device.isLocked}
+          {:else if phone.isLocked}
             <Lockscreen />
           {:else}
-            {#if phone.device.showHomescreen}
+            {#if phone.showHomescreen}
               <Homescreen />
             {/if}
 

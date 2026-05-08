@@ -3,6 +3,7 @@
   import Search from "@lucide/svelte/icons/search";
   import UserRoundPlus from "@lucide/svelte/icons/user-round-plus";
 
+  import { calls } from "$phone/state/calls.svelte";
   import { phone } from "$phone/state/phone.svelte";
   import { phoneApp } from "../../state/phone-app.svelte";
 
@@ -41,7 +42,7 @@
 
   async function submitContact() {
     const contact = await SendEvent("addContact", {
-      cloudId: phone.data.data?.cloudId,
+      cloudId: phone.cloudId,
       name: contactName,
       phoneNumber: contactNumber,
     });
@@ -57,7 +58,7 @@
   }
 
   onMount(async () => {
-    const cloudId = phone.data.data?.cloudId;
+    const cloudId = phone.cloudId;
     if (!cloudId) {
       return;
     }
@@ -76,7 +77,7 @@
   }
 
   async function toggleFavorite(contactId: number) {
-    const cloudId = phone.data.data?.cloudId;
+    const cloudId = phone.cloudId;
     if (!cloudId) {
       return;
     }
@@ -215,7 +216,7 @@
             <button
               class="group w-full flex items-center justify-start gap-2.5 font-medium text-sm text-muted-foreground hover:text-foreground"
               onclick={() => {
-                phone.telephony.startOutgoingCall({
+                calls.startOutgoingCall({
                   name: contact.name,
                   number: contact.phoneNumber,
                   ...(contact.avatar ? { avatar: contact.avatar } : {}),

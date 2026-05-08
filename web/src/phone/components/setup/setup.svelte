@@ -24,7 +24,7 @@
   let setupError = $state<string | null>(null);
 
   async function completeSetup(result: SetupResult) {
-    const phoneId = phone.data.activePhoneId;
+    const phoneId = phone.phoneId;
     if (!phoneId) {
       return;
     }
@@ -52,13 +52,13 @@
     }
 
     setupError = null;
-    phone.data.setPhoneData(phoneData);
+    phone.setPhoneData(phoneData);
     phone.unlock();
   }
 
   const setupApp = provideSetupApp({
     onComplete: completeSetup,
-    existingAccounts: phone.data.setupClouds,
+    existingAccounts: phone.setupClouds,
   });
   let CurrentRoute = $derived(setupApp.currentComponent);
 </script>

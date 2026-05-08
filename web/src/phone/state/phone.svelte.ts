@@ -6,21 +6,19 @@ import { messagesApp } from "$apps/messages/state/messages-app.svelte";
 import { phoneApp } from "$apps/phone/state/phone-app.svelte";
 import { settingsApp } from "$apps/settings/state/settings-app.svelte";
 import { SendEvent } from "$lib/utils/eventsHandlers";
-import type { SharedImageAsset } from "$lib/types/media";
-import { notifications } from "./notifications.svelte";
+import { calls } from "./calls.svelte";
+import { mediaViewer } from "./media-viewer.svelte";
+import { settings } from "./settings.svelte";
 import { normalizePhoneSettings } from "./settings";
 
 import type { AppDefinition } from "$apps/types";
 import type {
-  CallParticipant,
-  CallSession,
-  DeviceSettings,
   OpenPhonePayload,
   PhoneCloudAccount,
   PhoneDataResponse,
+  PhoneShell,
   PhoneShellResponse,
   PhoneOpenState,
-  PhoneSettings,
 } from "./types";
 
 const appsById = Object.fromEntries(appRegistry.map((app) => [app.id, app])) as Record<string, AppDefinition>;
@@ -37,462 +35,241 @@ const appStates = {
 type ResettableAppId = keyof typeof appStates;
 type GetShellResponse = PhoneShellResponse | false;
 type FetchOwnedCloudsResponse = PhoneCloudAccount[] | false;
-type UpdatePhoneSettingsResponse = PhoneSettings | false;
-type AttemptCallResponse = unknown;
 
-function resetApp(appId: string | null) {
-  if (!appId) {
-    return;
-  }
+export class PhoneManager implements PhoneShell {
+  readonly apps = appRegistry;
 
-  const appState = appStates[appId as ResettableAppId];
-  appState?.reset?.();
-}
+  visible = $state(false);
+  isLocked = $state(false);
+  activeAppId = $state<string | null>(null);
+  showHomescreen = $state(true);
 
-function normalizePhoneData(phoneData: PhoneDataResponse): PhoneDataResponse {
-  return {
-    ...phoneData,
-    settings: normalizePhoneSettings(phoneData.settings, appRegistry),
-  };
-}
+  phoneId = $state<number | null>(null);
+  cloudId = $state<number | null>(null);
+  name = $state<string | null>(null);
+  phoneNumber = $state<number | null>(null);
+  owner = $state<number | null>(null);
+  openState = $state<PhoneOpenState | null>(null);
+  setupClouds = $state.raw<PhoneCloudAccount[]>([]);
+  error = $state<string | null>(null);
 
-let visible = $state(false);
-let isLocked = $state(false);
-let activeAppId = $state<string | null>(null);
-let showHomescreen = $state(true);
+  activeApp = $derived(this.activeAppId ? (appsById[this.activeAppId] ?? null) : null);
+  activeAppComponent = $derived(this.activeApp?.component ?? null);
 
-let activePhoneId = $state<number | null>(null);
-let activeCloudId = $state<number | null>(null);
-let openState = $state<PhoneOpenState | null>(null);
-let setupClouds = $state.raw<PhoneCloudAccount[]>([]);
-let data = $state.raw<PhoneDataResponse | null>(null);
-let error = $state<string | null>(null);
+  private homescreenTimer: ReturnType<typeof setTimeout> | undefined;
 
-let telephonyStatus = $state<"idle" | "incoming" | "outgoing" | "active">("idle");
-let currentCall = $state<CallSession | null>(null);
-
-let activeImage = $state<SharedImageAsset | null>(null);
-
-let activeApp = $derived(activeAppId ? (appsById[activeAppId] ?? null) : null);
-let activeAppComponent = $derived(activeApp?.component ?? null);
-
-let homescreenTimer: ReturnType<typeof setTimeout> | undefined;
-let callConnectTimer: ReturnType<typeof setTimeout> | undefined;
-
-function syncHomescreen(appOpenDelay = 250) {
-  if (homescreenTimer) {
-    clearTimeout(homescreenTimer);
-    homescreenTimer = undefined;
-  }
-
-  if (!activeAppId) {
-    showHomescreen = true;
-    return;
-  }
-
-  showHomescreen = true;
-  homescreenTimer = setTimeout(() => {
-    showHomescreen = false;
-  }, appOpenDelay);
-}
-
-function clearCallConnectTimer() {
-  if (callConnectTimer) {
-    clearTimeout(callConnectTimer);
-    callConnectTimer = undefined;
-  }
-}
-
-function resetCall() {
-  clearCallConnectTimer();
-  telephonyStatus = "idle";
-  currentCall = null;
-}
-
-function createCall(participant: CallParticipant, direction: CallSession["direction"]): CallSession {
-  return {
-    participant,
-    direction,
-    startedAt: new Date().toISOString(),
-  };
-}
-
-function hasActivePhoneSession(phoneId: number, cloudId: number | null | undefined) {
-  return activePhoneId === phoneId && activeCloudId === (cloudId ?? null) && (data !== null || openState !== null);
-}
-
-function resetSessionState() {
-  phone.device.reset();
-  phone.data.reset();
-  resetCall();
-  activeImage = null;
-}
-
-function getCurrentSettings() {
-  return data ? normalizePhoneSettings(data.settings, appRegistry) : null;
-}
-
-function replaceSettings(nextSettings: PhoneSettings) {
-  if (!data) {
-    return;
-  }
-
-  data = {
-    ...data,
-    settings: normalizePhoneSettings(nextSettings, appRegistry),
-  };
-}
-
-async function persistSettings(nextSettings: PhoneSettings, previousSettings: PhoneSettings | null) {
-  if (!data) {
-    return false;
-  }
-
-  const savedSettings = await SendEvent<UpdatePhoneSettingsResponse, { cloudId: number; settings: PhoneSettings }>(
-    "updateSettings",
-    {
-      cloudId: data.cloudId,
-      settings: nextSettings,
-    },
-  );
-
-  if (!savedSettings) {
-    if (previousSettings) {
-      replaceSettings(previousSettings);
-    }
-
-    return false;
-  }
-
-  replaceSettings(savedSettings);
-  return true;
-}
-
-async function updatePhoneSettings(nextSettings: PhoneSettings) {
-  const previousSettings = getCurrentSettings();
-  const normalizedSettings = normalizePhoneSettings(nextSettings, appRegistry);
-
-  replaceSettings(normalizedSettings);
-  return persistSettings(normalizedSettings, previousSettings);
-}
-
-function applySetupState(phoneId: number, clouds: PhoneCloudAccount[]) {
-  activePhoneId = phoneId;
-  activeCloudId = null;
-  error = null;
-  data = null;
-  openState = "setup";
-  setupClouds = clouds;
-  isLocked = false;
-}
-
-function applyPhoneShell(shell: PhoneShellResponse) {
-  error = null;
-
-  if (shell.state === "unlocked") {
-    if (!shell.data) {
-      data = null;
-      error = "Missing phone data";
+  private resetApp(appId: string | null): void {
+    if (!appId) {
       return;
     }
 
-    activeCloudId = shell.data.cloudId;
-    data = normalizePhoneData(shell.data);
-    openState = null;
-    setupClouds = [];
-    isLocked = false;
-    return;
+    const appState = appStates[appId as ResettableAppId];
+    appState?.reset?.();
   }
 
-  data = null;
-  activeCloudId = shell.cloudId ?? activeCloudId;
-  openState = shell.state;
-  setupClouds = [];
-  isLocked = true;
-}
+  private syncHomescreen(appOpenDelay = 250): void {
+    if (this.homescreenTimer) {
+      clearTimeout(this.homescreenTimer);
+      this.homescreenTimer = undefined;
+    }
 
-export const phone = {
-  apps: appRegistry,
+    if (!this.activeAppId) {
+      this.showHomescreen = true;
+      return;
+    }
 
-  device: {
-    get visible() {
-      return visible;
-    },
-    get isLocked() {
-      return isLocked;
-    },
-    get activeAppId() {
-      return activeAppId;
-    },
-    get showHomescreen() {
-      return showHomescreen;
-    },
-    openApp(appId: string) {
-      activeAppId = appId;
-      syncHomescreen();
-    },
-    closeApp() {
-      resetApp(activeAppId);
-      activeAppId = null;
-      syncHomescreen();
-    },
-    reset() {
-      resetApp(activeAppId);
-      activeAppId = null;
-      isLocked = false;
-      syncHomescreen();
-    },
-    hide() {
-      visible = false;
-    },
-    show() {
-      visible = true;
-    },
-    lock() {
-      isLocked = true;
-    },
-    unlock() {
-      isLocked = false;
-    },
-  },
+    this.showHomescreen = true;
+    this.homescreenTimer = setTimeout(() => {
+      this.showHomescreen = false;
+    }, appOpenDelay);
+  }
 
-  data: {
-    get activePhoneId() {
-      return activePhoneId;
-    },
-    get activeCloudId() {
-      return activeCloudId;
-    },
-    get openState() {
-      return openState;
-    },
-    get setupClouds() {
-      return setupClouds;
-    },
-    get data() {
-      return data;
-    },
-    get error() {
-      return error;
-    },
-    setSetupState(phoneId: number, setupClouds: PhoneCloudAccount[]) {
-      applySetupState(phoneId, setupClouds);
-    },
-    setShellState(shell: PhoneShellResponse) {
-      applyPhoneShell(shell);
-    },
-    setPhoneData(phoneData?: PhoneDataResponse | null) {
-      if (!phoneData && data) {
-        return data;
-      }
+  private resetDeviceState(): void {
+    this.resetApp(this.activeAppId);
+    this.activeAppId = null;
+    this.isLocked = false;
+    this.syncHomescreen();
+  }
 
-      error = null;
+  private resetDataState(): void {
+    this.phoneId = null;
+    this.cloudId = null;
+    this.name = null;
+    this.phoneNumber = null;
+    this.owner = null;
+    this.openState = null;
+    this.setupClouds = [];
+    this.error = null;
+    settings.reset();
+  }
 
-      if (!phoneData) {
-        data = null;
-        error = "Missing phone data";
-        return null;
-      }
+  private hasActivePhoneSession(nextPhoneId: number, nextCloudId: number | null | undefined): boolean {
+    return (
+      this.phoneId === nextPhoneId &&
+      this.cloudId === (nextCloudId ?? null) &&
+      (this.cloudId !== null || this.openState !== null)
+    );
+  }
 
-      activeCloudId = phoneData.cloudId;
-      data = normalizePhoneData(phoneData);
-      openState = null;
-      setupClouds = [];
-      isLocked = false;
-      return data;
-    },
-    reset() {
-      activePhoneId = null;
-      activeCloudId = null;
-      openState = null;
-      setupClouds = [];
-      data = null;
-      error = null;
-    },
-  },
+  private resetSessionState(): void {
+    this.resetDeviceState();
+    this.resetDataState();
+    calls.reset();
+    mediaViewer.reset();
+  }
 
-  settings: {
-    get value() {
-      return getCurrentSettings();
-    },
-    get device() {
-      return getCurrentSettings()?.device ?? null;
-    },
-    get notifications() {
-      return getCurrentSettings()?.notifications ?? null;
-    },
-    get appearance() {
-      return getCurrentSettings()?.appearance ?? null;
-    },
-    async update(nextSettings: PhoneSettings) {
-      return updatePhoneSettings(nextSettings);
-    },
-    async setDeviceSetting<TKey extends keyof DeviceSettings>(key: TKey, value: DeviceSettings[TKey]) {
-      const currentSettings = getCurrentSettings();
-      if (!currentSettings) {
-        return false;
-      }
+  private applySetupState(nextPhoneId: number, clouds: PhoneCloudAccount[]): void {
+    this.phoneId = nextPhoneId;
+    this.cloudId = null;
+    this.name = null;
+    this.phoneNumber = null;
+    this.owner = null;
+    this.error = null;
+    this.openState = "setup";
+    this.setupClouds = clouds;
+    this.isLocked = false;
+    settings.reset();
+  }
 
-      return updatePhoneSettings({
-        ...currentSettings,
-        device: {
-          ...currentSettings.device,
-          [key]: value,
-        },
-      });
-    },
-    async setNotificationsMuted(value: boolean) {
-      const currentSettings = getCurrentSettings();
-      if (!currentSettings) {
-        return false;
-      }
+  private applyPhoneData(phoneData: PhoneDataResponse): void {
+    this.cloudId = phoneData.cloudId;
+    this.name = phoneData.name ?? null;
+    this.phoneNumber = phoneData.phoneNumber ?? null;
+    this.owner = phoneData.owner ?? null;
+    settings.setSettings(normalizePhoneSettings(phoneData.settings, appRegistry));
+    this.openState = null;
+    this.setupClouds = [];
+    this.isLocked = false;
+  }
 
-      return updatePhoneSettings({
-        ...currentSettings,
-        notifications: {
-          ...currentSettings.notifications,
-          muted: value,
-        },
-      });
-    },
-    async setNotificationAppEnabled(appId: string, enabled: boolean) {
-      const currentSettings = getCurrentSettings();
-      if (!currentSettings) {
-        return false;
-      }
+  private applyPhoneShell(shell: PhoneShellResponse): void {
+    this.error = null;
 
-      return updatePhoneSettings({
-        ...currentSettings,
-        notifications: {
-          ...currentSettings.notifications,
-          preferences: {
-            ...currentSettings.notifications.preferences,
-            [appId]: {
-              ...(currentSettings.notifications.preferences[appId] ?? { enabled: true }),
-              enabled,
-            },
-          },
-        },
-      });
-    },
-  },
-
-  telephony: {
-    get status() {
-      return telephonyStatus;
-    },
-    get currentCall() {
-      return currentCall;
-    },
-    receiveIncomingCall(participant: CallParticipant) {
-      clearCallConnectTimer();
-      currentCall = createCall(participant, "incoming");
-      telephonyStatus = "incoming";
-      notifications.showCall();
-    },
-    startOutgoingCall(participant: CallParticipant) {
-      clearCallConnectTimer();
-      currentCall = createCall(participant, "outgoing");
-      telephonyStatus = "outgoing";
-      notifications.showCall();
-      void SendEvent<AttemptCallResponse, string>("attemptCall", participant.number);
-
-      callConnectTimer = setTimeout(() => {
-        if (telephonyStatus === "outgoing" && currentCall) {
-          telephonyStatus = "active";
-          currentCall.startedAt = new Date().toISOString();
-        }
-      }, 1200);
-    },
-    answerCall() {
-      if (!currentCall || telephonyStatus !== "incoming") {
+    if (shell.state === "unlocked") {
+      if (!shell.data) {
+        this.name = null;
+        this.phoneNumber = null;
+        this.owner = null;
+        this.error = "Missing phone data";
+        settings.reset();
         return;
       }
 
-      telephonyStatus = "active";
-      currentCall.startedAt = new Date().toISOString();
-    },
-    declineCall() {
-      resetCall();
-    },
-    endCall() {
-      resetCall();
-    },
-  },
+      this.applyPhoneData(shell.data);
+      return;
+    }
 
-  mediaViewer: {
-    get activeImage() {
-      return activeImage;
-    },
-    openImage(image: SharedImageAsset) {
-      activeImage = image;
-    },
-    closeImage() {
-      activeImage = null;
-    },
-  },
+    this.name = null;
+    this.phoneNumber = null;
+    this.owner = null;
+    this.cloudId = shell.cloudId ?? this.cloudId;
+    this.openState = shell.state;
+    this.setupClouds = [];
+    this.isLocked = true;
+    settings.reset();
+  }
 
-  get activeApp() {
-    return activeApp;
-  },
-  get activeAppComponent() {
-    return activeAppComponent;
-  },
-  openApp(appId: string) {
+  openApp(appId: string): void {
     if (!appsById[appId]) {
       return;
     }
 
-    activeAppId = appId;
-    syncHomescreen();
-  },
-  closeApp() {
-    this.device.closeApp();
-  },
-  async openPhone(payload: OpenPhonePayload) {
-    const { phoneId, cloudId } = payload;
+    this.activeAppId = appId;
+    this.syncHomescreen();
+  }
 
-    if (hasActivePhoneSession(phoneId, cloudId)) {
-      visible = true;
-      isLocked = openState === "locked";
+  closeApp(): void {
+    this.resetApp(this.activeAppId);
+    this.activeAppId = null;
+    this.syncHomescreen();
+  }
+
+  reset(): void {
+    this.resetDeviceState();
+  }
+
+  show(): void {
+    this.visible = true;
+  }
+
+  setSetupState(nextPhoneId: number, nextSetupClouds: PhoneCloudAccount[]): void {
+    this.applySetupState(nextPhoneId, nextSetupClouds);
+  }
+
+  setShellState(shell: PhoneShellResponse): void {
+    this.applyPhoneShell(shell);
+  }
+
+  setPhoneData(phoneData?: PhoneDataResponse | null): PhoneDataResponse | null {
+    this.error = null;
+
+    if (!phoneData) {
+      this.name = null;
+      this.phoneNumber = null;
+      this.owner = null;
+      this.error = "Missing phone data";
+      settings.reset();
+      return null;
+    }
+
+    },
+    this.applyPhoneData(phoneData);
+    return phoneData;
+  }
+
+  resetData(): void {
+    this.resetDataState();
+  }
+
+  async openPhone(payload: OpenPhonePayload): Promise<void> {
+    const { phoneId: nextPhoneId, cloudId: nextCloudId } = payload;
+
+    if (this.hasActivePhoneSession(nextPhoneId, nextCloudId)) {
+      this.visible = true;
+      this.isLocked = this.openState === "locked";
       return;
     }
 
-    if (activePhoneId !== phoneId || activeCloudId !== (cloudId ?? null)) {
-      resetSessionState();
+    if (this.phoneId !== nextPhoneId || this.cloudId !== (nextCloudId ?? null)) {
+      this.resetSessionState();
     }
 
-    activePhoneId = phoneId;
+    this.phoneId = nextPhoneId;
 
-    if (!cloudId) {
+    if (!nextCloudId) {
       const ownedClouds = await SendEvent<FetchOwnedCloudsResponse>("fetchOwnedClouds");
-      applySetupState(phoneId, ownedClouds || []);
-      visible = true;
+      this.applySetupState(nextPhoneId, ownedClouds || []);
+      this.visible = true;
       return;
     }
 
-    activeCloudId = cloudId;
+    this.cloudId = nextCloudId;
 
-    const shell = await SendEvent<GetShellResponse, number>("getShell", cloudId);
+    const shell = await SendEvent<GetShellResponse, number>("getShell", nextCloudId);
     if (!shell) {
       return;
     }
 
-    applyPhoneShell(shell);
-    visible = true;
-  },
-  async hide() {
-    if (!visible) {
+    this.applyPhoneShell(shell);
+    this.visible = true;
+  }
+
+  async hide(): Promise<void> {
+    if (!this.visible) {
       return;
     }
 
     await SendEvent<boolean>("closePhone");
-    visible = false;
-  },
-  lock() {
-    isLocked = true;
-  },
-  unlock() {
-    isLocked = false;
-  },
-};
+    this.visible = false;
+  }
+
+  lock(): void {
+    this.isLocked = true;
+  }
+
+  unlock(): void {
+    this.isLocked = false;
+  }
+}
+
+export const phone = new PhoneManager();

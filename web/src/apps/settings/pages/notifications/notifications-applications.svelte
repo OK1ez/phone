@@ -1,6 +1,6 @@
 <script lang="ts">
   import { phone } from "$phone/state/phone.svelte";
-  import { notifications } from "$phone/state/notifications.svelte";
+  import { settings } from "$phone/state/settings.svelte";
 
   import { Switch } from "$lib/components/ui/switch";
 
@@ -23,13 +23,17 @@
   {#each phone.apps as app (app.id)}
     <button
       class="flex items-center justify-between w-full min-h-14 px-4 border-b hover:bg-secondary/20 disabled:opacity-50"
-      onclick={() => notifications.setAppEnabled(app.id, !(notifications.preferences[app.id]?.enabled ?? true))}
+      onclick={() =>
+        settings.setNotificationAppEnabled(app.id, !(settings.notifications?.preferences[app.id]?.enabled ?? true))}
     >
       <div class="flex items-center h-full space-x-4">
         <div class="size-7 rounded-lg bg-secondary" style="background-image: url('');"></div>
         <p class="text-xs">{app.label}</p>
       </div>
-      <Switch class="pointer-events-none" checked={notifications.preferences[app.id]?.enabled ?? true} />
+      <Switch
+        class="pointer-events-none"
+        checked={settings.notifications?.preferences[app.id]?.enabled ?? true}
+      />
     </button>
   {/each}
 </div>

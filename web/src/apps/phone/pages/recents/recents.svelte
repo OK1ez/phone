@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { phone } from "$phone/state/phone.svelte";
+  import { calls } from "$phone/state/calls.svelte";
   import { phoneApp } from "../../state/phone-app.svelte";
 
   function redial(number: string, name: string) {
-    phone.telephony.startOutgoingCall({
+    calls.startOutgoingCall({
       name,
       number,
     });

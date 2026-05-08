@@ -20,7 +20,7 @@
   }
 
   async function unlock() {
-    const cloudId = phone.data.activeCloudId;
+    const cloudId = phone.cloudId;
     if (!cloudId || !pinCode) {
       return;
     }
@@ -34,7 +34,7 @@
       return;
     }
 
-    phone.data.setPhoneData(phoneData);
+    phone.setPhoneData(phoneData);
     phone.unlock();
     pinCode = "";
   }

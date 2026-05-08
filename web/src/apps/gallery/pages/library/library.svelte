@@ -22,7 +22,7 @@
   let uploadToFivemanage = $state(false);
 
   onMount(async () => {
-    const cloudId = phone.data.activeCloudId;
+    const cloudId = phone.cloudId;
     if (!cloudId) {
       return;
     }

@@ -25,7 +25,7 @@ export function createDebugSenders(): DebugItem[] {
         },
         {
           label: "Close",
-          action: () => phone.device.hide(),
+          action: () => phone.hide(),
         },
         {
           label: "Notification",
