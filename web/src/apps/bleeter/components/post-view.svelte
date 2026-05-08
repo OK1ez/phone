@@ -1,5 +1,6 @@
-<script lang="ts">
-  import { bleeterApp } from "../bleeter.svelte";
+  <script lang="ts">
+  import type { BleeterPostData } from "../state/bleeter-app.svelte";
+  import { bleeterApp } from "../state/bleeter-app.svelte";
   import ChevronLeft from "@lucide/svelte/icons/chevron-left";
   import BadgeCheck from "@lucide/svelte/icons/badge-check";
   import MoreHorizontal from "@lucide/svelte/icons/more-horizontal";
@@ -11,31 +12,7 @@
   import { fly } from "svelte/transition";
   import BleeterReply from "./bleeter-reply.svelte";
 
-  interface PostData {
-    id: string;
-    avatar: string;
-    username: string;
-    verified: boolean;
-    timestamp: string;
-    content: string;
-    likes: number;
-    comments: number;
-    reposts: number;
-    replies: Array<{
-      id: string;
-      avatar: string;
-      username: string;
-      verified: boolean;
-      timestamp: string;
-      content: string;
-      likes: number;
-      comments: number;
-      reposts: number;
-      liked?: boolean;
-    }>;
-  }
-
-  let { postData }: { postData: PostData } = $props();
+  let { postData }: { postData: BleeterPostData } = $props();
 
   let liked = $state(false);
   let reposted = $state(false);
@@ -62,7 +39,7 @@
   in:fly={{ x: 300, duration: 300 }}
   out:fly={{ x: 300, duration: 300 }}
 >
-  <button class="flex items-center w-full space-x-2 mt-[4.5rem] px-6 pb-4 border-b" onclick={closePostView}>
+  <button class="flex items-center w-full space-x-2 mt-18 px-6 pb-4 border-b" onclick={closePostView}>
     <ChevronLeft class="size-5 text-muted-foreground hover:text-foreground" />
     <p class="font-medium text-sm">Back</p>
   </button>
@@ -80,7 +57,7 @@
           {#if postData.verified}
             <BadgeCheck class="size-[1.1rem] text-background" fill="#60a5fa" />
           {/if}
-          <span class="text-muted-foreground text-xs {!postData.verified && '!ml-1'}">
+          <span class="text-muted-foreground text-xs {!postData.verified && 'ml-1!'}">
             {postData.timestamp}
           </span>
         </div>
@@ -90,7 +67,7 @@
       </p>
       <div class="flex items-center space-x-4 pt-2">
         <button
-          class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+          class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-hidden focus:outline-hidden"
         >
           <Heart
             size="14"
@@ -101,7 +78,7 @@
           </span>
         </button>
         <button
-          class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+          class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-hidden focus:outline-hidden"
         >
           <MessageSquare size="15" class="group-hover:text-blue-500 transition-colors" />
           <span class="text-xs font-medium group-hover:text-blue-500 transition-colors">
@@ -109,7 +86,7 @@
           </span>
         </button>
         <button
-          class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+          class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-hidden focus:outline-hidden"
         >
           <Repeat2 size="18" class="group-hover:text-emerald-500 transition-colors {reposted && 'text-emerald-500'}" />
           <span class="text-xs font-medium group-hover:text-emerald-500 transition-colors">
@@ -125,7 +102,7 @@
         bind:value={replyText}
         oninput={autoResize}
         placeholder="Reply to OKiez"
-        class="w-full bg-transparent h-6 placeholder:text-muted-foreground border-none outline-none resize-none text-sm max-h-[120px] overflow-y-auto"
+        class="w-full bg-transparent h-6 placeholder:text-muted-foreground border-none outline-hidden resize-none text-sm max-h-[120px] overflow-y-auto"
       ></textarea>
       <div class="flex justify-between">
         <button class="text-muted-foreground hover:text-foreground">

@@ -1,13 +1,27 @@
-import { core } from "$lib/states/core.svelte";
 import type { DebugEventCallback } from "../types/events";
+import type { NotificationPayload } from "../types/notifications";
 import { ReceiveEvent } from "./eventsHandlers";
 
-import { setClipboard } from "./utils";
+import { phone } from "$phone/state/phone.svelte";
+import type { OpenPhonePayload } from "$phone/state/types";
+import { notifications } from "$phone/state/notifications.svelte";
 
 const AlwaysListened: DebugEventCallback[] = [
   {
-    action: "test",
-    handler: (data: any) => {},
+    action: "openPhone",
+    handler: (data: OpenPhonePayload) => {
+      phone.openPhone(data);
+    },
+  },
+  {
+    action: "showNotification",
+    handler: (data: NotificationPayload) => {
+      notifications.enqueue({
+        appId: data.app ?? "",
+        title: data.title ?? "",
+        body: data.content ?? "",
+      });
+    },
   },
 ];
 

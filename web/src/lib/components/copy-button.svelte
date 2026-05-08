@@ -1,6 +1,7 @@
 <script lang="ts">
   import Copy from "@lucide/svelte/icons/copy";
   import Check from "@lucide/svelte/icons/check";
+  import { onDestroy } from "svelte";
   import { setClipboard } from "$lib/utils/utils";
 
   interface Props {
@@ -11,6 +12,7 @@
 
   let { text, hover = true, size = "size-8" } = $props<Props>();
   let copied = $state(false);
+  let copyTimer: ReturnType<typeof setTimeout> | undefined;
 
   function handleCopy(event: MouseEvent) {
     copied = true;
@@ -19,12 +21,15 @@
 
     setClipboard(contentToCopy);
 
-    const timer = setTimeout(() => {
+    window.clearTimeout(copyTimer);
+    copyTimer = setTimeout(() => {
       copied = false;
     }, 1500);
-
-    return () => clearTimeout(timer);
   }
+
+  onDestroy(() => {
+    window.clearTimeout(copyTimer);
+  });
 </script>
 
 <button

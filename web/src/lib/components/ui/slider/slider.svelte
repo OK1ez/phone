@@ -83,7 +83,7 @@
     />
   </div>
   <Input
-    class="h-8 max-w-[3.25rem] px-2 py-1"
+    class="h-8 max-w-13 px-2 py-1"
     type="text"
     inputmode="decimal"
     value={inputValue}
@@ -99,7 +99,13 @@
 
 <style>
   input[type="range"]::-webkit-slider-thumb {
-    @apply appearance-none block h-3.5 w-3.5 rounded border-primary bg-background;
-    @apply ring-1 ring-primary;
+    display: block;
+    width: 0.875rem;
+    height: 0.875rem;
+    appearance: none;
+    border: 1px solid hsl(var(--primary));
+    border-radius: var(--radius);
+    background-color: hsl(var(--background));
+    box-shadow: 0 0 0 1px hsl(var(--primary));
   }
 </style>

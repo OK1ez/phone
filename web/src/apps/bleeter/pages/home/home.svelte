@@ -5,10 +5,10 @@
 </script>
 
 <header
-  class="flex items-center justify-center w-full mt-[4.5rem] px-6 space-x-12 border-b"
+  class="flex items-center justify-center w-full mt-18 px-6 space-x-12 border-b"
 >
   <button
-    class="border-b-2 w-[5rem] text-xs font-medium pb-2 {activeTab === 'for-you'
+    class="border-b-2 w-20 text-xs font-medium pb-2 {activeTab === 'for-you'
       ? 'border-primary'
       : 'border-transparent text-muted-foreground hover:text-foreground'}"
     onclick={() => (activeTab = "for-you")}
@@ -16,7 +16,7 @@
     For You
   </button>
   <button
-    class="border-b-2 w-[5rem] text-xs font-medium pb-2 {activeTab ===
+    class="border-b-2 w-20 text-xs font-medium pb-2 {activeTab ===
     'following'
       ? 'border-primary'
       : 'border-transparent text-muted-foreground hover:text-foreground'}"

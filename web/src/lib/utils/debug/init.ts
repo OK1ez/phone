@@ -1,18 +1,18 @@
-import type { DebugAction } from "../../types/events";
-import { DebugEventSend, SendEvent } from "../eventsHandlers";
+import type { DebugAction } from "$lib/types/events";
+import { DebugEventSend } from "../eventsHandlers";
 
+/**
+ * The initial debug actions to run on startup
+ */
 const InitDebug: DebugAction[] = [
   {
-    label: "Visible",
-    action: () => DebugEventSend("setVisibility", true),
+    label: "Open Phone",
+    action: () => DebugEventSend("openPhone", { phoneId: 3, cloudId: 1 }),
     delay: 500,
   },
-  {
-    label: "Open Bank",
-    action: () => DebugEventSend("openBank", {}),
-    delay: 1000,
-  },
 ];
+
+export default InitDebug;
 
 export function InitialiseDebugSenders(): void {
   for (const debug of InitDebug) {
@@ -21,5 +21,3 @@ export function InitialiseDebugSenders(): void {
     }, debug.delay || 0);
   }
 }
-
-export default InitDebug;

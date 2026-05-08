@@ -43,3 +43,8 @@ export function formatCurrency(amount: number) {
   }).format(amount);
   return `${formatted} kr`;
 }
+
+export function formatPhoneNumber(phoneNumber: number): string {
+  const value = phoneNumber.toString();
+  return value.replace(/(\d{3})(\d{2})(\d{3})/, "$1 $2 $3");
+}

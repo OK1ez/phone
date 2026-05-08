@@ -1,8 +1,8 @@
 import { app } from "$lib/states/app.svelte";
-import type { DebugEvent, NuiMessage } from "$lib/types/events";
+import type { EmptyPayload, NuiMessage } from "$lib/types/events";
 import { onDestroy, onMount } from "svelte";
 
-const debugEventListeners: DebugEvent[] = [];
+const debugEventListeners: Record<string, ((data: unknown) => unknown) | undefined> = {};
 
 export const IsEnvBrowser = (): boolean => !(window as any).invokeNative;
 
@@ -12,10 +12,13 @@ export const IsEnvBrowser = (): boolean => !(window as any).invokeNative;
  * @param data The data to send with the event
  * @returns {Promise<T>} The callback response from the Client
  **/
-export async function SendEvent<T = any, P = any>(eventName: string, data: T = {} as T): Promise<P> {
+export async function SendEvent<TResponse = unknown, TRequest = EmptyPayload>(
+  eventName: string,
+  data: TRequest = {} as TRequest,
+): Promise<TResponse> {
   if (app.isBrowser == true) {
-    const debugReturn = await DebugEventCallback<T>(eventName, data);
-    return Promise.resolve(debugReturn);
+    const debugReturn = await DebugEventCallback<TRequest>(eventName, data);
+    return Promise.resolve(debugReturn as TResponse);
   }
   const options = {
     method: "post",
@@ -109,7 +112,7 @@ export async function DebugEventReceive<T>(action: string, handler?: (data: T) =
     return;
   }
 
-  debugEventListeners[action] = handler;
+  debugEventListeners[action] = handler as ((data: unknown) => unknown) | undefined;
 }
 
 /**

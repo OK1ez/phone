@@ -39,7 +39,7 @@
 >
   <span
     class="bg-background pointer-events-none block h-4 w-4 rounded-full shadow-lg ring-0 transition-transform {checked
-      ? 'translate-x-[1rem]'
+      ? 'translate-x-4'
       : 'translate-x-0'}"
   ></span>
 </button>

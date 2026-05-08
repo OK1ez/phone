@@ -1,3 +1,5 @@
+export type EmptyPayload = Record<string, never>;
+
 export interface NuiMessage<T = any> {
   action: string;
   data: T;

@@ -8,7 +8,7 @@
 </script>
 
 <button
-  class="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-none transition-colors hover:bg-secondary hover:text-secondary-foreground w-full {className}"
+  class="relative flex items-center gap-2 rounded-sm px-2 py-1.5 text-sm outline-hidden transition-colors hover:bg-secondary hover:text-secondary-foreground w-full {className}"
   onclick={select}
 >
   {@render children?.()}

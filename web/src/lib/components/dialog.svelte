@@ -16,7 +16,7 @@
 {#if isOpen}
   <!-- onclick={onClose} -->
   <div class="fixed inset-0 flex items-center justify-center z-50">
-    <div class="absolute bg-black/50 w-[70rem] h-[45rem] rounded-lg"></div>
+    <div class="absolute bg-black/50 w-280 h-180 rounded-lg"></div>
     <div
       class="bg-background relative z-10 grid w-full gap-4 rounded-lg border p-6 shadow-lg duration-200 {size
         ? size
@@ -35,7 +35,7 @@
 
       <button
         onclick={onClose}
-        class="outline-none absolute right-4 top-4 opacity-70 transition-opacity hover:opacity-100 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
+        class="outline-hidden absolute right-4 top-4 opacity-70 transition-opacity hover:opacity-100 [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0"
       >
         <X />
       </button>

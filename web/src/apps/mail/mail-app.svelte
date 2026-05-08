@@ -1,10 +1,10 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
-  import { mailApp } from "./mail.svelte";
+  import { mailApp } from "./state/mail-app.svelte";
 
   import { getTransitionDirection } from "$lib/utils/utils";
 
-  let CurrentRoute = $derived(mailApp.routes[mailApp.currentRoute].route);
+  let CurrentRoute = $derived(mailApp.currentComponent);
 </script>
 
 <div class="relative flex flex-col w-full h-full bg-background">

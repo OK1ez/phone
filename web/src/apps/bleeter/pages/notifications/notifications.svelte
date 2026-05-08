@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { bleeterApp } from "../../bleeter.svelte";
+  import { bleeterApp } from "../../state/bleeter-app.svelte";
 
   function openProfile(
     username: string,
@@ -30,7 +30,7 @@
   }
 </script>
 
-<header class="flex items-center w-full mt-[4.5rem] px-6 pb-4 border-b">
+<header class="flex items-center w-full mt-18 px-6 pb-4 border-b">
   <p class="font-medium text-sm">Notifications</p>
 </header>
 

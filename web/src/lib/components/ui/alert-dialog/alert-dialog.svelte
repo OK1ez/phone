@@ -6,11 +6,11 @@
   <div class="fixed inset-0 z-50">
     <div
       onclick={() => (open = false)}
-      class="fixed inset-0 bg-background/40 backdrop-blur-sm rounded-lg"
+      class="fixed inset-0 bg-background/40 backdrop-blur-xs rounded-lg"
     ></div>
 
     <div
-      class="fixed left-[50%] top-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg rounded-lg max-w-[25rem] {className}"
+      class="fixed left-[50%] top-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg rounded-lg max-w-100 {className}"
     >
       {@render children?.()}
     </div>

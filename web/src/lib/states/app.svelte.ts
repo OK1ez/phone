@@ -6,9 +6,7 @@ interface Window {
 declare const window: Window;
 
 export class App {
-  resourceName = $state(
-    window.GetParentResourceName ? window.GetParentResourceName() : "interface",
-  );
+  resourceName = $state(window.GetParentResourceName ? window.GetParentResourceName() : "phone");
   isBrowser = $state(!window.invokeNative);
 }
 

@@ -1,34 +1,27 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-
-  import { localeManager } from "$lib/states/locales.svelte";
-
+  import { IsEnvBrowser } from "$lib/utils/eventsHandlers";
   import { InitialiseListeners } from "$lib/utils/listeners";
-  import { SendEvent, IsEnvBrowser } from "$lib/utils/eventsHandlers";
-  import { setupKeyHandler } from "$lib/utils/keyHandler";
 
-  import { InitialiseDebugSenders } from "$lib/utils/debug/init";
-  import { InitialiseDebugReceivers } from "$lib/utils/debug/receivers";
+  import { phone } from "./phone/state/phone.svelte";
+
+  import DebugMenu from "$lib/components/debug-menu.svelte";
+  import ImageViewer from "$lib/components/image-viewer.svelte";
   import Phone from "./phone/phone.svelte";
 
   InitialiseListeners();
 
-  if (import.meta.env.DEV && IsEnvBrowser()) {
-    InitialiseDebugSenders();
-    InitialiseDebugReceivers();
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.code === "Escape" && phone.device.visible) {
+      void phone.hide();
+    }
   }
-
-  async function initializeData() {
-    let translations = await SendEvent("fetchLocales");
-    localeManager.setTranslations(translations);
-  }
-
-  onMount(() => {
-    // initializeData();
-    return setupKeyHandler();
-  });
 </script>
 
-<main class="flex items-center justify-center">
+<svelte:window onkeydown={handleKeydown} />
+
+<main class="flex items-end justify-end p-8" class:bg-background={IsEnvBrowser()}>
+  <DebugMenu />
   <Phone />
 </main>
+
+<ImageViewer image={phone.mediaViewer.activeImage} onClose={() => phone.mediaViewer.closeImage()} />

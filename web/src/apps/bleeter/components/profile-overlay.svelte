@@ -1,30 +1,12 @@
-<script lang="ts">
-  import { bleeterApp } from "../bleeter.svelte";
+  <script lang="ts">
+  import type { BleeterProfileData } from "../state/bleeter-app.svelte";
+  import { bleeterApp } from "../state/bleeter-app.svelte";
   import ChevronLeft from "@lucide/svelte/icons/chevron-left";
   import BadgeCheck from "@lucide/svelte/icons/badge-check";
   import BleeterPost from "./bleeter-post.svelte";
-  import { fly, scale } from "svelte/transition";
+  import { fly } from "svelte/transition";
 
-  interface ProfileData {
-    username: string;
-    handle: string;
-    avatar: string;
-    verified: boolean;
-    bio: string;
-    followers: string;
-    posts: Array<{
-      avatar: string;
-      username: string;
-      verified: boolean;
-      timestamp: string;
-      content: string;
-      likes: number;
-      comments: number;
-      reposts: number;
-    }>;
-  }
-
-  let { profileData }: { profileData: ProfileData } = $props();
+  let { profileData }: { profileData: BleeterProfileData } = $props();
 
   let isFollowing = $state(false);
 
@@ -38,7 +20,7 @@
   in:fly={{ x: 300, duration: 300 }}
   out:fly={{ x: 300, duration: 300 }}
 >
-  <button class="flex items-center w-full space-x-2 mt-[4.5rem] px-6 pb-4 border-b" onclick={closeProfile}>
+  <button class="flex items-center w-full space-x-2 mt-18 px-6 pb-4 border-b" onclick={closeProfile}>
     <ChevronLeft class="size-5 text-muted-foreground hover:text-foreground" />
     <p class="font-medium text-sm">Back</p>
   </button>
@@ -83,26 +65,6 @@
 
     <div class="w-full">
       {#each profileData.posts as post}
-        <BleeterPost
-          avatar={post.avatar}
-          username={post.username}
-          verified={post.verified}
-          timestamp={post.timestamp}
-          content={post.content}
-          likes={post.likes}
-          comments={post.comments}
-          reposts={post.reposts}
-        />
-        <BleeterPost
-          avatar={post.avatar}
-          username={post.username}
-          verified={post.verified}
-          timestamp={post.timestamp}
-          content={post.content}
-          likes={post.likes}
-          comments={post.comments}
-          reposts={post.reposts}
-        />
         <BleeterPost
           avatar={post.avatar}
           username={post.username}

@@ -1,75 +1,82 @@
 <script lang="ts">
-  import { core } from "$lib/states/core.svelte";
+  import { fly } from "svelte/transition";
 
-  import Wifi from "@lucide/svelte/icons/wifi";
   import Signal from "@lucide/svelte/icons/signal";
+  import Wifi from "@lucide/svelte/icons/wifi";
 
-  import Lockscreen from "./components/lockscreen.svelte";
-  import Homescreen from "./components/homescreen.svelte";
+  import { phone } from "./state/phone.svelte";
+  import { notifications } from "./state/notifications.svelte";
+
   import AppView from "./components/app-view.svelte";
+  import Homescreen from "./components/homescreen.svelte";
+  import Lockscreen from "./components/lockscreen.svelte";
+  import Notifications from "./components/notifications.svelte";
+  import Setup from "./components/setup/setup.svelte";
 
-  let showHomescreen = $state(true);
+  let showActiveCallPill = $derived(phone.telephony.status !== "idle" && phone.telephony.currentCall !== null);
+  let shouldPeek = $derived(!phone.device.visible && (notifications.items.length > 0 || showActiveCallPill));
+  let shouldRenderShell = $derived(phone.device.visible || shouldPeek);
 
-  // makes app opening look nice
-  $effect(() => {
-    if (core.currentApp) {
-      const timeout = setTimeout(() => {
-        showHomescreen = false;
-      }, 250);
-
-      return () => clearTimeout(timeout);
-    } else {
-      showHomescreen = true;
-    }
-  });
+  let showSetup = $derived(phone.device.visible && phone.data.openState === "setup");
 </script>
 
 {#snippet volumeButton()}
-  <div class="w-full min-h-20 bg-[#6f6f6f] shadow-inner shadow-[#2f2f2f] rounded-full"></div>
+  <div class="w-full min-h-16 bg-[#6f6f6f] shadow-inner shadow-[#2f2f2f] rounded-full"></div>
 {/snippet}
 
 {#snippet lockButton()}
-  <button
-    class="absolute w-1.5 h-28 bg-[#6f6f6f] shadow-inner shadow-[#2f2f2f] rounded-full top-36 -right-2"
-    aria-label="Lock Phone"
-    onclick={() => core.lock()}
-  ></button>
+  <div
+    class="absolute top-36 -right-[0.450rem] z-0 h-24 w-1.5 rounded-full bg-[#6f6f6f] shadow-inner shadow-[#2f2f2f]"
+  ></div>
 {/snippet}
 
 {#snippet statusBar()}
-  <header class="absolute z-50 flex items-center justify-between w-full px-8 pt-6">
-    <p class="font-medium">20:07</p>
+  <header class="absolute z-50 flex items-center justify-between w-full px-5 pt-4">
+    <p class="font-medium text-xs select-none">20:07</p>
     <div class="flex space-x-2">
-      <Wifi class="size-5" />
-      <Signal class="size-5" />
+      <Wifi class="size-3.5 text-foreground" />
+      <Signal class="size-3.5" />
     </div>
   </header>
 {/snippet}
 
-<div class="absolute flex w-[23rem] h-[46rem] scale-90">
-  {@render lockButton()}
+{#if shouldRenderShell}
+  <div
+    class={[
+      "relative isolate flex h-164 w-84 origin-bottom-right transition-transform duration-300 ease-out",
+      shouldPeek ? "translate-y-[91%]" : "translate-y-0",
+    ]}
+    transition:fly={{ y: shouldPeek ? 250 : 900, duration: 350, opacity: 0 }}
+  >
+    {@render lockButton()}
 
-  <div class="w-1.5 absolute flex flex-col -left-2 top-28 gap-4">
-    {@render volumeButton()}
-    {@render volumeButton()}
-  </div>
+    <div class="absolute top-28 -left-[0.450rem] z-0 flex w-1.5 flex-col gap-3">
+      {@render volumeButton()}
+      {@render volumeButton()}
+    </div>
 
-  <div class="w-full h-full bg-black rounded-[2rem] shadow-frame flex p-1.5 overflow-hidden">
-    <div class="w-full h-full rounded-[1.8rem] bg-cover overflow-hidden relative">
-      {@render statusBar()}
-      <div class="h-full">
-        {#if core.isLocked}
-          <Lockscreen />
-        {:else}
-          {#if showHomescreen}
-            <Homescreen />
+    <div class="relative z-10 flex h-full w-full overflow-hidden rounded-[2rem] bg-black p-1 shadow-frame">
+      <div class="w-full h-full rounded-[1.8rem] bg-cover overflow-hidden relative">
+        {@render statusBar()}
+        <Notifications />
+        <div class="h-full">
+          {#if showSetup}
+            {#key phone.data.activePhoneId}
+              <Setup />
+            {/key}
+          {:else if phone.device.isLocked}
+            <Lockscreen />
+          {:else}
+            {#if phone.device.showHomescreen}
+              <Homescreen />
+            {/if}
+
+            {#if phone.activeApp}
+              <AppView />
+            {/if}
           {/if}
-
-          {#if core.currentApp}
-            <AppView />
-          {/if}
-        {/if}
+        </div>
       </div>
     </div>
   </div>
-</div>
+{/if}

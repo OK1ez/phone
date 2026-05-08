@@ -1,190 +1,91 @@
-// Taken from screencapture while we wait for svelte package. https://github.com/itschip/screencapture
+export type GameViewSize = {
+  width: number;
+  height: number;
+};
 
-// https://github.com/citizenfx/fivem/blob/538f9cc8310391417fd025febae6d1efb9558bc5/ext/cfx-ui/src/app/app.component.ts#L317
-const vertexShaderSrc = `
-  attribute vec2 a_position;
-  attribute vec2 a_texcoord;
-  uniform mat3 u_matrix;
-  varying vec2 textureCoordinate;
-  void main() {
-    gl_Position = vec4(a_position, 0.0, 1.0);
-    textureCoordinate = a_texcoord;
+export type GameViewResizeInput = GameViewSize | [number, number];
+
+export type GameView = {
+  canvas: HTMLCanvasElement;
+  dispose: () => void;
+  resize: (width: number, height: number) => void;
+};
+
+type NativeGameViewInstance = {
+  destroy?: () => void;
+  dispose?: () => void;
+  resize?: (width: number, height: number) => void;
+  setBounds?: (width: number, height: number) => void;
+  setSize?: (width: number, height: number) => void;
+};
+
+type NativeGameViewConstructor = new (canvas: HTMLCanvasElement) => NativeGameViewInstance;
+
+type NativeGameViewFactory = {
+  create?: (canvas: HTMLCanvasElement) => NativeGameViewInstance;
+};
+
+type NativeGameViewGlobal =
+  | NativeGameViewConstructor
+  | NativeGameViewFactory
+  | undefined;
+
+declare global {
+  interface Window {
+    CfxGameViewRenderer?: NativeGameViewGlobal;
   }
-`;
-
-const fragmentShaderSrc = `
-varying highp vec2 textureCoordinate;
-uniform sampler2D external_texture;
-void main()
-{
-  gl_FragColor = texture2D(external_texture, textureCoordinate);
-}
-`;
-
-function makeShader(gl: WebGLRenderingContext, type: number, src: string) {
-  const shader = gl.createShader(type);
-  if (!shader) {
-    throw new Error("Failed to create shader");
-  }
-
-  gl.shaderSource(shader, src);
-  gl.compileShader(shader);
-
-  const infoLog = gl.getShaderInfoLog(shader);
-  if (infoLog) {
-    console.error(infoLog);
-  }
-
-  return shader;
 }
 
-function createTexture(gl: WebGLRenderingContext) {
-  const tex = gl.createTexture();
-
-  const texPixels = new Uint8Array([0, 0, 255, 255]);
-
-  gl.bindTexture(gl.TEXTURE_2D, tex);
-  gl.texImage2D(
-    gl.TEXTURE_2D,
-    0,
-    gl.RGBA,
-    1,
-    1,
-    0,
-    gl.RGBA,
-    gl.UNSIGNED_BYTE,
-    texPixels,
-  );
-
-  gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-  gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-  gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-
-  // Magic hook sequence
-  gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-  gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
-  gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
-
-  // Reset
-  gl.texParameterf(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-
-  return tex;
+function normalizeSize(width: number, height: number): GameViewSize {
+  return {
+    width: Math.max(1, Math.floor(width)),
+    height: Math.max(1, Math.floor(height)),
+  };
 }
 
-function createBuffers(gl: WebGLRenderingContext) {
-  const vertexBuff = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuff);
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-    gl.STATIC_DRAW,
-  );
+function createNativeGameViewInstance(canvas: HTMLCanvasElement) {
+  const renderer = window.CfxGameViewRenderer;
 
-  const texBuff = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, texBuff);
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([0, 0, 1, 0, 0, 1, 1, 1]),
-    gl.STATIC_DRAW,
-  );
-
-  return { vertexBuff, texBuff };
-}
-
-function createProgram(gl: WebGLRenderingContext) {
-  const vertexShader = makeShader(gl, gl.VERTEX_SHADER, vertexShaderSrc);
-  const fragmentShader = makeShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSrc);
-
-  const program = gl.createProgram();
-  if (!program) {
-    throw new Error("Failed to create program");
+  if (!renderer) {
+    throw new Error("CfxGameViewRenderer is unavailable in this NUI context");
   }
 
-  gl.attachShader(program, vertexShader);
-  gl.attachShader(program, fragmentShader);
-  gl.linkProgram(program);
-  gl.useProgram(program);
-
-  const vloc = gl.getAttribLocation(program, "a_position");
-  const tloc = gl.getAttribLocation(program, "a_texcoord");
-
-  return { program, vloc, tloc };
-}
-
-export function createGameView(canvas: HTMLCanvasElement) {
-  const gl = canvas.getContext("webgl", {
-    antialias: false,
-    depth: false,
-    stencil: false,
-    alpha: false,
-    desynchronized: true,
-    failIfMajorPerformanceCaveat: false,
-  }) as WebGLRenderingContext;
-
-  let render = () => {};
-
-  function createStuff() {
-    const tex = createTexture(gl);
-    const { program, vloc, tloc } = createProgram(gl);
-    const { vertexBuff, texBuff } = createBuffers(gl);
-
-    gl.useProgram(program);
-
-    gl.bindTexture(gl.TEXTURE_2D, tex);
-
-    gl.uniform1i(gl.getUniformLocation(program, "external_texture"), 0);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuff);
-    gl.vertexAttribPointer(vloc, 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(vloc);
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, texBuff);
-    gl.vertexAttribPointer(tloc, 2, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(tloc);
-
-    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-    render();
+  if (typeof renderer === "function") {
+    return new renderer(canvas);
   }
 
-  const gameView = {
+  if (typeof renderer.create === "function") {
+    return renderer.create(canvas);
+  }
+
+  throw new Error("CfxGameViewRenderer does not expose a supported constructor or factory");
+}
+
+export function createGameView(canvas: HTMLCanvasElement): GameView {
+  const instance = createNativeGameViewInstance(canvas);
+
+  return {
     canvas,
-    gl,
-    animationFrame: void 0,
-    disposed: false,
-    resize: (width: number, height: number) => {
-      if (gameView.disposed) return;
-      gl.viewport(0, 0, width, height);
-      gl.canvas.width = width;
-      gl.canvas.height = height;
-    },
     dispose: () => {
-      if (gameView.disposed) return;
-      gameView.disposed = true;
-      if (gameView.animationFrame) {
-        cancelAnimationFrame(gameView.animationFrame);
-        gameView.animationFrame = void 0;
-      }
-      const ext = gl.getExtension("WEBGL_lose_context");
-      if (ext) {
-        ext.loseContext();
-      }
-      if (canvas.parentNode) {
-        canvas.parentNode.removeChild(canvas);
-      }
+      instance.dispose?.();
+      instance.destroy?.();
+    },
+    resize: (width: number, height: number) => {
+      const size = normalizeSize(width, height);
+      canvas.width = size.width;
+      canvas.height = size.height;
+      instance.resize?.(size.width, size.height);
+      instance.setSize?.(size.width, size.height);
+      instance.setBounds?.(size.width, size.height);
     },
   };
+}
 
-  render = () => {
-    if (gameView.disposed) return;
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    gl.finish();
+export function resizeGameView(gameView: GameView, size: GameViewResizeInput) {
+  if (Array.isArray(size)) {
+    gameView.resize(size[0], size[1]);
+    return;
+  }
 
-    // @ts-ignore
-    gameView.animationFrame = requestAnimationFrame(render);
-  };
-
-  createStuff();
-
-  return gameView;
+  gameView.resize(size.width, size.height);
 }

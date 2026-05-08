@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { bleeterApp } from "../bleeter.svelte";
+  import { bleeterApp } from "../state/bleeter-app.svelte";
   import BadgeCheck from "@lucide/svelte/icons/badge-check";
   import MoreHorizontal from "@lucide/svelte/icons/more-horizontal";
   import MessageSquare from "@lucide/svelte/icons/message-square";
@@ -145,7 +145,7 @@
         {#if verified}
           <BadgeCheck class="size-[1.1rem] text-background" fill="#60a5fa" />
         {/if}
-        <span class="text-muted-foreground text-xs {!verified && '!ml-1'}">
+        <span class="text-muted-foreground text-xs {!verified && 'ml-1!'}">
           {timestamp}
         </span>
       </div>
@@ -156,9 +156,9 @@
     <p class="text-xs leading-relaxed">
       {content}
     </p>
-    <div class="flex items-center space-x-4 !mt-3">
+    <div class="flex items-center space-x-4 mt-3!">
       <button
-        class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-hidden focus:outline-hidden"
         onclick={handleLikeClick}
       >
         <Heart size="14" class="group-hover:text-rose-500 transition-colors {liked && 'fill-rose-500 text-rose-500'}" />
@@ -167,7 +167,7 @@
         </span>
       </button>
       <button
-        class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-hidden focus:outline-hidden"
         onclick={handlePostClick}
       >
         <MessageSquare size="15" class="group-hover:text-blue-500 transition-colors" />
@@ -176,7 +176,7 @@
         </span>
       </button>
       <button
-        class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-none focus:outline-none"
+        class="flex items-center space-x-2 w-16 text-muted-foreground group transition-all duration-200 outline-hidden focus:outline-hidden"
         onclick={handleRepostClick}
       >
         <Repeat2 size="18" class="group-hover:text-emerald-500 transition-colors {reposted && 'text-emerald-500'}" />

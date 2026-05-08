@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { bleeterApp } from "./bleeter.svelte";
+  import { bleeterApp } from "./state/bleeter-app.svelte";
   import ProfileOverlay from "./components/profile-overlay.svelte";
   import PostView from "./components/post-view.svelte";
 
@@ -9,7 +9,7 @@
   import User from "@lucide/svelte/icons/user";
   import Plus from "@lucide/svelte/icons/plus";
 
-  let CurrentRoute = $derived(bleeterApp.routes[bleeterApp.currentRoute].route);
+  let CurrentRoute = $derived(bleeterApp.currentComponent);
 </script>
 
 <div class=" flex flex-col w-full h-full bg-background">

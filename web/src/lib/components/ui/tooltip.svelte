@@ -60,6 +60,14 @@
     isHovered = false;
   }
 
+  function handleFocusIn() {
+    handleMouseOver();
+  }
+
+  function handleFocusOut() {
+    handleMouseLeave();
+  }
+
   $effect(() => {
     if (isHovered) {
       window.addEventListener("scroll", updateTooltipPosition, true);
@@ -114,8 +122,11 @@
 <div
   bind:this={containerRef}
   class="relative"
-  onmouseover={handleMouseOver}
-  onmouseleave={handleMouseLeave}
+  role="group"
+  onpointerenter={handleMouseOver}
+  onfocusin={handleFocusIn}
+  onpointerleave={handleMouseLeave}
+  onfocusout={handleFocusOut}
 >
   {@render children?.()}
 </div>

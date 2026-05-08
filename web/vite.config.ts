@@ -1,5 +1,6 @@
 import { defineConfig } from "vite";
 import { svelte } from "@sveltejs/vite-plugin-svelte";
+import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
 // https://vite.dev/config/
@@ -15,16 +16,16 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "../dist/web",
+    outDir: "../web/build",
     emptyOutDir: true,
     target: "es2023",
     rollupOptions: {
       output: {
-        assetFileNames: "assets/[name][extname]",
-        entryFileNames: "assets/[name].js",
-        chunkFileNames: "assets/[name].js",
+        entryFileNames: `[name].js`,
+        chunkFileNames: `[name].js`,
+        assetFileNames: `[name].[ext]`,
       },
     },
   },
-  plugins: [svelte()],
+  plugins: [svelte(), tailwindcss()],
 });
