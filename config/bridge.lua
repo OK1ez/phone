@@ -1,0 +1,3 @@
+return {
+    framework = 'manifest',
+}

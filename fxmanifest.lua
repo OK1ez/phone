@@ -25,12 +25,19 @@ server_scripts {
     'server/uploadMedia.lua'
 }
 
-shared_script '@ox_lib/init.lua'
+shared_scripts {
+    '@ox_lib/init.lua',
+    'shared/bridge.lua',
+}
 
 files {
     'locales/*.json',
-    'config/main.lua',
     'data/*.lua',
+
+    'config/*.lua',
+    'bridge/**/client.lua',
+    'bridge/**/shared.lua',
+
     'web/build/index.html',
     'web/build/index.js',
     'web/build/index.css',

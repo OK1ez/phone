@@ -12,12 +12,12 @@ local function sendNotification(data)
         data = data
     })
 
-    exports.nativeaudio:playSoundFrontend({
-        audio = {
-            name = 'Notification',
-            ref = 'Phone_SoundSet_Michael'
-        }
-    })
+    -- exports.nativeaudio:playSoundFrontend({
+    --     audio = {
+    --         name = 'Notification',
+    --         ref = 'Phone_SoundSet_Michael'
+    --     }
+    -- })
 end
 exports('sendNotification', sendNotification)
 
