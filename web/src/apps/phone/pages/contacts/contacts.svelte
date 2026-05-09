@@ -87,7 +87,6 @@
       openContactDrawer = null;
     }
   }
-
 </script>
 
 <header class="flex items-center justify-between w-full mt-12 px-4 pb-2 space-x-2">
@@ -250,7 +249,7 @@
               class="group w-full flex items-center justify-start gap-2.5 font-medium text-sm text-muted-foreground hover:text-foreground"
               onclick={() => void toggleFavorite(contact.id)}
             >
-              <Star class="size-3.5 {contact.favorited ? 'fill-foreground text-foreground' : ''}" />
+              <Star class="size-3.5 {contact.favorited ? 'fill-muted-foreground group-hover:fill-foreground' : ''}" />
               {contact.favorited ? "Unfavorite" : "Favorite"}
             </button>
             <button
