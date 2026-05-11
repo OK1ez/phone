@@ -9,10 +9,6 @@ import View from "../pages/view/view.svelte";
 
 import type { GalleryMediaAsset } from "../media";
 
-let selectedMedia = $state<GalleryMediaAsset | null>(null);
-let mediaItems = $state.raw<GalleryMediaAsset[]>([]);
-let loadedCloudId = $state<number | null>(null);
-
 type FetchGalleryResponse = {
   id: number;
   url: string;
@@ -21,13 +17,28 @@ type FetchGalleryResponse = {
 }[];
 type SaveMediaResponse = SharedMediaAsset | false;
 
-function toGalleryMedia(media: FetchGalleryResponse[number] | (GalleryMediaAsset & { filename?: string })) {
+function toGalleryMedia(media: FetchGalleryResponse[number]) {
   return {
     id: media.id,
     url: media.url,
     type: media.type,
     timestamp: media.timestamp,
     alt: media.type === "video" ? "Recorded video" : "Gallery photo",
+  } satisfies GalleryMediaAsset;
+}
+
+function toImportedGalleryMedia(
+  media: SharedMediaAsset & {
+    filename?: string;
+    timestamp: string;
+  },
+) {
+  return {
+    id: media.id ?? media.url,
+    url: media.url,
+    type: media.type,
+    timestamp: media.timestamp,
+    alt: media.alt || (media.type === "video" ? "Recorded video" : "Gallery photo"),
   } satisfies GalleryMediaAsset;
 }
 
@@ -43,51 +54,43 @@ function getImageExtension(contentType: string) {
   return "png";
 }
 
-const router = createAppRouter({
-  routes: {
-    libary: {
-      label: "Recents",
-      component: Library,
-    },
-    view: {
-      label: "View",
-      component: View,
-    },
+const galleryRoutes = {
+  libary: {
+    label: "Recents",
+    component: Library,
   },
-  initialRoute: "libary",
-});
+  view: {
+    label: "View",
+    component: View,
+  },
+} as const;
 
-export const galleryApp = {
-  get routes() {
-    return router.routes;
-  },
-  get currentRoute() {
-    return router.currentRoute;
-  },
-  get direction() {
-    return router.direction;
-  },
-  get currentComponent() {
-    return router.currentComponent;
-  },
-  get selectedMedia() {
-    return selectedMedia;
-  },
-  get mediaItems() {
-    return mediaItems;
-  },
-  async fetchGallery(cloudId: number) {
-    if (loadedCloudId === cloudId) {
-      return mediaItems;
+export class GalleryAppManager {
+  readonly router = createAppRouter({
+    routes: galleryRoutes,
+    initialRoute: "libary",
+  });
+  readonly routes = this.router.routes;
+
+  selectedMedia = $state<GalleryMediaAsset | null>(null);
+  mediaItems = $state.raw<GalleryMediaAsset[]>([]);
+
+  currentRoute = $derived(this.router.currentRoute);
+  direction = $derived(this.router.direction);
+  currentComponent = $derived(this.router.currentComponent);
+
+  async fetchGallery(cloudId: number): Promise<GalleryMediaAsset[]> {
+    if (this.mediaItems.length > 0) {
+      return this.mediaItems;
     }
 
     const gallery = await SendEvent<FetchGalleryResponse, number>("fetchGallery", cloudId);
-    mediaItems = (gallery || []).map(toGalleryMedia);
-    loadedCloudId = cloudId;
+    this.mediaItems = (gallery || []).map(toGalleryMedia);
 
-    return mediaItems;
-  },
-  async importImage(url: string, uploadToFivemanage = false) {
+    return this.mediaItems;
+  }
+
+  async importImage(url: string, uploadToFivemanage = false): Promise<boolean> {
     const cloudId = phone.cloudId;
     const trimmedUrl = url.trim();
 
@@ -136,14 +139,14 @@ export const galleryApp = {
         throw new Error("Failed to save image");
       }
 
-      mediaItems = [
+      this.mediaItems = [
         {
-          ...toGalleryMedia({
+          ...toImportedGalleryMedia({
             ...savedMedia,
             timestamp: new Date().toISOString(),
           }),
         },
-        ...mediaItems,
+        ...this.mediaItems,
       ];
 
       notifications.enqueue({
@@ -162,24 +165,31 @@ export const galleryApp = {
 
       return false;
     }
-  },
-  openMedia(media: GalleryMediaAsset) {
-    selectedMedia = media;
-    router.navigate("view");
-  },
-  closeMedia() {
-    selectedMedia = null;
-    router.navigate("libary", true);
-  },
-  navigate(routeId: keyof typeof router.routes, back = false) {
+  }
+
+  openMedia(media: GalleryMediaAsset): void {
+    this.selectedMedia = media;
+    this.router.navigate("view");
+  }
+
+  closeMedia(): void {
+    this.selectedMedia = null;
+    this.router.navigate("libary", true);
+  }
+
+  navigate(routeId: keyof typeof galleryRoutes, back = false): void {
     if (routeId === "libary") {
-      selectedMedia = null;
+      this.selectedMedia = null;
     }
 
-    router.navigate(routeId, back);
-  },
-  reset() {
-    selectedMedia = null;
-    router.reset();
-  },
-};
+    this.router.navigate(routeId, back);
+  }
+
+  reset(): void {
+    this.selectedMedia = null;
+    this.mediaItems = [];
+    this.router.reset();
+  }
+}
+
+export const galleryApp = new GalleryAppManager();
