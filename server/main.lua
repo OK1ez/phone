@@ -315,7 +315,7 @@ end)
 -- Hooks
 
 ---Adds phone device metadata when a phone item is created.
-exports.ox_inventory:registerHook('createItem', function(payload)
+local createItemHookId = exports.ox_inventory:registerHook('createItem', function(payload)
     local metadata = payload.metadata or {}
     if metadata.phoneId then
         return
@@ -324,8 +324,6 @@ exports.ox_inventory:registerHook('createItem', function(payload)
     local phoneId = generateNewPhoneId()
     metadata.phoneId = phoneId
 
-    MySQL.insert('INSERT INTO `phone_devices` (`phoneId`) VALUES (?)', { phoneId })
-
     return metadata
 end, {
     itemFilter = {
@@ -333,8 +331,29 @@ end, {
     }
 })
 
----Updates cached phone number ownership when phone items move inventories.
-exports.ox_inventory:registerHook('swapItems', function(payload)
+local swapItemsHookId = exports.ox_inventory:registerHook('swapItems', function(_payload)
+end, {
+    itemFilter = {
+        phone = true
+    }
+})
+
+---Saves the phone device data once the inventory action succeeds
+AddEventHandler(createItemHookId, function(success, payload)
+    if not success then return end
+
+    local metadata = payload.metadata or {}
+    if not metadata.phoneId then
+        return
+    end
+
+    MySQL.insert('INSERT INTO `phone_devices` (`phoneId`) VALUES (?)', { metadata.phoneId })
+end)
+
+---Updates cached phone number ownership after a phone item move succeeds.
+AddEventHandler(swapItemsHookId, function(success, payload)
+    if not success then return end
+
     local metadata = payload.fromSlot.metadata or {}
     local phoneNumber = metadata.phoneNumber
 
@@ -345,11 +364,7 @@ exports.ox_inventory:registerHook('swapItems', function(payload)
     elseif payload.fromType == 'player' then
         phoneNumbers[phoneNumber] = nil
     end
-end, {
-    itemFilter = {
-        phone = true
-    }
-})
+end)
 
 ---Syncs phone number ownership for online players when the resource starts.
 AddEventHandler('onResourceStart', function(resourceName)
