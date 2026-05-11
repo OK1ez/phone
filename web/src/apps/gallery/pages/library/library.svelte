@@ -107,7 +107,7 @@
   </header>
 
   <div class="min-h-0 flex-1 overflow-y-auto">
-    <div class="grid grid-cols-4 gap-1 w-full pb-8">
+    <div class="grid grid-cols-4 gap-0.5 w-full pb-8">
       {#if galleryApp.mediaItems.length === 0}
         <div class="col-span-4 px-4 py-3 text-xs text-muted-foreground">No media found.</div>
       {/if}
