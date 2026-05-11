@@ -10,7 +10,7 @@
         class="relative flex flex-col items-center justify-center rounded-lg space-y-2"
         onclick={() => phone.openApp(app.id)}
       >
-        <div class="size-13 rounded-xl bg-secondary" style="background-image: url('');"></div>
+        <div class="size-13 rounded-xl bg-secondary shadow-lg" style="background-image: url('');"></div>
         <p class="text-center text-xs">{app.label}</p>
       </button>
     {/each}
