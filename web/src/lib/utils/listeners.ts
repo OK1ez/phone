@@ -11,6 +11,7 @@ const AlwaysListened: DebugEventCallback[] = [
     action: "openPhone",
     handler: (data: OpenPhonePayload) => {
       phone.openPhone(data);
+      console.log(data.cloudId);
     },
   },
   {

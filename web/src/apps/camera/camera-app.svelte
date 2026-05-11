@@ -4,21 +4,19 @@
 
   import { onDestroy, onMount } from "svelte";
 
-  import { createCameraState } from "./camera.svelte";
+  import { cameraApp } from "./state/camera-app.svelte";
   import { SendEvent } from "$lib/utils/eventsHandlers";
 
   type CaptureMode = "photo" | "video";
   let activeTab = $state<CaptureMode>("photo");
   let previewCanvas: HTMLCanvasElement | undefined = $state();
 
-  const camera = createCameraState();
-
   onMount(() => {
-    camera.mountPreview(previewCanvas);
+    cameraApp.mountPreview(previewCanvas);
   });
 
   onDestroy(() => {
-    camera.destroy();
+    cameraApp.destroy();
   });
 
   function handleKeyDown(e: KeyboardEvent) {
@@ -26,7 +24,7 @@
   }
 </script>
 
-<svelte:window onresize={camera.resizePreview} onkeydown={handleKeyDown} />
+<svelte:window onresize={cameraApp.resizePreview} onkeydown={handleKeyDown} />
 
 <div class="flex h-full w-full flex-col bg-background">
   <div class="mt-4 flex h-8 w-full items-center justify-center border-b px-6 pb-4" aria-hidden="true"></div>
@@ -38,21 +36,21 @@
   <footer class="flex flex-col space-y-2 mt-auto border-t pt-5 items-center justify-between w-full pb-8 px-4">
     {#if activeTab === "photo"}
       <button
-        onclick={camera.takePhoto}
-        disabled={camera.isCapturing || camera.isRecording}
+        onclick={cameraApp.takePhoto}
+        disabled={cameraApp.isCapturing || cameraApp.isRecording}
         class="bg-primary hover:bg-primary/80 text-primary-foreground flex h-8 w-full items-center justify-center outline-hidden select-none text-xs font-medium rounded-lg disabled:opacity-50"
       >
         Take Photo
       </button>
     {:else if activeTab === "video"}
       <button
-        onclick={camera.toggleRecording}
-        disabled={camera.isCapturing || !camera.canRecord}
-        class="{camera.isRecording
+        onclick={cameraApp.toggleRecording}
+        disabled={cameraApp.isCapturing || !cameraApp.canRecord}
+        class="{cameraApp.isRecording
           ? 'bg-destructive/80 hover:bg-destructive/90 text-foreground'
           : 'bg-primary hover:bg-primary/80 text-primary-foreground'} flex h-8 w-full items-center justify-center outline-hidden select-none text-xs font-medium rounded-lg disabled:opacity-50"
       >
-        {#if camera.isRecording}
+        {#if cameraApp.isRecording}
           Recording
         {:else}
           Record
@@ -63,18 +61,18 @@
     <div class="flex w-full space-x-2">
       <button
         aria-label="Gallery"
-        onclick={camera.openLatestMedia}
+        onclick={cameraApp.openLatestMedia}
         class="bg-input/70 flex h-8 min-w-8 max-w-8 items-center justify-center outline-hidden select-none rounded-lg group overflow-hidden"
       >
-        {#if camera.latestMedia}
-          {#if camera.latestMedia.type === "image"}
+        {#if cameraApp.latestMedia}
+          {#if cameraApp.latestMedia.type === "image"}
             <img
-              src={camera.latestMedia.url}
-              alt={camera.latestMedia.alt || "Latest photo"}
+              src={cameraApp.latestMedia.url}
+              alt={cameraApp.latestMedia.alt || "Latest photo"}
               class="h-full w-full object-cover"
             />
           {:else}
-            <video src={camera.latestMedia.url} muted class="h-full w-full object-cover" aria-label="Latest video"
+            <video src={cameraApp.latestMedia.url} muted class="h-full w-full object-cover" aria-label="Latest video"
             ></video>
           {/if}
         {:else}
@@ -100,8 +98,8 @@
       </div>
 
       <button
-        onclick={camera.switchDirection}
-        disabled={camera.isCapturing || camera.isRecording}
+        onclick={cameraApp.switchDirection}
+        disabled={cameraApp.isCapturing || cameraApp.isRecording}
         class="bg-input/70 flex h-8 min-w-8 items-center justify-center outline-hidden select-none text-xs font-medium rounded-lg disabled:opacity-50 group"
       >
         <RefreshCcw class="size-4 text-muted-foreground group-hover:text-foreground" />

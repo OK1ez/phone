@@ -176,7 +176,7 @@ function createRecorder(stream: MediaStream) {
   return new MediaRecorder(stream);
 }
 
-class CameraState {
+export class CameraAppManager {
   isCapturing = $state(false);
   isRecording = $state(false);
   latestMedia = $state<SharedMediaAsset | null>(null);
@@ -314,6 +314,16 @@ class CameraState {
     this.previewGameView = null;
     this.previewCanvas = undefined;
     this.closeNativeCamera();
+  }
+
+  reset() {
+    this.destroy();
+    this.isCapturing = false;
+    this.isRecording = false;
+    this.latestMedia = null;
+    this.direction = "rear";
+    this.recordedChunks = [];
+    this.recorder = null;
   }
 
   private async openNativeCamera() {
@@ -487,6 +497,4 @@ class CameraState {
   }
 }
 
-export function createCameraState() {
-  return new CameraState();
-}
+export const cameraApp = new CameraAppManager();

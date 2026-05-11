@@ -1,5 +1,6 @@
 import { appRegistry } from "$apps/registry";
 import { bleeterApp } from "$apps/bleeter/state/bleeter-app.svelte";
+import { cameraApp } from "$apps/camera/state/camera-app.svelte";
 import { galleryApp } from "$apps/gallery/state/gallery-app.svelte";
 import { mailApp } from "$apps/mail/state/mail-app.svelte";
 import { messagesApp } from "$apps/messages/state/messages-app.svelte";
@@ -25,6 +26,7 @@ const appsById = Object.fromEntries(appRegistry.map((app) => [app.id, app])) as 
 
 const appStates = {
   bleeter: bleeterApp,
+  camera: cameraApp,
   gallery: galleryApp,
   mail: mailApp,
   messages: messagesApp,
@@ -58,13 +60,10 @@ export class PhoneManager implements PhoneShell {
 
   private homescreenTimer: ReturnType<typeof setTimeout> | undefined;
 
-  private resetApp(appId: string | null): void {
-    if (!appId) {
-      return;
+  private resetApps(): void {
+    for (const appId of Object.keys(appStates) as ResettableAppId[]) {
+      appStates[appId]?.reset?.();
     }
-
-    const appState = appStates[appId as ResettableAppId];
-    appState?.reset?.();
   }
 
   private syncHomescreen(appOpenDelay = 250): void {
@@ -85,7 +84,7 @@ export class PhoneManager implements PhoneShell {
   }
 
   private resetDeviceState(): void {
-    this.resetApp(this.activeAppId);
+    this.resetApps();
     this.activeAppId = null;
     this.isLocked = false;
     this.syncHomescreen();
@@ -179,7 +178,6 @@ export class PhoneManager implements PhoneShell {
   }
 
   closeApp(): void {
-    this.resetApp(this.activeAppId);
     this.activeAppId = null;
     this.syncHomescreen();
   }

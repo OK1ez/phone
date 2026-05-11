@@ -5,6 +5,20 @@ import Keypad from "../pages/keypad/keypad.svelte";
 import Recents from "../pages/recents/recents.svelte";
 
 const SEARCH_DEBOUNCE_MS = 250;
+const phoneRoutes = {
+  recents: {
+    label: "Recents",
+    component: Recents,
+  },
+  contacts: {
+    label: "Contacts",
+    component: Contacts,
+  },
+  keypad: {
+    label: "Keypad",
+    component: Keypad,
+  },
+} as const;
 
 export interface PhoneContact {
   id: number;
@@ -63,136 +77,64 @@ const recentCalls = [
   },
 ] satisfies RecentCall[];
 
-const router = createAppRouter({
-  routes: {
-    recents: {
-      label: "Recents",
-      component: Recents,
-    },
-    contacts: {
-      label: "Contacts",
-      component: Contacts,
-    },
-    keypad: {
-      label: "Keypad",
-      component: Keypad,
-    },
-  },
-  initialRoute: "contacts",
-});
-
-let contacts = $state.raw<PhoneContact[]>([]);
-let loadedCloudId = $state<number | null>(null);
-let searchQuery = $state("");
-let debouncedSearchQuery = $state("");
-let searchIndex = $state<Record<string, { name: string; phoneNumber: string }>>({});
-let searchTimer: number | null = $state(null);
-
-function normalizeSearchTerm(value: string) {
-  return value.trim().toLowerCase();
-}
-
-function normalizePhoneNumber(value: string | number) {
-  return String(value).replace(/\s+/g, "");
-}
-
-function sortContacts(nextContacts: PhoneContact[]) {
-  return [...nextContacts];
-}
-
 function isFavorite(contact: PhoneContact) {
   return contact.favorited;
 }
 
-function buildSearchIndex(nextContacts: PhoneContact[]) {
-  const index: Record<string, { name: string; phoneNumber: string }> = {};
-
-  nextContacts.forEach((contact) => {
-    index[String(contact.id)] = {
-      name: normalizeSearchTerm(contact.name),
-      phoneNumber: normalizePhoneNumber(contact.phoneNumber),
-    };
+export class PhoneAppManager {
+  readonly router = createAppRouter({
+    routes: phoneRoutes,
+    initialRoute: "contacts",
   });
+  readonly routes = this.router.routes;
 
-  searchIndex = index;
-}
+  contacts = $state.raw<PhoneContact[]>([]);
+  searchQuery = $state("");
+  debouncedSearchQuery = $state("");
+  searchTimer = $state<ReturnType<typeof setTimeout> | null>(null);
 
-function setContactsState(nextContacts: PhoneContact[]) {
-  const sortedContacts = sortContacts(nextContacts);
-  contacts = sortedContacts;
-  buildSearchIndex(sortedContacts);
-  return sortedContacts;
-}
+  readonly recentCalls = recentCalls;
+  currentRoute = $derived(this.router.currentRoute);
+  direction = $derived(this.router.direction);
+  currentComponent = $derived(this.router.currentComponent);
+  filteredContacts = $derived.by(() => this.getSearchResults());
+  favorites = $derived(this.filteredContacts.filter(isFavorite));
 
-function getSearchResults() {
-  if (!debouncedSearchQuery) {
-    return contacts;
-  }
-
-  const nameSearchTerm = normalizeSearchTerm(debouncedSearchQuery);
-  const phoneSearchTerm = normalizePhoneNumber(debouncedSearchQuery);
-
-  return contacts.filter((contact) => {
-    const indexedContact = searchIndex[String(contact.id)];
-    if (!indexedContact) {
-      return false;
+  private getSearchResults(): PhoneContact[] {
+    if (!this.debouncedSearchQuery) {
+      return this.contacts;
     }
 
-    return indexedContact.name.includes(nameSearchTerm) || indexedContact.phoneNumber.includes(phoneSearchTerm);
-  });
-}
+    const searchTerm = this.debouncedSearchQuery.trim().toLowerCase();
 
-let searchResults = $derived(getSearchResults());
-let favoriteItems = $derived(searchResults.filter(isFavorite));
+    return this.contacts.filter((contact) => {
+      return (
+        contact.name.toLowerCase().includes(searchTerm) ||
+        String(contact.phoneNumber).includes(this.debouncedSearchQuery)
+      );
+    });
+  }
 
-export const phoneApp = {
-  get routes() {
-    return router.routes;
-  },
-  get currentRoute() {
-    return router.currentRoute;
-  },
-  get direction() {
-    return router.direction;
-  },
-  get currentComponent() {
-    return router.currentComponent;
-  },
-
-  get contacts() {
-    return contacts;
-  },
-  recentCalls,
-  get searchQuery() {
-    return searchQuery;
-  },
-  get debouncedSearchQuery() {
-    return debouncedSearchQuery;
-  },
-  get favorites() {
-    return favoriteItems;
-  },
-  get filteredContacts() {
-    return searchResults;
-  },
-  async fetchContacts(cloudId: number) {
-    if (loadedCloudId === cloudId) {
-      return contacts;
+  async fetchContacts(cloudId: number): Promise<PhoneContact[]> {
+    if (this.contacts.length > 0) {
+      return this.contacts;
     }
 
     const nextContacts = await SendEvent<FetchContactsResponse, FetchContactsRequest>("fetchContacts", cloudId);
-    const sortedContacts = setContactsState(nextContacts || []);
-    loadedCloudId = cloudId;
-    return sortedContacts;
-  },
-  setContacts(value: PhoneContact[]) {
-    setContactsState(value);
-  },
-  addContact(contact: PhoneContact) {
-    setContactsState([contact, ...contacts]);
-  },
-  async toggleFavorite(cloudId: number, contactId: number) {
-    const contactToUpdate = contacts.find((contact) => contact.id === contactId);
+    this.contacts = nextContacts || [];
+    return this.contacts;
+  }
+
+  setContacts(value: PhoneContact[]): void {
+    this.contacts = value;
+  }
+
+  addContact(contact: PhoneContact): void {
+    this.contacts = [contact, ...this.contacts];
+  }
+
+  async toggleFavorite(cloudId: number, contactId: number): Promise<ToggleFavoriteResponse> {
+    const contactToUpdate = this.contacts.find((contact) => contact.id === contactId);
     if (!contactToUpdate) {
       return false;
     }
@@ -207,44 +149,49 @@ export const phoneApp = {
       return false;
     }
 
-    setContactsState(
-      contacts.map((contact) => {
-        if (contact.id !== result.id) {
-          return contact;
-        }
+    this.contacts = this.contacts.map((contact) => {
+      if (contact.id !== result.id) {
+        return contact;
+      }
 
-        return {
-          ...contact,
-          favorited: result.favorited,
-        };
-      }),
-    );
+      return {
+        ...contact,
+        favorited: result.favorited,
+      };
+    });
 
     return result;
-  },
-  navigate(routeId: keyof typeof router.routes, back = false) {
-    router.navigate(routeId, back);
-  },
-  updateSearchQuery(query: string) {
-    searchQuery = query;
+  }
 
-    if (searchTimer !== null) {
-      clearTimeout(searchTimer);
+  navigate(routeId: keyof typeof phoneRoutes, back = false): void {
+    this.router.navigate(routeId, back);
+  }
+
+  updateSearchQuery(query: string): void {
+    this.searchQuery = query;
+
+    if (this.searchTimer !== null) {
+      clearTimeout(this.searchTimer);
     }
 
-    searchTimer = setTimeout(() => {
-      debouncedSearchQuery = normalizeSearchTerm(searchQuery);
-      searchTimer = null;
-    }, SEARCH_DEBOUNCE_MS) as unknown as number;
-  },
-  reset() {
-    router.reset();
-    searchQuery = "";
-    debouncedSearchQuery = "";
+    this.searchTimer = setTimeout(() => {
+      this.debouncedSearchQuery = this.searchQuery;
+      this.searchTimer = null;
+    }, SEARCH_DEBOUNCE_MS);
+  }
 
-    if (searchTimer !== null) {
-      clearTimeout(searchTimer);
-      searchTimer = null;
+  reset(): void {
+    this.router.reset();
+
+    if (this.searchTimer !== null) {
+      clearTimeout(this.searchTimer);
+      this.searchTimer = null;
     }
-  },
-};
+
+    this.contacts = [];
+    this.searchQuery = "";
+    this.debouncedSearchQuery = "";
+  }
+}
+
+export const phoneApp = new PhoneAppManager();
