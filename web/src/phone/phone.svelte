@@ -27,7 +27,7 @@
 
 {#snippet lockButton()}
   <div
-    class="absolute top-36 -right-[0.450rem] z-0 h-24 w-1.5 rounded-full bg-[#6f6f6f] shadow-inner shadow-[#2f2f2f]"
+    class="absolute top-36 right-[-0.45rem] z-0 h-24 w-1.5 rounded-full bg-[#6f6f6f] shadow-inner shadow-[#2f2f2f]"
   ></div>
 {/snippet}
 
@@ -51,7 +51,7 @@
   >
     {@render lockButton()}
 
-    <div class="absolute top-28 -left-[0.450rem] z-0 flex w-1.5 flex-col gap-3">
+    <div class="absolute top-28 left-[-0.45rem] z-0 flex w-1.5 flex-col gap-3">
       {@render volumeButton()}
       {@render volumeButton()}
     </div>
