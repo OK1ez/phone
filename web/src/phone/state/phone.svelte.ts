@@ -98,16 +98,7 @@ export class PhoneManager implements PhoneShell {
     this.owner = null;
     this.openState = null;
     this.setupClouds = [];
-    this.error = null;
     settings.reset();
-  }
-
-  private hasActivePhoneSession(nextPhoneId: number, nextCloudId: number | null | undefined): boolean {
-    return (
-      this.phoneId === nextPhoneId &&
-      this.cloudId === (nextCloudId ?? null) &&
-      (this.cloudId !== null || this.openState !== null)
-    );
   }
 
   private resetSessionState(): void {
@@ -123,7 +114,6 @@ export class PhoneManager implements PhoneShell {
     this.name = null;
     this.phoneNumber = null;
     this.owner = null;
-    this.error = null;
     this.openState = "setup";
     this.setupClouds = clouds;
     this.isLocked = false;
@@ -142,14 +132,11 @@ export class PhoneManager implements PhoneShell {
   }
 
   private applyPhoneShell(shell: PhoneShellResponse): void {
-    this.error = null;
-
     if (shell.state === "unlocked") {
       if (!shell.data) {
         this.name = null;
         this.phoneNumber = null;
         this.owner = null;
-        this.error = "Missing phone data";
         settings.reset();
         return;
       }
@@ -182,30 +169,11 @@ export class PhoneManager implements PhoneShell {
     this.syncHomescreen();
   }
 
-  reset(): void {
-    this.resetDeviceState();
-  }
-
-  show(): void {
-    this.visible = true;
-  }
-
-  setSetupState(nextPhoneId: number, nextSetupClouds: PhoneCloudAccount[]): void {
-    this.applySetupState(nextPhoneId, nextSetupClouds);
-  }
-
-  setShellState(shell: PhoneShellResponse): void {
-    this.applyPhoneShell(shell);
-  }
-
   setPhoneData(phoneData?: PhoneDataResponse | null): PhoneDataResponse | null {
-    this.error = null;
-
     if (!phoneData) {
       this.name = null;
       this.phoneNumber = null;
       this.owner = null;
-      this.error = "Missing phone data";
       settings.reset();
       return null;
     }
@@ -214,25 +182,24 @@ export class PhoneManager implements PhoneShell {
     return phoneData;
   }
 
-  resetData(): void {
-    this.resetDataState();
-  }
-
   async openPhone(payload: OpenPhonePayload): Promise<void> {
     const { phoneId: nextPhoneId, cloudId: nextCloudId } = payload;
 
-    if (this.hasActivePhoneSession(nextPhoneId, nextCloudId)) {
+    // If cloudId matches, show the phone
+    if (this.cloudId === (nextCloudId ?? null)) {
       this.visible = true;
       this.isLocked = this.openState === "locked";
       return;
     }
 
-    if (this.phoneId !== nextPhoneId || this.cloudId !== (nextCloudId ?? null)) {
+    // If cloudId doesn't match, reset the session
+    if (this.cloudId !== (nextCloudId ?? null)) {
       this.resetSessionState();
     }
 
     this.phoneId = nextPhoneId;
 
+    // If no cloudId, fetch owned clouds and start the setup process
     if (!nextCloudId) {
       const ownedClouds = await SendEvent<FetchOwnedCloudsResponse>("fetchOwnedClouds");
       this.applySetupState(nextPhoneId, ownedClouds || []);
@@ -242,26 +209,19 @@ export class PhoneManager implements PhoneShell {
 
     this.cloudId = nextCloudId;
 
+    // Fetch the phone shell
     const shell = await SendEvent<GetShellResponse, number>("getShell", nextCloudId);
-    if (!shell) {
-      return;
-    }
+    if (!shell) return;
 
     this.applyPhoneShell(shell);
     this.visible = true;
   }
 
   async hide(): Promise<void> {
-    if (!this.visible) {
-      return;
-    }
+    if (!this.visible) return;
 
     await SendEvent<boolean>("closePhone");
     this.visible = false;
-  }
-
-  lock(): void {
-    this.isLocked = true;
   }
 
   unlock(): void {

@@ -44,7 +44,6 @@ export interface PhoneSessionState {
   owner: number | null;
   openState: PhoneOpenState | null;
   setupClouds: PhoneCloudAccount[];
-  error: string | null;
 }
 
 export interface NotificationPreference {
@@ -112,14 +111,8 @@ export interface PhoneShell extends DeviceState, PhoneSessionState {
   readonly activeAppComponent: AppDefinition["component"] | null;
   openApp(appId: string): void;
   closeApp(): void;
-  reset(): void;
   hide(): Promise<void>;
-  show(): void;
-  lock(): void;
   unlock(): void;
-  setSetupState(phoneId: number, setupClouds: PhoneCloudAccount[]): void;
-  setShellState(shell: PhoneShellResponse): void;
   setPhoneData(phoneData?: PhoneDataResponse | null): PhoneDataResponse | null;
-  resetData(): void;
   openPhone(payload: OpenPhonePayload): Promise<void>;
 }
