@@ -83,14 +83,12 @@ export class PhoneManager implements PhoneShell {
     }, appOpenDelay);
   }
 
-  private resetDeviceState(): void {
+  private resetSession(): void {
     this.resetApps();
     this.activeAppId = null;
     this.isLocked = false;
     this.syncHomescreen();
-  }
 
-  private resetDataState(): void {
     this.phoneId = null;
     this.cloudId = null;
     this.name = null;
@@ -98,12 +96,8 @@ export class PhoneManager implements PhoneShell {
     this.owner = null;
     this.openState = null;
     this.setupClouds = [];
-    settings.reset();
-  }
 
-  private resetSessionState(): void {
-    this.resetDeviceState();
-    this.resetDataState();
+    settings.reset();
     calls.reset();
     mediaViewer.reset();
   }
@@ -117,42 +111,35 @@ export class PhoneManager implements PhoneShell {
     this.openState = "setup";
     this.setupClouds = clouds;
     this.isLocked = false;
+
     settings.reset();
   }
 
-  private applyPhoneData(phoneData: PhoneDataResponse): void {
+  private applyLockedState(nextPhoneId: number, nextCloudId: number): void {
+    this.phoneId = nextPhoneId;
+    this.cloudId = nextCloudId;
+    this.name = null;
+    this.phoneNumber = null;
+    this.owner = null;
+    this.openState = "locked";
+    this.setupClouds = [];
+    this.isLocked = true;
+
+    settings.reset();
+  }
+
+  applyPhoneData(phoneData: PhoneDataResponse): PhoneDataResponse {
     this.cloudId = phoneData.cloudId;
     this.name = phoneData.name ?? null;
     this.phoneNumber = phoneData.phoneNumber ?? null;
     this.owner = phoneData.owner ?? null;
-    settings.setSettings(normalizePhoneSettings(phoneData.settings, appRegistry));
     this.openState = null;
     this.setupClouds = [];
     this.isLocked = false;
-  }
 
-  private applyPhoneShell(shell: PhoneShellResponse): void {
-    if (shell.state === "unlocked") {
-      if (!shell.data) {
-        this.name = null;
-        this.phoneNumber = null;
-        this.owner = null;
-        settings.reset();
-        return;
-      }
+    settings.setSettings(normalizePhoneSettings(phoneData.settings, appRegistry));
 
-      this.applyPhoneData(shell.data);
-      return;
-    }
-
-    this.name = null;
-    this.phoneNumber = null;
-    this.owner = null;
-    this.cloudId = shell.cloudId ?? this.cloudId;
-    this.openState = shell.state;
-    this.setupClouds = [];
-    this.isLocked = true;
-    settings.reset();
+    return phoneData;
   }
 
   openApp(appId: string): void {
@@ -169,39 +156,22 @@ export class PhoneManager implements PhoneShell {
     this.syncHomescreen();
   }
 
-  setPhoneData(phoneData?: PhoneDataResponse | null): PhoneDataResponse | null {
-    if (!phoneData) {
-      this.name = null;
-      this.phoneNumber = null;
-      this.owner = null;
-      settings.reset();
-      return null;
-    }
-
-    this.applyPhoneData(phoneData);
-    return phoneData;
-  }
-
   async openPhone(payload: OpenPhonePayload): Promise<void> {
-    const { phoneId: nextPhoneId, cloudId: nextCloudId } = payload;
+    const nextPhoneId = payload.phoneId;
+    const nextCloudId = payload.cloudId ?? null;
 
-    // If cloudId matches, show the phone
-    if (this.cloudId === (nextCloudId ?? null)) {
+    if (this.phoneId === nextPhoneId && this.cloudId === nextCloudId) {
       this.visible = true;
       this.isLocked = this.openState === "locked";
       return;
     }
 
-    // If cloudId doesn't match, reset the session
-    if (this.cloudId !== (nextCloudId ?? null)) {
-      this.resetSessionState();
-    }
-
+    this.resetSession();
     this.phoneId = nextPhoneId;
 
-    // If no cloudId, fetch owned clouds and start the setup process
-    if (!nextCloudId) {
+    if (nextCloudId === null) {
       const ownedClouds = await SendEvent<FetchOwnedCloudsResponse>("fetchOwnedClouds");
+
       this.applySetupState(nextPhoneId, ownedClouds || []);
       this.visible = true;
       return;
@@ -209,11 +179,15 @@ export class PhoneManager implements PhoneShell {
 
     this.cloudId = nextCloudId;
 
-    // Fetch the phone shell
     const shell = await SendEvent<GetShellResponse, number>("getShell", nextCloudId);
     if (!shell) return;
 
-    this.applyPhoneShell(shell);
+    if (shell.state === "unlocked" && shell.data) {
+      this.applyPhoneData(shell.data);
+    } else {
+      this.applyLockedState(nextPhoneId, shell.cloudId ?? nextCloudId);
+    }
+
     this.visible = true;
   }
 
@@ -222,10 +196,6 @@ export class PhoneManager implements PhoneShell {
 
     await SendEvent<boolean>("closePhone");
     this.visible = false;
-  }
-
-  unlock(): void {
-    this.isLocked = false;
   }
 }
 

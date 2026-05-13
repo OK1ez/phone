@@ -112,7 +112,6 @@ export interface PhoneShell extends DeviceState, PhoneSessionState {
   openApp(appId: string): void;
   closeApp(): void;
   hide(): Promise<void>;
-  unlock(): void;
-  setPhoneData(phoneData?: PhoneDataResponse | null): PhoneDataResponse | null;
+  applyPhoneData(phoneData: PhoneDataResponse): PhoneDataResponse;
   openPhone(payload: OpenPhonePayload): Promise<void>;
 }

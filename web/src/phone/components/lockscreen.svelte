@@ -34,8 +34,7 @@
       return;
     }
 
-    phone.setPhoneData(phoneData);
-    phone.unlock();
+    phone.applyPhoneData(phoneData);
     pinCode = "";
   }
 </script>

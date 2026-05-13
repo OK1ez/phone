@@ -52,8 +52,7 @@
     }
 
     setupError = null;
-    phone.setPhoneData(phoneData);
-    phone.unlock();
+    phone.applyPhoneData(phoneData);
   }
 
   const setupApp = provideSetupApp({
