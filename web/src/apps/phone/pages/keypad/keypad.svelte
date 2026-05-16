@@ -5,69 +5,50 @@
   import { phone } from "$phone/state/phone.svelte";
   import { phoneApp } from "../../state/phone-app.svelte";
 
-  const keypadRows = [
-    [
-      { label: "1", digit: "1" },
-      { label: "2", digit: "2" },
-      { label: "3", digit: "3" },
-    ],
-    [
-      { label: "4", digit: "4" },
-      { label: "5", digit: "5" },
-      { label: "6", digit: "6" },
-    ],
-    [
-      { label: "7", digit: "7" },
-      { label: "8", digit: "8" },
-      { label: "9", digit: "9" },
-    ],
-    [
-      { label: "*", disabled: true },
-      { label: "0", digit: "0" },
-      { label: "#", disabled: true },
-    ],
+  type KeypadKey =
+    | { kind: "digit"; label: string; value: string }
+    | { kind: "call"; label: string }
+    | { kind: "delete"; label: string };
+
+  const keypadKeys: KeypadKey[] = [
+    { kind: "digit", label: "1", value: "1" },
+    { kind: "digit", label: "2", value: "2" },
+    { kind: "digit", label: "3", value: "3" },
+
+    { kind: "digit", label: "4", value: "4" },
+    { kind: "digit", label: "5", value: "5" },
+    { kind: "digit", label: "6", value: "6" },
+
+    { kind: "digit", label: "7", value: "7" },
+    { kind: "digit", label: "8", value: "8" },
+    { kind: "digit", label: "9", value: "9" },
+
+    { kind: "call", label: "Call" },
+    { kind: "digit", label: "0", value: "0" },
+    { kind: "delete", label: "Delete" },
   ];
 </script>
 
-<div class="flex h-[calc(100%-11.8rem)] flex-col items-center px-4 mt-12">
-  <div
-    class="flex min-h-14 w-full max-w-[20rem] items-center justify-center px-4 text-center text-2xl font-medium tracking-widest"
-  >
-    12323322
-  </div>
+<div
+  class="mt-12 flex min-h-32 w-full max-w-[20rem] items-center justify-center px-4 text-center text-2xl font-medium tracking-widest"
+>
+  12323322
+</div>
 
-  <div class="flex w-full flex-1 flex-col items-center mt-9">
-    <div class="flex flex-1 items-center justify-center">
-      <div class="grid w-fit grid-cols-3 gap-4">
-        {#each keypadRows as row (row.map((key) => key.label).join(""))}
-          {#each row as key (key.label)}
-            <button
-              class={[
-                "flex size-16 items-center justify-center rounded-full text-2xl font-medium transition-colors",
-                key.disabled ? "bg-secondary hover:bg-secondary/80" : "bg-secondary hover:bg-secondary/80",
-              ]}
-              aria-label={key.disabled ? `${key.label} unavailable` : `Dial ${key.label}`}
-            >
-              {key.label}
-            </button>
-          {/each}
-        {/each}
-      </div>
-    </div>
-
-    <div class="flex w-fit grid-cols-2 gap-4 pt-4">
-      <button
-        class="flex w-36 h-16 items-center justify-center rounded-full bg-emerald-500 text-white transition-colors hover:bg-emerald-500/90 disabled:opacity-50"
-        aria-label="Start call"
-      >
+<div class="mx-auto mt-10 grid w-fit grid-cols-3 justify-items-center gap-x-8 gap-y-4">
+  {#each keypadKeys as key (key.label)}
+    <button
+      type="button"
+      class="flex size-16 items-center justify-center rounded-full text-2xl font-medium transition-colors hover:bg-secondary/80"
+      aria-label={key.label}
+    >
+      {#if key.kind === "call"}
         <PhoneCall class="size-6" />
-      </button>
-      <button
-        class="flex size-16 items-center justify-center rounded-full bg-secondary transition-colors hover:bg-secondary/80 disabled:opacity-50"
-        aria-label="Delete digit"
-      >
+      {:else if key.kind === "delete"}
         <Delete class="size-6" />
-      </button>
-    </div>
-  </div>
+      {:else}
+        {key.label}
+      {/if}
+    </button>
+  {/each}
 </div>
