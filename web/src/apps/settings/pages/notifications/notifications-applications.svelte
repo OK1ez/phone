@@ -13,7 +13,7 @@
 
 <button
   class="flex items-center w-full space-x-2 mt-12 px-4 pb-3 border-b group"
-  onclick={() => settingsApp.navigate("notifications", true)}
+  onclick={() => settingsApp.router.navigate("notifications", true)}
 >
   <ChevronLeft class="size-4 text-muted-foreground group-hover:text-foreground" />
   <p class="font-medium text-sm">Applications</p>

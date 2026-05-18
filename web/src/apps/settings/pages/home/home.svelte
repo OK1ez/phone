@@ -47,7 +47,7 @@
   </button>
   <button
     class="flex items-center justify-between w-full min-h-14 px-4 border-b hover:bg-secondary/20 disabled:opacity-50 group"
-    onclick={() => settingsApp.navigate("notifications")}
+    onclick={() => settingsApp.router.navigate("notifications")}
   >
     <div class="flex items-center h-full space-x-4">
       <BellDot class="size-5" />

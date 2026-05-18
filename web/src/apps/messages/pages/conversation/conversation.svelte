@@ -212,7 +212,7 @@
 
 <div class="flex h-full min-h-0 flex-col">
   <header class="flex shrink-0 items-center justify-between w-full mt-12 px-4 pb-3 border-b">
-    <button class="flex items-center space-x-2 group" onclick={() => messagesApp.navigate("recents", true)}>
+    <button class="flex items-center space-x-2 group" onclick={() => messagesApp.router.navigate("recents", true)}>
       <ChevronLeft class="size-4 text-muted-foreground group-hover:text-foreground" />
       <p class="font-medium text-sm">Mads</p>
     </button>

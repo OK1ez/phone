@@ -13,7 +13,7 @@
 
 <button
   class="flex items-center w-full space-x-2 mt-12 px-4 pb-3 border-b group"
-  onclick={() => settingsApp.navigate("settings", true)}
+  onclick={() => settingsApp.router.navigate("settings", true)}
 >
   <ChevronLeft class="size-4 text-muted-foreground group-hover:text-foreground" />
   <p class="font-medium text-sm">Notifications</p>
@@ -35,7 +35,7 @@
   </button>
   <button
     class="flex items-center justify-between w-full min-h-14 px-4 border-b hover:bg-secondary/20 disabled:opacity-50 group"
-    onclick={() => settingsApp.navigate("notifications_applications")}
+    onclick={() => settingsApp.router.navigate("notifications_applications")}
   >
     <div class="flex items-center h-full space-x-4">
       <Layers class="size-5" />

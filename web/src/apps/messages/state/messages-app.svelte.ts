@@ -19,15 +19,6 @@ export class MessagesAppManager {
     routes: messagesRoutes,
     initialRoute: "recents",
   });
-  readonly routes = this.router.routes;
-
-  currentRoute = $derived(this.router.currentRoute);
-  direction = $derived(this.router.direction);
-  currentComponent = $derived(this.router.currentComponent);
-
-  navigate(routeId: keyof typeof messagesRoutes, back = false): void {
-    this.router.navigate(routeId, back);
-  }
 
   reset(): void {
     this.router.reset();

@@ -86,7 +86,6 @@ export class PhoneAppManager {
     routes: phoneRoutes,
     initialRoute: "contacts",
   });
-  readonly routes = this.router.routes;
 
   contacts = $state.raw<PhoneContact[]>([]);
   searchQuery = $state("");
@@ -94,9 +93,6 @@ export class PhoneAppManager {
   searchTimer = $state<ReturnType<typeof setTimeout> | null>(null);
 
   readonly recentCalls = recentCalls;
-  currentRoute = $derived(this.router.currentRoute);
-  direction = $derived(this.router.direction);
-  currentComponent = $derived(this.router.currentComponent);
   filteredContacts = $derived.by(() => this.getSearchResults());
   favorites = $derived(this.filteredContacts.filter(isFavorite));
 
@@ -161,10 +157,6 @@ export class PhoneAppManager {
     });
 
     return result;
-  }
-
-  navigate(routeId: keyof typeof phoneRoutes, back = false): void {
-    this.router.navigate(routeId, back);
   }
 
   updateSearchQuery(query: string): void {

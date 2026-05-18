@@ -113,7 +113,7 @@
   {#each conversations as conversation (conversation.id)}
     <button
       class="flex flex-col justify-center w-full min-h-16 px-4 border-b hover:bg-secondary/20 disabled:opacity-50 text-left space-y-0.5 group"
-      onclick={() => messagesApp.navigate("conversation")}
+      onclick={() => messagesApp.router.navigate("conversation")}
     >
       <div class="flex justify-between w-full">
         <span class="text-xs font-medium">{conversation.name}</span>

@@ -70,14 +70,9 @@ export class GalleryAppManager {
     routes: galleryRoutes,
     initialRoute: "libary",
   });
-  readonly routes = this.router.routes;
 
   selectedMedia = $state<GalleryMediaAsset | null>(null);
   mediaItems = $state.raw<GalleryMediaAsset[]>([]);
-
-  currentRoute = $derived(this.router.currentRoute);
-  direction = $derived(this.router.direction);
-  currentComponent = $derived(this.router.currentComponent);
 
   async fetchGallery(cloudId: number): Promise<GalleryMediaAsset[]> {
     if (this.mediaItems.length > 0) {
@@ -167,22 +162,29 @@ export class GalleryAppManager {
     }
   }
 
+  addMedia(media: SharedMediaAsset & { timestamp?: string }): GalleryMediaAsset {
+    const galleryMedia = toImportedGalleryMedia({
+      ...media,
+      timestamp: media.timestamp ?? new Date().toISOString(),
+    });
+
+    this.mediaItems = [galleryMedia, ...this.mediaItems];
+
+    return galleryMedia;
+  }
+
   openMedia(media: GalleryMediaAsset): void {
     this.selectedMedia = media;
     this.router.navigate("view");
   }
 
   closeMedia(): void {
-    this.selectedMedia = null;
-    this.router.navigate("libary", true);
+    this.openLibrary(true);
   }
 
-  navigate(routeId: keyof typeof galleryRoutes, back = false): void {
-    if (routeId === "libary") {
-      this.selectedMedia = null;
-    }
-
-    this.router.navigate(routeId, back);
+  openLibrary(back = false): void {
+    this.selectedMedia = null;
+    this.router.navigate("libary", back);
   }
 
   reset(): void {

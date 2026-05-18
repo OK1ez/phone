@@ -270,7 +270,7 @@ export class CameraAppManager {
     phone.openApp("gallery");
 
     if (!this.latestMedia) {
-      galleryApp.navigate("libary");
+      galleryApp.openLibrary();
       return;
     }
 
@@ -485,13 +485,16 @@ export class CameraAppManager {
       return false;
     }
 
-    this.latestMedia = {
+    const nextMedia = {
       type: savedMedia.type,
       url: savedMedia.url,
       filename: savedMedia.filename,
       id: savedMedia.id,
       alt: savedMedia.filename,
     };
+
+    this.latestMedia = nextMedia;
+    galleryApp.addMedia(nextMedia);
 
     return true;
   }

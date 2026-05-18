@@ -9,11 +9,11 @@
   import User from "@lucide/svelte/icons/user";
   import Plus from "@lucide/svelte/icons/plus";
 
-  let CurrentRoute = $derived(bleeterApp.currentComponent);
+  let CurrentRoute = $derived(bleeterApp.router.currentComponent);
 </script>
 
 <div class=" flex flex-col w-full h-full bg-background">
-  {#key bleeterApp.currentRoute}
+  {#key bleeterApp.router.currentRoute}
     <div class="w-full h-full absolute">
       <CurrentRoute />
     </div>
@@ -28,18 +28,18 @@
     class="absolute bottom-0 flex items-center justify-center space-x-3 w-full h-20 px-12 pb-4 border-t bg-background z-30"
   >
     <button
-      class="p-4 {bleeterApp.currentRoute === 'home'
+      class="p-4 {bleeterApp.router.currentRoute === 'home'
         ? 'text-foreground'
         : 'text-muted-foreground hover:text-foreground'}"
-      onclick={() => bleeterApp.navigate("home")}
+      onclick={() => bleeterApp.router.navigate("home")}
     >
       <Home class="size-5" />
     </button>
     <button
-      class="p-4 {bleeterApp.currentRoute === 'search'
+      class="p-4 {bleeterApp.router.currentRoute === 'search'
         ? 'text-foreground'
         : 'text-muted-foreground hover:text-foreground'}"
-      onclick={() => bleeterApp.navigate("search")}
+      onclick={() => bleeterApp.router.navigate("search")}
     >
       <Search class="size-5" />
     </button>
@@ -47,18 +47,18 @@
       <Plus class="size-5" />
     </button>
     <button
-      class="p-4 {bleeterApp.currentRoute === 'notifications'
+      class="p-4 {bleeterApp.router.currentRoute === 'notifications'
         ? 'text-foreground'
         : 'text-muted-foreground hover:text-foreground'}"
-      onclick={() => bleeterApp.navigate("notifications")}
+      onclick={() => bleeterApp.router.navigate("notifications")}
     >
       <BellDot class="size-5" />
     </button>
     <button
-      class="p-4 {bleeterApp.currentRoute === 'profile'
+      class="p-4 {bleeterApp.router.currentRoute === 'profile'
         ? 'text-foreground'
         : 'text-muted-foreground hover:text-foreground'}"
-      onclick={() => bleeterApp.navigate("profile")}
+      onclick={() => bleeterApp.router.navigate("profile")}
     >
       <User class="size-5" />
     </button>

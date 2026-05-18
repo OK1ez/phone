@@ -79,7 +79,6 @@ export class BleeterAppManager {
       this.closePostView();
     },
   });
-  readonly routes = this.router.routes;
 
   profileOverlay = $state({
     isOpen: false,
@@ -90,14 +89,6 @@ export class BleeterAppManager {
     isOpen: false,
     postData: null as BleeterPostData | null,
   });
-
-  currentRoute = $derived(this.router.currentRoute);
-  direction = $derived(this.router.direction);
-  currentComponent = $derived(this.router.currentComponent);
-
-  navigate(routeId: keyof typeof bleeterRoutes, back = false): void {
-    this.router.navigate(routeId, back);
-  }
 
   reset(): void {
     this.router.reset();

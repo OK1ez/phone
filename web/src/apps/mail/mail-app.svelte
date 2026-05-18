@@ -4,15 +4,15 @@
 
   import { getTransitionDirection } from "$lib/utils/utils";
 
-  let CurrentRoute = $derived(mailApp.currentComponent);
+  let CurrentRoute = $derived(mailApp.router.currentComponent);
 </script>
 
 <div class="relative flex flex-col w-full h-full bg-background">
-  {#key mailApp.currentRoute}
+  {#key mailApp.router.currentRoute}
     <div
       class="w-full h-full absolute"
-      in:fly={getTransitionDirection(mailApp.direction).in}
-      out:fly={getTransitionDirection(mailApp.direction).out}
+      in:fly={getTransitionDirection(mailApp.router.direction).in}
+      out:fly={getTransitionDirection(mailApp.router.direction).out}
     >
       <CurrentRoute />
     </div>
