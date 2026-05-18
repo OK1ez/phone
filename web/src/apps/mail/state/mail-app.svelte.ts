@@ -21,48 +21,44 @@ const messages = [
   },
 ] satisfies MailMessage[];
 
-const router = createAppRouter({
-  routes: {
-    inbox: {
-      label: "Inbox",
-      component: Inbox,
-    },
-    view: {
-      label: "View",
-      component: View,
-    },
+const mailRoutes = {
+  inbox: {
+    label: "Inbox",
+    component: Inbox,
   },
-  initialRoute: "inbox",
-});
+  view: {
+    label: "View",
+    component: View,
+  },
+} as const;
 
-let selectedMessage = $state<MailMessage | null>(messages[0] ?? null);
+export class MailAppManager {
+  readonly router = createAppRouter({
+    routes: mailRoutes,
+    initialRoute: "inbox",
+  });
+  readonly routes = this.router.routes;
+  readonly messages = messages;
 
-export const mailApp = {
-  messages,
-  get routes() {
-    return router.routes;
-  },
-  get currentRoute() {
-    return router.currentRoute;
-  },
-  get direction() {
-    return router.direction;
-  },
-  get currentComponent() {
-    return router.currentComponent;
-  },
-  get selectedMessage() {
-    return selectedMessage;
-  },
-  navigate(routeId: keyof typeof router.routes, back = false) {
-    router.navigate(routeId, back);
-  },
-  reset() {
-    router.reset();
-    selectedMessage = messages[0] ?? null;
-  },
-  openMessage(message: MailMessage) {
-    selectedMessage = message;
-    router.navigate("view");
-  },
-};
+  selectedMessage = $state<MailMessage | null>(messages[0] ?? null);
+
+  currentRoute = $derived(this.router.currentRoute);
+  direction = $derived(this.router.direction);
+  currentComponent = $derived(this.router.currentComponent);
+
+  navigate(routeId: keyof typeof mailRoutes, back = false): void {
+    this.router.navigate(routeId, back);
+  }
+
+  reset(): void {
+    this.router.reset();
+    this.selectedMessage = this.messages[0] ?? null;
+  }
+
+  openMessage(message: MailMessage): void {
+    this.selectedMessage = message;
+    this.router.navigate("view");
+  }
+}
+
+export const mailApp = new MailAppManager();

@@ -51,87 +51,79 @@ export interface BleeterPostData {
   replies: BleeterReply[];
 }
 
-let profileOverlay = $state({
-  isOpen: false,
-  profileData: null as BleeterProfileData | null,
-});
+const bleeterRoutes = {
+  home: {
+    label: "Home",
+    component: Home,
+  },
+  search: {
+    label: "Search",
+    component: Search,
+  },
+  notifications: {
+    label: "Notifications",
+    component: Notifications,
+  },
+  profile: {
+    label: "Profile",
+    component: Profile,
+  },
+} as const;
 
-let postView = $state({
-  isOpen: false,
-  postData: null as BleeterPostData | null,
-});
+export class BleeterAppManager {
+  readonly router = createAppRouter({
+    routes: bleeterRoutes,
+    initialRoute: "home",
+    onNavigate: () => {
+      this.closeProfile();
+      this.closePostView();
+    },
+  });
+  readonly routes = this.router.routes;
 
-const router = createAppRouter({
-  routes: {
-    home: {
-      label: "Home",
-      component: Home,
-    },
-    search: {
-      label: "Search",
-      component: Search,
-    },
-    notifications: {
-      label: "Notifications",
-      component: Notifications,
-    },
-    profile: {
-      label: "Profile",
-      component: Profile,
-    },
-  },
-  initialRoute: "home",
-  onNavigate() {
-    profileOverlay.isOpen = false;
-    profileOverlay.profileData = null;
-    postView.isOpen = false;
-    postView.postData = null;
-  },
-});
+  profileOverlay = $state({
+    isOpen: false,
+    profileData: null as BleeterProfileData | null,
+  });
 
-export const bleeterApp = {
-  get routes() {
-    return router.routes;
-  },
-  get currentRoute() {
-    return router.currentRoute;
-  },
-  get direction() {
-    return router.direction;
-  },
-  get currentComponent() {
-    return router.currentComponent;
-  },
-  get profileOverlay() {
-    return profileOverlay;
-  },
-  get postView() {
-    return postView;
-  },
-  navigate(routeId: keyof typeof router.routes, back = false) {
-    router.navigate(routeId, back);
-  },
-  reset() {
-    router.reset();
-    profileOverlay.isOpen = false;
-    profileOverlay.profileData = null;
-    postView.isOpen = false;
-    postView.postData = null;
-  },
-  openProfile(profileData: BleeterProfileData) {
-    profileOverlay.profileData = profileData;
-    profileOverlay.isOpen = true;
-  },
-  closeProfile() {
-    profileOverlay.isOpen = false;
-    profileOverlay.profileData = null;
-  },
-  openPostView(postData: BleeterPostData) {
-    postView.postData = postData;
-    postView.isOpen = true;
-  },
-  closePostView() {
-    postView.isOpen = false;
-    postView.postData = null;
-  },
-};
+  postView = $state({
+    isOpen: false,
+    postData: null as BleeterPostData | null,
+  });
+
+  currentRoute = $derived(this.router.currentRoute);
+  direction = $derived(this.router.direction);
+  currentComponent = $derived(this.router.currentComponent);
+
+  navigate(routeId: keyof typeof bleeterRoutes, back = false): void {
+    this.router.navigate(routeId, back);
+  }
+
+  reset(): void {
+    this.router.reset();
+    this.closeProfile();
+    this.closePostView();
+  }
+
+  openProfile(profileData: BleeterProfileData): void {
+    this.profileOverlay.profileData = profileData;
+    this.profileOverlay.isOpen = true;
+  }
+
+  closeProfile(): void {
+    this.profileOverlay.isOpen = false;
+    this.profileOverlay.profileData = null;
+  }
+
+  openPostView(postData: BleeterPostData): void {
+    this.postView.postData = postData;
+    this.postView.isOpen = true;
+  }
+
+  closePostView(): void {
+    this.postView.isOpen = false;
+    this.postView.postData = null;
+  }
+}
+
+export const bleeterApp = new BleeterAppManager();

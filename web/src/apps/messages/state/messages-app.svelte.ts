@@ -3,37 +3,35 @@ import { createAppRouter } from "$apps/shared/create-app-router.svelte";
 import Conversation from "../pages/conversation/conversation.svelte";
 import Recents from "../pages/recents/recents.svelte";
 
-const router = createAppRouter({
-  routes: {
-    recents: {
-      label: "Recents",
-      component: Recents,
-    },
-    conversation: {
-      label: "Conversation",
-      component: Conversation,
-    },
+const messagesRoutes = {
+  recents: {
+    label: "Recents",
+    component: Recents,
   },
-  initialRoute: "recents",
-});
+  conversation: {
+    label: "Conversation",
+    component: Conversation,
+  },
+} as const;
 
-export const messagesApp = {
-  get routes() {
-    return router.routes;
-  },
-  get currentRoute() {
-    return router.currentRoute;
-  },
-  get direction() {
-    return router.direction;
-  },
-  get currentComponent() {
-    return router.currentComponent;
-  },
-  navigate(routeId: keyof typeof router.routes, back = false) {
-    router.navigate(routeId, back);
-  },
-  reset() {
-    router.reset();
-  },
-};
+export class MessagesAppManager {
+  readonly router = createAppRouter({
+    routes: messagesRoutes,
+    initialRoute: "recents",
+  });
+  readonly routes = this.router.routes;
+
+  currentRoute = $derived(this.router.currentRoute);
+  direction = $derived(this.router.direction);
+  currentComponent = $derived(this.router.currentComponent);
+
+  navigate(routeId: keyof typeof messagesRoutes, back = false): void {
+    this.router.navigate(routeId, back);
+  }
+
+  reset(): void {
+    this.router.reset();
+  }
+}
+
+export const messagesApp = new MessagesAppManager();
