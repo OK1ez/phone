@@ -73,14 +73,21 @@ export class GalleryAppManager {
 
   selectedMedia = $state<GalleryMediaAsset | null>(null);
   mediaItems = $state.raw<GalleryMediaAsset[]>([]);
+  hasLoadedGallery = $state(false);
 
   async fetchGallery(cloudId: number): Promise<GalleryMediaAsset[]> {
-    if (this.mediaItems.length > 0) {
+    if (this.hasLoadedGallery) {
       return this.mediaItems;
     }
 
     const gallery = await SendEvent<FetchGalleryResponse, number>("fetchGallery", cloudId);
-    this.mediaItems = (gallery || []).map(toGalleryMedia);
+    const fetchedMedia = (gallery || []).map(toGalleryMedia);
+    const localMedia = this.mediaItems.filter((media) => {
+      return !fetchedMedia.some((fetchedItem) => fetchedItem.id === media.id || fetchedItem.url === media.url);
+    });
+
+    this.mediaItems = [...localMedia, ...fetchedMedia];
+    this.hasLoadedGallery = true;
 
     return this.mediaItems;
   }
@@ -134,15 +141,10 @@ export class GalleryAppManager {
         throw new Error("Failed to save image");
       }
 
-      this.mediaItems = [
-        {
-          ...toImportedGalleryMedia({
-            ...savedMedia,
-            timestamp: new Date().toISOString(),
-          }),
-        },
-        ...this.mediaItems,
-      ];
+      this.addMedia({
+        ...savedMedia,
+        timestamp: new Date().toISOString(),
+      });
 
       notifications.enqueue({
         appId: "gallery",
@@ -168,7 +170,13 @@ export class GalleryAppManager {
       timestamp: media.timestamp ?? new Date().toISOString(),
     });
 
-    this.mediaItems = [galleryMedia, ...this.mediaItems];
+    const alreadyExists = this.mediaItems.some((mediaItem) => {
+      return mediaItem.id === galleryMedia.id || mediaItem.url === galleryMedia.url;
+    });
+
+    if (!alreadyExists) {
+      this.mediaItems = [galleryMedia, ...this.mediaItems];
+    }
 
     return galleryMedia;
   }
@@ -190,6 +198,7 @@ export class GalleryAppManager {
   reset(): void {
     this.selectedMedia = null;
     this.mediaItems = [];
+    this.hasLoadedGallery = false;
     this.router.reset();
   }
 }
