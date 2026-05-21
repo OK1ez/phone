@@ -48,7 +48,7 @@ function blobToDataUrl(blob: Blob): Promise<string> {
 
 async function requestUploadUrl(): Promise<string | null> {
   try {
-    const presignedUrl = await SendEvent<UploadUrlResponse>("requestMediaUploadUrl");
+    const presignedUrl = await SendEvent<UploadUrlResponse>("requestPresignedUrl");
 
     if (typeof presignedUrl !== "string" || presignedUrl.length === 0) {
       console.error(UPLOAD_URL_ERROR);

@@ -1,8 +1,8 @@
 ---Requests a presigned upload URL for captured media.
 ---@param _data nil
 ---@param cb fun(presignedUrl: string?)
-RegisterNUICallback('requestMediaUploadUrl', function(_data, cb)
-    local presignedUrl = lib.callback.await('phone:server:requestMediaUploadUrl', false)
+RegisterNUICallback('requestPresignedUrl', function(_data, cb)
+    local presignedUrl = lib.callback.await('phone:server:requestPresignedUrl', false)
 
     exports.nativeaudio:playSoundFrontend({ -- TODO: only play for photos, not videos.
         audio = {

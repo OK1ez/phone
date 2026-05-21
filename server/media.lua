@@ -4,7 +4,7 @@ local API_KEY = GetConvar('FIVEMANAGE_MEDIA_API_KEY', '')
 
 ---Requests a presigned upload URL from Fivemanage.
 ---@return string? presignedUrl
-local function requestMediaUploadUrl()
+local function requestPresignedUrl()
     if API_KEY == '' then
         print('API key is not configured')
         return nil
@@ -39,8 +39,8 @@ end
 ---Returns a presigned upload URL to the client.
 ---@param _serverId integer
 ---@return string? presignedUrl
-lib.callback.register('phone:server:requestMediaUploadUrl', function(_serverId)
-    return requestMediaUploadUrl()
+lib.callback.register('phone:server:requestPresignedUrl', function(_serverId)
+    return requestPresignedUrl()
 end)
 
 ---Creates uploaded media for a cloud account.

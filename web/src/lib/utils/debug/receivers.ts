@@ -162,7 +162,7 @@ const ReceiveDebuggers: DebugEventCallback[] = [
     },
   },
   {
-    action: "requestMediaUploadUrl",
+    action: "requestPresignedUrl",
     handler: () => {
       return "debug-upload-url";
     },
