@@ -41,7 +41,7 @@
   const hasValidContactNumber = $derived(/^\d{8}$/.test(contactNumber.trim()));
 
   async function submitContact() {
-    const contact = await SendEvent("addContact", {
+    const contact = await SendEvent("createContact", {
       cloudId: phone.cloudId,
       name: contactName,
       phoneNumber: contactNumber,

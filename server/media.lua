@@ -4,7 +4,7 @@ local API_KEY = GetConvar('FIVEMANAGE_MEDIA_API_KEY', '')
 
 ---Requests a presigned upload URL from Fivemanage.
 ---@return string? presignedUrl
-local function requestUploadURL()
+local function requestMediaUploadUrl()
     if API_KEY == '' then
         print('API key is not configured')
         return nil
@@ -39,17 +39,17 @@ end
 ---Returns a presigned upload URL to the client.
 ---@param _serverId integer
 ---@return string? presignedUrl
-lib.callback.register('phone:server:getUploadURL', function(_serverId)
-    return requestUploadURL()
+lib.callback.register('phone:server:requestMediaUploadUrl', function(_serverId)
+    return requestMediaUploadUrl()
 end)
 
----Saves uploaded media for a cloud account.
+---Creates uploaded media for a cloud account.
 ---@param _serverId integer
 ---@param cloudId number
 ---@param url string
 ---@param mediaType 'image' | 'video'
 ---@return table|false
-lib.callback.register('phone:server:saveMedia', function(_serverId, cloudId, url, mediaType)
+lib.callback.register('phone:server:createMedia', function(_serverId, cloudId, url, mediaType)
     if not cloudId or not url or (mediaType ~= 'image' and mediaType ~= 'video') then
         return false
     end
@@ -69,11 +69,11 @@ end)
 
 -- TODO: only fetch again when phone/cloud is changed
 
----Fetches gallery media for a cloud account.
+---Fetches media for a cloud account.
 ---@param _serverId integer
 ---@param cloudId number
 ---@return table[]
-lib.callback.register('phone:server:fetchGallery', function(_serverId, cloudId)
+lib.callback.register('phone:server:fetchMedia', function(_serverId, cloudId)
     return MySQL.query.await('SELECT `id`, `url`, `type`, `timestamp` FROM `phone_gallery` WHERE `cloudId` = ? ORDER BY `timestamp` DESC', {
         cloudId
     })

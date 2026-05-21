@@ -20,7 +20,7 @@
   });
 
   function handleKeyDown(e: KeyboardEvent) {
-    if (e.code === "AltLeft") void SendEvent<boolean>("closeNuiFocus");
+    if (e.code === "AltLeft") void SendEvent<boolean>("releasePhoneFocus");
   }
 </script>
 

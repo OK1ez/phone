@@ -63,7 +63,7 @@ const ReceiveDebuggers: DebugEventCallback[] = [
     },
   },
   {
-    action: "getShell",
+    action: "fetchPhoneShell",
     handler: (cloudId: number) => {
       if (debugLockedClouds.has(cloudId)) {
         return {
@@ -79,7 +79,7 @@ const ReceiveDebuggers: DebugEventCallback[] = [
     },
   },
   {
-    action: "fetchOwnedClouds",
+    action: "fetchClouds",
     handler: () => {
       return debugSetupClouds;
     },
@@ -126,7 +126,7 @@ const ReceiveDebuggers: DebugEventCallback[] = [
     },
   },
   {
-    action: "addContact",
+    action: "createContact",
     handler: (data: AddPhoneContactRequest) => {
       const nextContact: PhoneContact = {
         id: debugContacts.length + 1,
@@ -156,19 +156,19 @@ const ReceiveDebuggers: DebugEventCallback[] = [
     },
   },
   {
-    action: "fetchGallery",
+    action: "fetchMedia",
     handler: (_cloudId: number) => {
       return debugGalleryMedia;
     },
   },
   {
-    action: "getUploadURL",
+    action: "requestMediaUploadUrl",
     handler: () => {
       return "debug-upload-url";
     },
   },
   {
-    action: "saveMedia",
+    action: "createMedia",
     handler: (data: { cloudId: number; url: string; type: "image" | "video" }) => {
       const nextMedia = {
         id: `debug-gallery-${debugGalleryMedia.length + 1}`,

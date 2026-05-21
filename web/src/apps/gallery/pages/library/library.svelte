@@ -27,7 +27,7 @@
       return;
     }
 
-    await galleryApp.fetchGallery(cloudId);
+    await galleryApp.fetchMedia(cloudId);
   });
 
   async function handleImportImage() {

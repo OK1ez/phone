@@ -15,7 +15,8 @@ client_scripts {
     'client/main.lua',
     'client/phone.lua',
     'client/notifications.lua',
-    'client/camera.lua'
+    'client/camera.lua',
+    'client/media.lua'
 }
 
 server_scripts {

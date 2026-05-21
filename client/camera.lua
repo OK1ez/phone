@@ -82,7 +82,7 @@ end
 
 ---Opens the camera in rear-camera mode.
 ---@param _data nil
----@param cb fun(response: { ok: boolean })
+---@param cb fun(success: boolean)
 RegisterNUICallback('openCamera', function(_data, cb)
     startCamera()
     cb(true)
@@ -90,8 +90,8 @@ end)
 
 ---Switches the current camera direction and returns the new direction.
 ---@param _data nil
----@param cb fun(response: { ok: boolean, direction: 'front' | 'rear' })
-RegisterNUICallback('switchCameraDirection', function(_data, cb)
+---@param cb fun(direction: 'front' | 'rear')
+RegisterNUICallback('toggleCameraDirection', function(_data, cb)
     local isFrontFacing = toggleCameraDirection()
     cb(isFrontFacing and 'front' or 'rear')
 end)
@@ -102,38 +102,6 @@ end)
 RegisterNUICallback('closeCamera', function(_data, cb)
     stopCamera()
     cb(true)
-end)
-
----Requests a presigned upload URL for captured media.
----@param _data nil
----@param cb fun(presignedUrl: string?)
-RegisterNUICallback('getUploadURL', function(_data, cb)
-    local presignedUrl = lib.callback.await('phone:server:getUploadURL', false)
-
-    exports.nativeaudio:playSoundFrontend({ -- check media type, only play when image, did not that well to video
-        audio = {
-            name = 'Camera_Shoot',
-            ref = 'Phone_SoundSet_Michael'
-        }
-    })
-
-    cb(presignedUrl)
-end)
-
----Saves uploaded media on the active cloud account.
----@param data { cloudId: number, url: string, type: 'image' | 'video' }
----@param cb fun(result: table|false)
-RegisterNUICallback('saveMedia', function(data, cb)
-    local media = lib.callback.await('phone:server:saveMedia', false, data.cloudId, data.url, data.type)
-    cb(media)
-end)
-
----Fetches gallery media for the active cloud account.
----@param cloudId number
----@param cb fun(result: table[])
-RegisterNUICallback('fetchGallery', function(cloudId, cb)
-    local media = lib.callback.await('phone:server:fetchGallery', false, cloudId)
-    cb(media)
 end)
 
 ---Stops the phone camera if this resource is stopped.

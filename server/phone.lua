@@ -21,7 +21,7 @@ end)
 ---@param name string
 ---@param phoneNumber string
 ---@return table|false
-lib.callback.register('phone:server:addContact', function(_serverId, cloudId, name, phoneNumber)
+lib.callback.register('phone:server:createContact', function(_serverId, cloudId, name, phoneNumber)
     local trimmedName = name:match('^%s*(.-)%s*$')
     local trimmedPhoneNumber = phoneNumber:match('^%s*(.-)%s*$')
 

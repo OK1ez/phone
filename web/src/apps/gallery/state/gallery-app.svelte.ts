@@ -75,12 +75,12 @@ export class GalleryAppManager {
   mediaItems = $state.raw<GalleryMediaAsset[]>([]);
   hasLoadedGallery = $state(false);
 
-  async fetchGallery(cloudId: number): Promise<GalleryMediaAsset[]> {
+  async fetchMedia(cloudId: number): Promise<GalleryMediaAsset[]> {
     if (this.hasLoadedGallery) {
       return this.mediaItems;
     }
 
-    const gallery = await SendEvent<FetchGalleryResponse, number>("fetchGallery", cloudId);
+    const gallery = await SendEvent<FetchGalleryResponse, number>("fetchMedia", cloudId);
     const fetchedMedia = (gallery || []).map(toGalleryMedia);
     const localMedia = this.mediaItems.filter((media) => {
       return !fetchedMedia.some((fetchedItem) => fetchedItem.id === media.id || fetchedItem.url === media.url);
@@ -130,7 +130,7 @@ export class GalleryAppManager {
         savedMedia = await SendEvent<
           SaveMediaResponse,
           { cloudId: number; url: string; type: SharedMediaAsset["type"] }
-        >("saveMedia", {
+        >("createMedia", {
           cloudId,
           url: trimmedUrl,
           type: "image",

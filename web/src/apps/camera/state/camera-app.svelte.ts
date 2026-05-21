@@ -286,7 +286,7 @@ export class CameraAppManager {
     if (this.isCapturing || this.isRecording) return;
 
     try {
-      const direction = await SendEvent<CameraDirection>("switchCameraDirection");
+      const direction = await SendEvent<CameraDirection>("toggleCameraDirection");
 
       if (this.destroyed) return;
 

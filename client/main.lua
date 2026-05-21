@@ -57,7 +57,7 @@ end)
 ---Releases NUI focus while keeping the phone session open.
 ---@param _data nil
 ---@param cb fun(success: boolean)
-RegisterNUICallback('closeNuiFocus', function(_data, cb)
+RegisterNUICallback('releasePhoneFocus', function(_data, cb)
     SetNuiFocus(false, false)
     cb(true)
 end)
@@ -65,8 +65,8 @@ end)
 ---Fetches the shell state for a cloud account.
 ---@param cloudId number
 ---@param cb fun(result: table|false)
-RegisterNUICallback('getShell', function(cloudId, cb)
-    local shell = lib.callback.await('phone:server:getShell', false, cloudId)
+RegisterNUICallback('fetchPhoneShell', function(cloudId, cb)
+    local shell = lib.callback.await('phone:server:fetchPhoneShell', false, cloudId)
     cb(shell)
 end)
 
@@ -81,8 +81,8 @@ end)
 ---Fetches clouds owned by the current character.
 ---@param _data nil
 ---@param cb fun(result: table[]|false)
-RegisterNUICallback('fetchOwnedClouds', function(_data, cb)
-    local clouds = lib.callback.await('phone:server:fetchOwnedClouds', false)
+RegisterNUICallback('fetchClouds', function(_data, cb)
+    local clouds = lib.callback.await('phone:server:fetchClouds', false)
     cb(clouds)
 end)
 
@@ -105,8 +105,8 @@ end)
 ---Saves settings for a cloud account.
 ---@param data { cloudId: number, settings: table }
 ---@param cb fun(result: table|false)
-RegisterNUICallback('updateSettings', function(data, cb)
-    local settings = lib.callback.await('phone:server:updateSettings', false, data.cloudId, data.settings)
+RegisterNUICallback('updatePhoneSettings', function(data, cb)
+    local settings = lib.callback.await('phone:server:updatePhoneSettings', false, data.cloudId, data.settings)
     cb(settings)
 end)
 

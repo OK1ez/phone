@@ -9,8 +9,8 @@ end)
 ---Adds a contact to the active cloud account.
 ---@param data { cloudId: number, name: string, phoneNumber: string }
 ---@param cb fun(result: table)
-RegisterNUICallback('addContact', function(data, cb)
-    local contact = lib.callback.await('phone:server:addContact', false, data.cloudId, data.name, data.phoneNumber)
+RegisterNUICallback('createContact', function(data, cb)
+    local contact = lib.callback.await('phone:server:createContact', false, data.cloudId, data.name, data.phoneNumber)
     cb(contact)
 end)
 

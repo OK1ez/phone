@@ -48,7 +48,7 @@ function blobToDataUrl(blob: Blob): Promise<string> {
 
 async function requestUploadUrl(): Promise<string | null> {
   try {
-    const presignedUrl = await SendEvent<UploadUrlResponse>("getUploadURL");
+    const presignedUrl = await SendEvent<UploadUrlResponse>("requestMediaUploadUrl");
 
     if (typeof presignedUrl !== "string" || presignedUrl.length === 0) {
       console.error(UPLOAD_URL_ERROR);
@@ -76,7 +76,7 @@ export async function persistMedia({
     const savedMedia = await SendEvent<
       SaveMediaResponse,
       { cloudId: number; url: string; type: SharedMediaAsset["type"] }
-    >("saveMedia", {
+    >("createMedia", {
       cloudId,
       url: mediaUrl,
       type,
@@ -125,7 +125,7 @@ export async function persistMedia({
     const savedMedia = await SendEvent<
       SaveMediaResponse,
       { cloudId: number; url: string; type: SharedMediaAsset["type"] }
-    >("saveMedia", {
+    >("createMedia", {
       cloudId,
       url: payload.data.url,
       type,

@@ -162,7 +162,7 @@ end
 ---@param serverId integer
 ---@param cloudId number
 ---@return table|false
-lib.callback.register('phone:server:getShell', function(serverId, cloudId)
+lib.callback.register('phone:server:fetchPhoneShell', function(serverId, cloudId)
     if not cloudId then
         return false
     end
@@ -193,7 +193,7 @@ end)
 ---Fetches cloud accounts owned by the current character.
 ---@param serverId integer
 ---@return table[]
-lib.callback.register('phone:server:fetchOwnedClouds', function(serverId)
+lib.callback.register('phone:server:fetchClouds', function(serverId)
     local charId = GetPlayerCharacterId(serverId)
 
     return MySQL.query.await('SELECT `cloudId`, `name`, `phoneNumber` FROM `phone_clouds` WHERE `owner` = ? ORDER BY `name`', {
@@ -303,7 +303,7 @@ end)
 ---@param cloudId number
 ---@param settings table
 ---@return table|false
-lib.callback.register('phone:server:updateSettings', function(_serverId, cloudId, settings)
+lib.callback.register('phone:server:updatePhoneSettings', function(_serverId, cloudId, settings)
     MySQL.update.await('UPDATE `phone_clouds` SET `settings` = ? WHERE `cloudId` = ? LIMIT 1', {
         json.encode(settings),
         cloudId

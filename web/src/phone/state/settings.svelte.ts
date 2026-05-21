@@ -28,7 +28,7 @@ export class SettingsManager {
     }
 
     const savedSettings = await SendEvent<UpdatePhoneSettingsResponse, { cloudId: number; settings: PhoneSettings }>(
-      "updateSettings",
+      "updatePhoneSettings",
       {
         cloudId,
         settings: nextSettings,

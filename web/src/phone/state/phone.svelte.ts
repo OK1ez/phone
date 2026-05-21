@@ -170,7 +170,7 @@ export class PhoneManager implements PhoneShell {
     this.phoneId = nextPhoneId;
 
     if (nextCloudId === null) {
-      const ownedClouds = await SendEvent<FetchOwnedCloudsResponse>("fetchOwnedClouds");
+      const ownedClouds = await SendEvent<FetchOwnedCloudsResponse>("fetchClouds");
 
       this.applySetupState(nextPhoneId, ownedClouds || []);
       this.visible = true;
@@ -179,7 +179,7 @@ export class PhoneManager implements PhoneShell {
 
     this.cloudId = nextCloudId;
 
-    const shell = await SendEvent<GetShellResponse, number>("getShell", nextCloudId);
+    const shell = await SendEvent<GetShellResponse, number>("fetchPhoneShell", nextCloudId);
     if (!shell) return;
 
     if (shell.state === "unlocked" && shell.data) {
