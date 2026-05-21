@@ -22,7 +22,7 @@ server_scripts {
     '@oxmysql/lib/MySQL.lua',
     'server/main.lua',
     'server/phone.lua',
-    'server/uploadMedia.lua'
+    'server/media.lua'
 }
 
 shared_scripts {
