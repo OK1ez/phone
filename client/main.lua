@@ -1,15 +1,43 @@
 local config <const> = require 'config.main'
 
 local phoneOpen = false
+local activePhone = nil
 
 -- Functions
 
----Gets metadata for the first phone item in the player's inventory.
-local function getPhoneToOpen()
-    local slot = exports.ox_inventory:GetSlotWithItem('phone')
-    if not slot then
-        return nil
+---Gets metadata for the latest opened phone item, if it is still in the player's inventory.
+---@return table|nil
+local function getActivePhone()
+    if not activePhone then return nil end
+
+    local slots = exports.ox_inventory:GetSlotsWithItem('phone')
+
+    if not slots then return nil end
+
+    for _index, slot in pairs(slots) do
+        local metadata = slot.metadata or {}
+        if metadata.phoneId == activePhone.phoneId then
+            return metadata
+        end
     end
+
+    activePhone = nil
+
+    return nil
+end
+
+---Gets metadata for the phone item to open.
+local function getPhoneToOpen()
+    local activePhoneMetadata = getActivePhone()
+
+    if activePhoneMetadata then
+        return activePhoneMetadata
+    end
+
+    -- if no phone is active deafult to first in inventory
+    local slot = exports.ox_inventory:GetSlotWithItem('phone')
+
+    if not slot then return nil end
 
     return slot.metadata
 end
@@ -19,6 +47,7 @@ local function openPhone(metadata)
     if not metadata or not metadata.phoneId then return end
 
     phoneOpen = true
+    activePhone = metadata
 
     SetNuiFocus(true, true)
     SendNUIMessage({
@@ -130,41 +159,4 @@ RegisterCommand('toggleNuiFocus', function()
     if phoneOpen then
         SetNuiFocus(true, true)
     end
-end)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
----@param phoneNumber number
----@param cb fun(result: table|false)
-RegisterNuiCallback('attemptCall', function(phoneNumber, cb)
-    local result = lib.callback.await('phone:server:attemptCall', false, phoneNumber)
-
-
-    cb(result)
-end)
-
-RegisterNuiCallback('answerCall', function(data, cb)
-
-end)
-
-RegisterNuiCallback('rejectCall', function(data, cb)
-
-end)
-
-RegisterNuiCallback('endCall', function(data, cb)
-
 end)
