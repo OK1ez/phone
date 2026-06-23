@@ -1,4 +1,4 @@
-local phoneNumbers = {}
+PhoneNumbers = {}
 
 -- Functions
 
@@ -108,10 +108,11 @@ local function syncPhoneItemMetadata(serverId, phoneId, cloudId)
 
         if item.name == 'phone' and metadata.phoneId == phoneId then
             metadata.cloudId = cloudId
-            metadata.phoneNumber = phoneMetadata.phoneNumber
+            -- Ensure consistent string keys for PhoneNumbers lookups.
+            metadata.phoneNumber = tostring(phoneMetadata.phoneNumber)
             metadata.pinCode = phoneMetadata.pin
             exports.ox_inventory:SetMetadata(serverId, item.slot, metadata)
-            phoneNumbers[phoneMetadata.phoneNumber] = serverId
+            PhoneNumbers[tostring(phoneMetadata.phoneNumber)] = serverId
             return
         end
     end
@@ -120,9 +121,9 @@ end
 ---Clears cached phone number ownership for a player.
 ---@param serverId integer
 local function clearPlayerPhoneNumbers(serverId)
-    for phoneNumber, sourceId in pairs(phoneNumbers) do
+    for phoneNumber, sourceId in pairs(PhoneNumbers) do
         if sourceId == serverId then
-            phoneNumbers[phoneNumber] = nil
+            PhoneNumbers[phoneNumber] = nil
         end
     end
 end
@@ -151,7 +152,7 @@ local function syncPlayerPhoneNumbers(serverId)
         end
 
         if metadata.phoneNumber then
-            phoneNumbers[metadata.phoneNumber] = serverId
+            PhoneNumbers[tostring(metadata.phoneNumber)] = serverId
         end
     end
 end
@@ -353,14 +354,15 @@ AddEventHandler(swapItemsHookId, function(success, payload)
     if not success then return end
 
     local metadata = payload.fromSlot.metadata or {}
-    local phoneNumber = metadata.phoneNumber
+    local phoneNumber = metadata.phoneNumber and tostring(metadata.phoneNumber) or nil
 
     if not phoneNumber then return end
 
     if payload.toType == 'player' then
-        phoneNumbers[phoneNumber] = payload.toInventory
+        PhoneNumbers[phoneNumber] = payload.toInventory
     elseif payload.fromType == 'player' then
-        phoneNumbers[phoneNumber] = nil
+        ClearPlayerCall(payload.fromInventory, 'unavailable')
+        PhoneNumbers[phoneNumber] = nil
     end
 end)
 
@@ -382,24 +384,11 @@ end)
 
 ---Clears phone number ownership when a character drops.
 RegisterNetEvent('core:playerDropped', function(serverId)
+    ClearPlayerCall(serverId, 'disconnected')
     clearPlayerPhoneNumbers(serverId)
 end)
 
 
-
 RegisterCommand('phoneNumbers', function(source, args)
-    print(json.encode(phoneNumbers, { indent = true }))
-end)
-
-
--- exports['pma-voice']:setPlayerCall(source, 1)
-
-
-lib.callback.register('phone:server:attemptCall', function(serverId, phoneNumber)
-    print(serverId, "attempting to call", phoneNumber)
-
-    local receiver = phoneNumbers[phoneNumber]
-
-    print("getting called", receiver)
-
+    print(json.encode(PhoneNumbers, { indent = true }))
 end)

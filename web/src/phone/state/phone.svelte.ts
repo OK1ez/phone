@@ -99,6 +99,7 @@ export class PhoneManager implements PhoneShell {
 
     settings.reset();
     calls.reset();
+    calls.setCallerNumber(null);
     mediaViewer.reset();
   }
 
@@ -113,6 +114,7 @@ export class PhoneManager implements PhoneShell {
     this.isLocked = false;
 
     settings.reset();
+    calls.setCallerNumber(null);
   }
 
   private applyLockedState(nextPhoneId: number, nextCloudId: number): void {
@@ -126,6 +128,7 @@ export class PhoneManager implements PhoneShell {
     this.isLocked = true;
 
     settings.reset();
+    calls.setCallerNumber(null);
   }
 
   applyPhoneData(phoneData: PhoneDataResponse): PhoneDataResponse {
@@ -138,6 +141,7 @@ export class PhoneManager implements PhoneShell {
     this.isLocked = false;
 
     settings.setSettings(normalizePhoneSettings(phoneData.settings, appRegistry));
+    calls.setCallerNumber(phoneData.phoneNumber != null ? String(phoneData.phoneNumber) : null);
 
     return phoneData;
   }
@@ -156,6 +160,7 @@ export class PhoneManager implements PhoneShell {
     this.syncHomescreen();
   }
 
+  // TODO:
   async openPhone(payload: OpenPhonePayload): Promise<void> {
     const nextPhoneId = payload.phoneId;
     const nextCloudId = payload.cloudId ?? null;

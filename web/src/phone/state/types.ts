@@ -79,6 +79,7 @@ export interface PhoneNotification {
 }
 
 export type CallStatus = "idle" | "incoming" | "outgoing" | "active";
+export type CallEndReason = "busy" | "declined" | "ended" | "self" | "timeout" | "unavailable" | "disconnected";
 
 export interface CallParticipant {
   name: string;
@@ -86,11 +87,29 @@ export interface CallParticipant {
   avatar?: string;
 }
 
-export interface CallSession {
+interface BaseCallSession {
   participant: CallParticipant;
-  direction: "incoming" | "outgoing";
   startedAt: string;
 }
+
+export type CallSession =
+  | (BaseCallSession & { state: "ringing"; direction: "outgoing"; callId: number })
+  | (BaseCallSession & { state: "incoming"; direction: "incoming"; callId: number })
+  | (BaseCallSession & { state: "active"; direction: "incoming" | "outgoing"; callId: number });
+
+export interface AttemptCallRequest {
+  transmitterNumber: string;
+  receiverNumber: string;
+}
+
+export type AttemptCallResponse =
+  | { ok: true; callId: number; status: "ringing" }
+  | { ok: false; reason: CallEndReason };
+
+export type CallMessage =
+  | { action: "incoming"; callId: number; participant: CallParticipant }
+  | { action: "accepted"; callId: number }
+  | { action: "ended"; callId: number; reason: CallEndReason };
 
 export interface CallsState {
   status: CallStatus;
@@ -98,11 +117,12 @@ export interface CallsState {
 }
 
 export interface CallsDomain extends CallsState {
-  receiveIncomingCall(participant: CallParticipant): void;
-  startOutgoingCall(participant: CallParticipant): void;
-  answerCall(): void;
-  declineCall(): void;
-  endCall(): void;
+  receiveIncomingCall(callId: number, participant: CallParticipant): void;
+  startOutgoingCall(participant: CallParticipant): Promise<void>;
+  answerCall(): Promise<void>;
+  declineCall(): Promise<void>;
+  endCall(): Promise<void>;
+  setCallerNumber(callerNumber: string | null): void;
 }
 
 export interface PhoneShell extends DeviceState, PhoneSessionState {

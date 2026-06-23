@@ -1,8 +1,9 @@
 import type { DebugEventCallback } from "$lib/types/events";
 import type { GalleryMediaAsset } from "$apps/gallery/media";
 import type { PhoneContact } from "$apps/phone/state/phone-app.svelte";
-import { DebugEventReceive } from "../eventsHandlers";
+import { DebugEventReceive, DebugEventSend } from "../eventsHandlers";
 import { createDebugPhoneContacts, createDebugPhoneData, debugSetupClouds } from "./data";
+import type { AttemptCallRequest } from "$phone/state/types";
 
 const debugLockedClouds = new Set([2]);
 
@@ -38,6 +39,8 @@ type ToggleFavoriteRequest = {
   contactId: number;
   favorited: boolean;
 };
+
+let debugCallId = 1;
 
 const debugContacts = createDebugPhoneContacts();
 const debugGalleryMedia: GalleryMediaAsset[] = [
@@ -154,6 +157,35 @@ const ReceiveDebuggers: DebugEventCallback[] = [
         favorited: contact.favorited,
       };
     },
+  },
+  {
+    action: "attemptCall",
+    handler: (request: AttemptCallRequest) => {
+      if (!/^\d{8}$/.test(request.phoneNumber)) {
+        return { ok: false, reason: "unavailable" };
+      }
+
+      const callId = debugCallId++;
+      void DebugEventSend("callMessage", { action: "accepted", callId }, 1200);
+
+      return {
+        ok: true,
+        callId,
+        status: "ringing",
+      };
+    },
+  },
+  {
+    action: "acceptCall",
+    handler: () => true,
+  },
+  {
+    action: "declineCall",
+    handler: () => true,
+  },
+  {
+    action: "endCall",
+    handler: () => true,
   },
   {
     action: "fetchMedia",

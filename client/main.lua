@@ -3,6 +3,29 @@ local config <const> = require 'config.main'
 local phoneOpen = false
 local activePhone = nil
 
+
+-- 1.
+
+
+setActivePhone(cloudId)
+
+end
+
+
+RegisterNetEvent("recive call", function(data)
+    data = {
+        cloudId,
+
+
+    }
+
+
+    SendNUIMessage({
+        action = '',
+    })
+
+end)
+
 -- Functions
 
 ---Gets metadata for the latest opened phone item, if it is still in the player's inventory.
@@ -91,6 +114,7 @@ RegisterNUICallback('releasePhoneFocus', function(_data, cb)
     cb(true)
 end)
 
+--- TODO
 ---Fetches the shell state for a cloud account.
 ---@param cloudId number
 ---@param cb fun(result: table|false)

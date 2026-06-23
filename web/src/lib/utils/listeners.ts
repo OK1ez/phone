@@ -3,10 +3,12 @@ import type { NotificationPayload } from "../types/notifications";
 import { ReceiveEvent } from "./eventsHandlers";
 
 import { phone } from "$phone/state/phone.svelte";
-import type { OpenPhonePayload } from "$phone/state/types";
+import type { CallMessage, OpenPhonePayload } from "$phone/state/types";
 import { notifications } from "$phone/state/notifications.svelte";
+import { calls } from "$phone/state/calls.svelte";
 
 const AlwaysListened: DebugEventCallback[] = [
+  // TODO
   {
     action: "openPhone",
     handler: (data: OpenPhonePayload) => {
@@ -22,6 +24,12 @@ const AlwaysListened: DebugEventCallback[] = [
         title: data.title ?? "",
         body: data.content ?? "",
       });
+    },
+  },
+  {
+    action: "callMessage",
+    handler: (data: CallMessage) => {
+      calls.handleCallMessage(data);
     },
   },
 ];

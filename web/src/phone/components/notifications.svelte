@@ -1,15 +1,44 @@
 <script lang="ts">
+  import { onDestroy } from "svelte";
   import { flip } from "svelte/animate";
   import { cubicInOut, quintOut } from "svelte/easing";
   import { fly } from "svelte/transition";
+  import PhoneCall from "@lucide/svelte/icons/phone-call";
   import PhoneOff from "@lucide/svelte/icons/phone-off";
 
   import { calls } from "$phone/state/calls.svelte";
-  import { phone } from "$phone/state/phone.svelte";
   import { notifications } from "$phone/state/notifications.svelte";
 
+  let now = $state(Date.now());
   let showActiveCall = $derived(calls.status !== "idle" && calls.currentCall !== null);
   let activeCallParticipant = $derived(calls.currentCall?.participant ?? null);
+  let callStatusText = $derived.by(() => {
+    if (!calls.currentCall) {
+      return "";
+    }
+
+    if (calls.status === "incoming") {
+      return "Incoming call";
+    }
+
+    if (calls.status === "outgoing") {
+      return "Calling...";
+    }
+
+    const elapsedSeconds = Math.max(0, Math.floor((now - new Date(calls.currentCall.startedAt).getTime()) / 1000));
+    const minutes = Math.floor(elapsedSeconds / 60)
+      .toString()
+      .padStart(2, "0");
+    const seconds = (elapsedSeconds % 60).toString().padStart(2, "0");
+
+    return `${minutes}:${seconds}`;
+  });
+
+  const timer = setInterval(() => {
+    now = Date.now();
+  }, 1000);
+
+  onDestroy(() => clearInterval(timer));
 </script>
 
 {#if notifications?.items?.length > 0 || showActiveCall}
@@ -39,7 +68,7 @@
                   : "pointer-events-none scale-95 opacity-0",
               ]}
             >
-              <span class="truncate text-[10px] font-medium tabular-nums select-none">00:00</span>
+              <span class="truncate text-[10px] font-medium tabular-nums select-none">{callStatusText}</span>
             </span>
 
             <span
@@ -56,21 +85,39 @@
                   alt={activeCallParticipant.name}
                   class="size-8 shrink-0 rounded-[1.65rem] object-cover"
                 />
-              {:else}
+              {:else if activeCallParticipant.name}
                 <div
                   class="flex size-8 shrink-0 items-center justify-center rounded-full bg-secondary text-sm font-semibold"
                 >
-                  {activeCallParticipant?.name?.charAt(0) ?? "#"}
+                  {activeCallParticipant.name.charAt(0)}
                 </div>
               {/if}
 
               <div class="min-w-0">
-                <p class="truncate text-[10px] font-medium tabular-nums">00:00</p>
+                <p class="truncate text-[10px] font-medium tabular-nums">{callStatusText}</p>
                 <p class="truncate text-xs">
                   {activeCallParticipant.name ? activeCallParticipant.name : activeCallParticipant.number}
                 </p>
               </div>
             </span>
+
+            {#if calls.status === "incoming"}
+              <button
+                class={[
+                  "flex size-8 shrink-0 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-500 transition-all duration-150 hover:bg-emerald-500/25",
+                  notifications.compactCall
+                    ? "pointer-events-none scale-95 opacity-0"
+                    : "scale-100 opacity-100 delay-150",
+                ]}
+                aria-label="Answer"
+                onclick={(event) => {
+                  event.stopPropagation();
+                  void calls.answerCall();
+                }}
+              >
+                <PhoneCall class="size-3.5" />
+              </button>
+            {/if}
 
             <button
               class={[
@@ -79,8 +126,17 @@
                   ? "pointer-events-none scale-95 opacity-0"
                   : "scale-100 opacity-100 delay-150",
               ]}
-              aria-label="Hang up"
-              onclick={() => calls.endCall()}
+              aria-label={calls.status === "incoming" ? "Decline" : "Hang up"}
+              onclick={(event) => {
+                event.stopPropagation();
+
+                if (calls.status === "incoming") {
+                  void calls.declineCall();
+                  return;
+                }
+
+                void calls.endCall();
+              }}
             >
               <PhoneOff class="size-3.5" />
             </button>
