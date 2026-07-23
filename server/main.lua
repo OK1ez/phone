@@ -175,7 +175,7 @@ lib.callback.register('phone:server:fetchPhoneShell', function(serverId, cloudId
         return false
     end
 
-    local charId = GetPlayerCharacterId(serverId)
+    local charId = exports.core:getPlayerCharacterId(serverId)
 
     if cloud.owner ~= charId then
         return {
@@ -194,8 +194,7 @@ end)
 ---@param serverId integer
 ---@return table[]
 lib.callback.register('phone:server:fetchClouds', function(serverId)
-    local charId = GetPlayerCharacterId(serverId)
-
+    local charId = exports.core:getPlayerCharacterId(serverId)
     return MySQL.query.await('SELECT `cloudId`, `name`, `phoneNumber` FROM `phone_clouds` WHERE `owner` = ? ORDER BY `name`', {
         charId
     })
@@ -245,7 +244,7 @@ lib.callback.register('phone:server:createCloud', function(serverId, phoneId, na
         return false
     end
 
-    local charId = GetPlayerCharacterId(serverId)
+    local charId = exports.core:getPlayerCharacterId(serverId)
     local cloudId = generateNewCloudId()
 
     MySQL.insert.await('INSERT INTO `phone_clouds` (`cloudId`, `name`, `phoneNumber`, `owner`, `pin`) VALUES (?, ?, ?, ?, ?)', {
@@ -275,7 +274,7 @@ lib.callback.register('phone:server:attachCloud', function(serverId, phoneId, cl
         return false
     end
 
-    local charId = GetPlayerCharacterId(serverId)
+    local charId = exports.core:getPlayerCharacterId(serverId)
 
     local cloud = MySQL.single.await('SELECT 1 FROM `phone_clouds` WHERE `cloudId` = ? AND `owner` = ? LIMIT 1', {
         cloudId, charId

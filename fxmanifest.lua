@@ -28,7 +28,7 @@ server_scripts {
 
 shared_scripts {
     '@ox_lib/init.lua',
-    'shared/bridge.lua',
+    -- 'shared/bridge.lua',
 }
 
 files {
@@ -36,8 +36,8 @@ files {
     'data/*.lua',
 
     'config/*.lua',
-    'bridge/**/client.lua',
-    'bridge/**/shared.lua',
+    -- 'bridge/**/client.lua',
+    -- 'bridge/**/shared.lua',
 
     'web/build/index.html',
     'web/build/index.js',
