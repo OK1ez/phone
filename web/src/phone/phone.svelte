@@ -32,7 +32,7 @@
 {/snippet}
 
 {#snippet statusBar()}
-  <header class="absolute z-50 flex items-center justify-between w-full px-5 pt-4">
+  <header class="absolute z-50 flex items-center justify-between w-full px-4 pt-4">
     <p class="font-medium text-xs select-none">20:07</p>
     <div class="flex space-x-2">
       <Wifi class="size-3.5 text-foreground" />
@@ -44,10 +44,10 @@
 {#if shouldRenderShell}
   <div
     class={[
-      "relative isolate flex h-164 w-84 origin-bottom-right transition-transform duration-300 ease-out",
+      "relative isolate flex h-[44rem] w-[23rem] origin-bottom-right transition-transform duration-300 ease-out",
       shouldPeek ? "translate-y-[91%]" : "translate-y-0",
     ]}
-    transition:fly={{ y: shouldPeek ? 250 : 900, duration: 350, opacity: 0 }}
+    transition:fly={{ y: shouldPeek ? 250 : 900, duration: 350, opacity: 1 }}
   >
     {@render lockButton()}
 

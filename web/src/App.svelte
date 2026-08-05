@@ -20,7 +20,7 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-<main class="flex items-end justify-end p-8" class:bg-background={IsEnvBrowser()}>
+<main class="flex items-end justify-end p-9" class:bg-background={IsEnvBrowser()}>
   <DebugMenu />
   <Phone />
 </main>

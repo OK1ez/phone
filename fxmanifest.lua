@@ -39,13 +39,14 @@ files {
     -- 'bridge/**/client.lua',
     -- 'bridge/**/shared.lua',
 
+    'web/bridge/index.html',
     'web/build/index.html',
     'web/build/index.js',
     'web/build/index.css',
     'web/build/*.webp'
 }
 
--- ui_page 'web/build/index.html'
 ui_page 'http://localhost:5173/'
+-- ui_page 'web/bridge/index.html'
 
 ox_lib 'locale'
