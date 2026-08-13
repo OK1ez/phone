@@ -39,7 +39,6 @@ files {
     -- 'bridge/**/client.lua',
     -- 'bridge/**/shared.lua',
 
-    'web/bridge/index.html',
     'web/build/index.html',
     'web/build/index.js',
     'web/build/index.css',
